@@ -20,73 +20,46 @@
 #ifndef RPOLY_HH
 #define RPOLY_HH
 
-namespace Rpoly {
+#include <utility>
+#include <cstdlib>
+#include <cmath>
+
+/*
+..
+.. N. FLOCKE
+.. Algorithm 954: An Accurate and Efficient Cubic and Quartic Equation Solver
+.. for Physical Applications
+.. ACM TOMS, Vol. 41, No. 4, 2015.
+.. DOI: http://dx.doi.org/10.1145/2699468
+..
+*/
+
+namespace PolynomialRoots {
 
   typedef double valueType ;
+  typedef int    indexType ;
 
-  class Rpoly {
+  bool
+  solveQuadratic( valueType   a,
+                  valueType   b,
+                  valueType   c,
+                  valueType & r1,
+                  valueType & r2 ) ;
 
-    void
-    quad( valueType a,
-          valueType b1,
-          valueType c,
-          valueType & sr,
-          valueType & si,
-          valueType & lr,
-          valueType & li) ;
+  bool
+  solveCubic( valueType   A,
+              valueType   B,
+              valueType   C,
+              valueType   D,
+              valueType & r1,
+              valueType & r2,
+              valueType & r3 ) ;
 
-    void
-    quadsd( int         n,
-            valueType & u,
-            valueType & v,
-            valueType   p[],
-            valueType   q[],
-            valueType & a,
-            valueType & b) ;
-
-    void
-    fxshfr( int l2, int & nz ) ;
-
-    void
-    quadit( valueType & uu,
-            valueType & vv,
-            int       & nz) ;
-
-    void
-    realit( valueType sss, int  & nz, int & iflag) ;
-
-    void calcsc(int & type) ;
-    void nextk(int type) ;
-
-    void
-    newest( int type, valueType & uu, valueType & vv ) ;
-
-    valueType const base ;
-    valueType const eta ;
-    valueType const infin ;
-    valueType const smalno ;
-
-    valueType *p,*qp,*k,*qk,*svk;
-    valueType sr,si,u,v ;
-    valueType a1,a2,a3,a6,a7 ;
-    valueType a,b,c,d,e,f,g,h ;
-    valueType szr,szi,lzr,lzi ;
-    valueType are,mre;
-
-    int n, itercnt;
-
-  public:
-  
-    Rpoly() ;
-
-    int
-    eval( valueType const op[],
-          int       const degree,
-          valueType       zeror[],
-          valueType       zeroi[],
-          int             info[] ) ;
-  };
-
+  int
+  roots( valueType const op[],
+         indexType       Degree,
+         valueType       zeror[],
+         valueType       zeroi[] ) ;
 }
 
 #endif

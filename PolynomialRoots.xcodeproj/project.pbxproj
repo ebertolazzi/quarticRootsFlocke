@@ -1,0 +1,255 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D90C1E7D1C49B15A001D153C /* PolynomialRoot-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D90C1E7C1C49B15A001D153C /* PolynomialRoot-Jenkins-Traub.cc */; };
+		D95395411C478D6000520275 /* test.cc in Sources */ = {isa = PBXBuildFile; fileRef = D953953F1C478D6000520275 /* test.cc */; };
+		D9E404B91C49640E00C4B080 /* PolynomialRoots.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E404B71C49640E00C4B080 /* PolynomialRoots.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D953952F1C478D2600520275 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D90C1E7C1C49B15A001D153C /* PolynomialRoot-Jenkins-Traub.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoot-Jenkins-Traub.cc"; sourceTree = "<group>"; };
+		D95395311C478D2600520275 /* PolynomialRoots */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PolynomialRoots; sourceTree = BUILT_PRODUCTS_DIR; };
+		D953953F1C478D6000520275 /* test.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test.cc; sourceTree = "<group>"; };
+		D9E404B71C49640E00C4B080 /* PolynomialRoots.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolynomialRoots.cc; sourceTree = "<group>"; };
+		D9E404B81C49640E00C4B080 /* PolynomialRoots.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PolynomialRoots.hh; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D953952E1C478D2600520275 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D95395281C478D2600520275 = {
+			isa = PBXGroup;
+			children = (
+				D95395321C478D2600520275 /* Products */,
+				D953953C1C478D6000520275 /* srcs */,
+			);
+			sourceTree = "<group>";
+		};
+		D95395321C478D2600520275 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D95395311C478D2600520275 /* PolynomialRoots */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D953953C1C478D6000520275 /* srcs */ = {
+			isa = PBXGroup;
+			children = (
+				D9E404B71C49640E00C4B080 /* PolynomialRoots.cc */,
+				D90C1E7C1C49B15A001D153C /* PolynomialRoot-Jenkins-Traub.cc */,
+				D9E404B81C49640E00C4B080 /* PolynomialRoots.hh */,
+				D953953F1C478D6000520275 /* test.cc */,
+			);
+			path = srcs;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D95395301C478D2600520275 /* PolynomialRoots */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D95395381C478D2600520275 /* Build configuration list for PBXNativeTarget "PolynomialRoots" */;
+			buildPhases = (
+				D953952D1C478D2600520275 /* Sources */,
+				D953952E1C478D2600520275 /* Frameworks */,
+				D953952F1C478D2600520275 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PolynomialRoots;
+			productName = rpoly;
+			productReference = D95395311C478D2600520275 /* PolynomialRoots */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D95395291C478D2600520275 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Enrico Bertolazzi";
+				TargetAttributes = {
+					D95395301C478D2600520275 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = D953952C1C478D2600520275 /* Build configuration list for PBXProject "PolynomialRoots" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D95395281C478D2600520275;
+			productRefGroup = D95395321C478D2600520275 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D95395301C478D2600520275 /* PolynomialRoots */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D953952D1C478D2600520275 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9E404B91C49640E00C4B080 /* PolynomialRoots.cc in Sources */,
+				D95395411C478D6000520275 /* test.cc in Sources */,
+				D90C1E7D1C49B15A001D153C /* PolynomialRoot-Jenkins-Traub.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D95395361C478D2600520275 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D95395371C478D2600520275 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D95395391C478D2600520275 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = PolynomialRoots;
+			};
+			name = Debug;
+		};
+		D953953A1C478D2600520275 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = PolynomialRoots;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D953952C1C478D2600520275 /* Build configuration list for PBXProject "PolynomialRoots" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D95395361C478D2600520275 /* Debug */,
+				D95395371C478D2600520275 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D95395381C478D2600520275 /* Build configuration list for PBXNativeTarget "PolynomialRoots" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D95395391C478D2600520275 /* Debug */,
+				D953953A1C478D2600520275 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D95395291C478D2600520275 /* Project object */;
+}

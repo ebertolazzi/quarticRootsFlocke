@@ -1,0 +1,40 @@
+#include "rpoly.hh"
+#include <iostream>
+
+using namespace std ;
+
+int
+main() {
+
+  Rpoly::Rpoly rpoly ;
+
+  double op[] = { 1,-95,4160,-111268,2030514,-26742198,262157072,
+                  -1944178864,10972055029,-46991290259,150970590936,
+                  -355796299908,592189329456,-652458872448,421335032832,
+                  -118513704960 } ;
+  
+  double zeror[15], zeroi[15] ;
+  int    info[15] ;
+
+  int ok = rpoly.eval( op, 15, zeror, zeroi, info ) ;
+  cout << " ok = " << ok << '\n' ;
+  for ( int i = 0 ; i < 10 ; ++i )
+    cout << zeror[i] << " + I* " << zeroi[i] << '\n' ;
+
+  double op1[] = { 8, -8, 16,-16, 8,-8};
+
+  ok = rpoly.eval( op1, 5, zeror, zeroi, info ) ;
+  cout << " ok = " << ok << '\n' ;
+  for ( int i = 0 ; i < 5 ; ++i )
+    cout << zeror[i] << " + I* " << zeroi[i] << '\n' ;
+
+  double op2[] = { 8e9, -8e9, 16e9,-16e9, 8e9,-8e9};
+
+  ok = rpoly.eval( op2, 5, zeror, zeroi, info ) ;
+  cout << " ok = " << ok << '\n' ;
+  for ( int i = 0 ; i < 5 ; ++i )
+    cout << zeror[i] << " + I* " << zeroi[i] << '\n' ;
+
+  return 0 ;
+}
+
