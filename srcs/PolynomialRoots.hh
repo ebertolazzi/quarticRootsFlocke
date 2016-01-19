@@ -23,6 +23,7 @@
 #include <utility>
 #include <cstdlib>
 #include <cmath>
+#include <complex>
 
 /*
 ..
@@ -39,21 +40,50 @@ namespace PolynomialRoots {
   typedef double valueType ;
   typedef int    indexType ;
 
-  bool
+  void
   solveQuadratic( valueType   a,
                   valueType   b,
                   valueType   c,
                   valueType & r1,
-                  valueType & r2 ) ;
+                  valueType & r2,
+                  indexType & nr,
+                  indexType & nc ) ;
 
-  bool
+  indexType
   solveCubic( valueType   A,
               valueType   B,
               valueType   C,
               valueType   D,
               valueType & r1,
               valueType & r2,
-              valueType & r3 ) ;
+              valueType & r3,
+              indexType & nr,
+              indexType & nc ) ;
+
+  indexType
+  solveQuartic( valueType   A,
+                valueType   B,
+                valueType   C,
+                valueType   D,
+                valueType   E,
+                valueType & r1,
+                valueType & r2,
+                valueType & r3,
+                valueType & r4,
+                indexType & nr,
+                indexType & nc ) ;
+
+  valueType
+  evalPoly( valueType const op[],
+            indexType       Degree,
+            valueType       x,
+            bool            reverse ) ;
+
+  std::complex<valueType>
+  evalPolyC( valueType const         op[],
+             indexType               Degree,
+             std::complex<valueType> x,
+             bool                    reverse ) ;
 
   int
   roots( valueType const op[],
@@ -61,5 +91,7 @@ namespace PolynomialRoots {
          valueType       zeror[],
          valueType       zeroi[] ) ;
 }
+
+extern "C" void quartic_solver_( double op[], int & degree, double zeror[], double zeroi[] ) ;
 
 #endif

@@ -321,7 +321,9 @@ namespace PolynomialRoots {
     valueType relstp, omp, ui, vi ;
     bool triedFlag = false ;
     do {
-      if ( solveQuadratic( 1.0, u, v, szr, lzr ) ) {
+      indexType nr, nc ;
+      solveQuadratic( 1.0, u, v, szr, lzr, nr, nc ) ;
+      if ( nr == 2 ) {
         szi = lzi = 0 ;
       } else {
         szi =  lzr ;
@@ -620,8 +622,10 @@ namespace PolynomialRoots {
       zeror[0] = -(p[1]/p[0]);
       zeroi[0] = 0 ;
     } else if ( Degree == 2 ) {
+      indexType nr, nc ;
       valueType r1, r2 ;
-      if ( solveQuadratic( p[0], p[1], p[2], r1, r2) ) {
+      solveQuadratic( p[0], p[1], p[2], r1, r2, nr, nc ) ;
+      if ( nr == 2 ) {
         zeror[0] = r1 ; zeroi[0] = 0 ;
         zeror[1] = r2 ; zeroi[1] = 0 ;
       } else {
@@ -629,8 +633,10 @@ namespace PolynomialRoots {
         zeror[1] = r1 ; zeroi[1] = -r2 ;
       }
     } else if ( Degree == 3 ) {
+      indexType nr, nc ;
       valueType r1, r2, r3 ;
-      if ( solveCubic( p[0], p[1], p[2], p[3], r1, r2, r3) ) {
+      solveCubic( p[0], p[1], p[2], p[3], r1, r2, r3, nr, nc ) ;
+      if ( nr == 3 ) {
         zeror[0] = r1 ; zeroi[0] = 0 ;
         zeror[1] = r2 ; zeroi[1] = 0 ;
         zeror[2] = r3 ; zeroi[2] = 0 ;
