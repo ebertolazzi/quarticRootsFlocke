@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------------*\
  |                                                                          |
- |  Copyright (C) 2013                                                      |
+ |  Copyright (C) 2017                                                      |
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
@@ -176,7 +176,5 @@ quartic_solver_( double op[], int & degree, double zeror[], double zeroi[] ) {
     break ;
   }
 }
-
-
 
 // EOF: PolynomialRoots.cc

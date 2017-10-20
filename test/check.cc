@@ -14,15 +14,15 @@ using namespace PolynomialRoots ;
 
 double rootCubicReal1[] = { 1, 1.0e+7, 1.0e+14 } ;
 double rootCubicImag1[] = { 0, 0, 0 } ;
-double cubic1[]         = {1,-1.00000010000001e+14,+1.00000010000001e+21,-1.e+21} ;
+double cubic1[]         = { 1,-1.00000010000001e+14,+1.00000010000001e+21,-1.e+21 } ;
 
-double rootCubicReal2[] = { 1.000002, 1.000001, 1 } ;
+double rootCubicReal2[] = { 1, 1.000001, 1.000002 } ;
 double rootCubicImag2[] = { 0, 0, 0 } ;
-double cubic2[]         = {1,-3.000003,+3.000006000002,-1.000003000002} ;
+double cubic2[]         = { 1,-3.000003,+3.000006000002,-1.000003000002 } ;
 
 double rootCubicReal3[] = { 1.0e+80, 1.0e+77, -1.0e+81 } ;
 double rootCubicImag3[] = { 0, 0, 0 } ;
-double cubic3[]         = {1,+8.999e+80,-1.0009e+161,+1.e+238} ;
+double cubic3[]         = { 1,+8.999e+80,-1.0009e+161,+1.e+238 } ;
 
 double rootCubicReal4[] = { 1, -1, -1.0e+24 } ;
 double rootCubicImag4[] = { 0, 0, 0 } ;
@@ -184,8 +184,8 @@ do_test3( double const p[4], double const re[3], double const im[3] ) {
     im2 = 0 ;
     im3 = 0 ;
   } else {
-    complex<valueType> z2(r1,r2) ;
-    complex<valueType> z3(r1,-r2) ;
+    complex<valueType> z2(r2,r3) ;
+    complex<valueType> z3(r2,-r3) ;
     complex<valueType> res1 = evalPoly( p, 3, r1, true ) ;
     complex<valueType> res2 = evalPolyC( p, 3, z2, true ) ;
     complex<valueType> res3 = evalPolyC( p, 3, z3, true ) ;
@@ -200,12 +200,12 @@ do_test3( double const p[4], double const re[3], double const im[3] ) {
     im2 = r3 ;
     im3 = -r3 ;
   }
-  cout << "(1) = real " << setw(14) << re1 << " " << setw(14) << re[0] << " err = " << re1-re[0] << '\n' ;
-  cout << "(1) = imag " << setw(14) << im1 << " " << setw(14) << im[0] << " err = " << im1-im[0] << '\n' ;
-  cout << "(2) = real " << setw(14) << re2 << " " << setw(14) << re[1] << " err = " << re2-re[1] << '\n' ;
-  cout << "(2) = imag " << setw(14) << im2 << " " << setw(14) << im[1] << " err = " << im2-im[1] << '\n' ;
-  cout << "(3) = real " << setw(14) << re3 << " " << setw(14) << re[2] << " err = " << re3-re[2] << '\n' ;
-  cout << "(4) = imag " << setw(14) << im3 << " " << setw(14) << im[2] << " err = " << im3-im[2] << '\n' ;
+  cout << "(1) = real " << setw(14) << re[0] << " err = " << re1-re[0] << '\n' ;
+  cout << "(1) = imag " << setw(14) << im[0] << " err = " << im1-im[0] << '\n' ;
+  cout << "(2) = real " << setw(14) << re[1] << " err = " << re2-re[1] << '\n' ;
+  cout << "(2) = imag " << setw(14) << im[1] << " err = " << im2-im[1] << '\n' ;
+  cout << "(3) = real " << setw(14) << re[2] << " err = " << re3-re[2] << '\n' ;
+  cout << "(4) = imag " << setw(14) << im[2] << " err = " << im3-im[2] << '\n' ;
 }
 
 #define TESTCUBIC(A) do_test3( cubic##A, rootCubicReal##A, rootCubicImag##A )

@@ -29,7 +29,84 @@ namespace PolynomialRoots {
   using std::abs ;
   using std::pow ;
 
-  static valueType const machepsi = std::numeric_limits<valueType>::epsilon() ;
+  static valueType const machepsi      = std::numeric_limits<valueType>::epsilon() ;
+  static valueType const third         = 1./3. ;
+  static valueType const one27th       = 1./27. ;
+  static valueType const two27th       = 2./27. ;
+  static int       const bitsValueType = std::numeric_limits<valueType>::digits ;
+  static valueType const splitFactor   = (long(1)<<(bitsValueType-1))+1 ;
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // a + b = x + err
+  static
+  inline
+  void
+  TwoSum( valueType   a,
+          valueType   b,
+          valueType & x,
+          valueType & y ) {
+    x = a+b ;
+    valueType z = x-a ;
+    y = (a-(x-z))+(b-z) ;
+    //if ( abs(a) < abs(b) ) std::swap(a,b) ;
+    //x = a+b ;
+    //valueType z = x - a;
+    //y = b-z ;
+  }
+
+  // a = x + y
+  static
+  inline
+  void
+  Split( valueType a, valueType & x, valueType & y ) {
+    valueType c = splitFactor*a ;
+    x = c-(c-a) ;
+    y = a-x ;
+  }
+
+  // a * b = x + err
+  static
+  inline
+  void
+  TwoProduct( valueType   a,
+              valueType   b,
+              valueType & x,
+              valueType & y ) {
+    valueType a1, a2, b1, b2 ;
+    Split( a, a1, a2 ) ;
+    Split( b, b1, b2 ) ;
+    x = a*b ;
+    y = a2*b2-(((x-a1*b1)-a2*b1)-a1*b2) ;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // stable computation of polinomial
+  // p0 + p1*x + p2*x^2 + ... + pn*x^n
+  //
+  // (p0/x^n + p1/x^(n-1) + p2/(x^(n-2) + ... + pn)*x^n
+  //
+  valueType
+  CompHorner( valueType const p[],
+              indexType       Degree,
+              valueType       x,
+              bool            reverse ) {
+
+    valueType xabs = std::abs(x) ;
+    if ( xabs > 1 ) { x = valueType(1)/x ; reverse = !reverse ; }
+    indexType ii0 = reverse ? 0 : Degree ;
+    valueType res(p[ii0]) ;
+    valueType c = 0 ;
+    for ( indexType i = 1 ; i <= Degree ; ++i ) {
+      indexType ii = reverse ? i : Degree-i ;
+      valueType tmp, pi, sigma ;
+      TwoProduct( res, x, tmp, pi ) ;
+      TwoSum( tmp, p[ii], res, sigma ) ;
+      c = c * x + (pi+sigma) ;
+    }
+    res += c ;
+    if ( xabs > 1 ) res *= pow(x,Degree) ;
+    return res ;
+  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //
@@ -58,25 +135,24 @@ namespace PolynomialRoots {
       else         i_case = 2 ; // b <= a  and c <= a --> a MAX
     }
 
-    valueType s ;
     switch ( i_case ) {
       case 0:
-        s = scale = 1/c ;
-        AS = A*s ; s *= scale ;
-        BS = B*s ;
-        CS = C > 0 ? 1 : -1 ;
+        scale = c ;
+        AS    = A/c ;
+        BS    = (B/c)/c ;
+        CS    = C > 0 ? 1 : -1 ;
       break ;
       case 1:
-        s = scale = 1/b ;
-        AS = A*s ; s *= scale ;
-        BS = B > 0 ? 1 : -1 ; s *= scale ;
-        CS = C*s ;
+        scale = b ;
+        AS    = A/b ;
+        BS    = B > 0 ? 1 : -1 ;
+        CS    = ((C/b)/b)/b ;
       break ;
       case 2:
-        s = scale = 1/a ;
-        AS = A > 0 ? 1 : -1 ; s *= scale ;
-        BS = B*s ; s *= scale ;
-        CS = C*s ;
+        scale = a ;
+        AS    = A > 0 ? 1 : -1 ;
+        BS    = (B/a)/a ;
+        CS    = ((C/a)/a)/a ;
       break ;
     }
   }
@@ -121,35 +197,34 @@ namespace PolynomialRoots {
       }
     }
 
-    valueType s ;
     switch ( i_case ) {
       case 0:
-        scale = s = 1/d ;
-        AS = A*s ; s *= scale ;
-        BS = B*s ; s *= scale ;
-        CS = C*s ;
-        DS = D > 0 ? 1 : -1 ;
+        scale = d ;
+        AS    = A/d ;
+        BS    = (B/d)/d ;
+        CS    = ((C/d)/d)/d ;
+        DS    = D > 0 ? 1 : -1 ;
       break ;
       case 1:
-        scale = s = 1/c ;
-        AS = A*s ; s *= scale ;
-        BS = B*s ; s *= scale ;
-        CS = C > 0 ? 1 : -1 ; s *= scale ;
-        DS = D*s ;
+        scale = c ;
+        AS    = A/c ;
+        BS    = (B/c)/c ;
+        CS    = C > 0 ? 1 : -1 ;
+        DS    = (((D/c)/c)/c)/c ;
       break ;
       case 2:
-        scale = s = 1/b ;
-        AS = A*s ; s *= scale ;
-        BS = B > 0 ? 1 : -1 ; s *= scale ;
-        CS = C*s ; s *= scale ;
-        DS = D*s ;
+        scale = b ;
+        AS    = A/b ;
+        BS    = B > 0 ? 1 : -1 ;
+        CS    = ((C/b)/b)/b ;
+        DS    = (((D/b)/b)/b)/b ;
       break ;
       case 3:
-        scale = s = 1/a ;
-        AS = A > 0 ? 1 : -1 ; s *= scale ;
-        BS = B*s ; s *= scale ;
-        CS = C*s ; s *= scale ;
-        DS = D*s ;
+        scale = a ;
+        AS    = A > 0 ? 1 : -1 ;
+        BS    = (B/a)/a ;
+        CS    = ((C/a)/a)/a ;
+        DS    = (((D/a)/a)/a)/a ;
       break ;
     }
   }
@@ -475,6 +550,7 @@ namespace PolynomialRoots {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+#if 1
   /*\
    *  Calculate the zeros of the quadratic a*z^2 + b*z + c.
    *  The quadratic formula, modified to avoid overflow, is used
@@ -527,6 +603,7 @@ namespace PolynomialRoots {
       }
     }
   }
+#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   static
@@ -577,11 +654,11 @@ namespace PolynomialRoots {
   static
   inline
   valueType
-  guess5( valueType const a[3], bool & use_shifted ) {
+  guess5( valueType const a[3] ) {
     valueType p, q, r, s ;
-    use_shifted = abs(a[1]-1./3.) <= 0.01 && abs(a[0]+1./27.) ;
-    if ( a[1] <= 1./3. ) {
-      if ( a[0] < -a[1]/3+2./27. ) {
+    valueType tmp = two27th-a[1]/3 ;
+    if ( a[1] <= third ) {
+      if ( a[0] < tmp ) {
         p =  8.78558E-1 ;
         q = -5.71888E-1 ;
         r = -7.11154E-1 ;
@@ -593,7 +670,7 @@ namespace PolynomialRoots {
         s = -2.64881E-1 ;
       }
     } else {
-      if ( a[0] < -a[1]/3+2./27. ) {
+      if ( a[0] < tmp ) {
         p = 1.19748 ;
         q = -2.83772E-1 ;
         r = -8.37476E-1 ;
@@ -610,11 +687,11 @@ namespace PolynomialRoots {
 
   static
   inline
-  valueType guess6( valueType const a[3], bool & use_shifted ) {
+  valueType guess6( valueType const a[3] ) {
     valueType p, q, r, s ;
-    use_shifted = abs(a[1]-1./3.) <= 0.01 && abs(a[0]-1./27.) ;
-    if ( a[1] <= 1./3. ) {
-      if ( a[0] > a[1]/3-2./27. ) {
+    valueType tmp = a[1]/3-two27th ;
+    if ( a[1] <= third ) {
+      if ( a[0] > tmp ) {
         p = -8.78558E-1 ;
         q = -5.71888E-1 ;
         r =  7.11154E-1 ;
@@ -626,7 +703,7 @@ namespace PolynomialRoots {
         s = -2.64881E-1 ;
       }
     } else {
-      if ( a[0] > a[1]/3-2./27. ) {
+      if ( a[0] > tmp ) {
         p = -1.19748 ;
         q = -2.83772E-1 ;
         r =  8.37476E-1 ;
@@ -697,44 +774,77 @@ namespace PolynomialRoots {
       case 2: iclass = a[2] > 0 ? 6 : 5 ; break ;
     }
     bool use_shifted = false ;
+    bool triple_root = false ;
     switch ( iclass ) {
       case 1: r1 = guess1(a) ; break ;
       case 2: r1 = guess2(a) ; break ;
       case 3: r1 = guess3(a) ; break ;
       case 4: r1 = guess4(a) ; break ;
-      case 5: r1 = guess5(a,use_shifted) ; break ;
-      case 6: r1 = guess6(a,use_shifted) ; break ;
+      case 5:
+        r2 = a[1]-third ;
+        r3 = a[0]+one27th ;
+        use_shifted = abs(r2) <= 0.01 && abs(r3) <= 0.01 ;
+        triple_root = abs(r2) <= machepsi && abs(r3) <= machepsi ;
+        r1 = guess5(a) ;
+        break ;
+      case 6:
+        r2 = a[1]-third ;
+        r3 = a[0]-one27th ;
+        use_shifted = abs(r2) <= 0.01 && abs(r3) <= 0.01 ;
+        triple_root = abs(r2) <= machepsi && abs(r3) <= machepsi ;
+        r1 = guess6(a) ;
+        break ;
     }
-    indexType iter ;
-    if ( use_shifted ) {
-      valueType const A1 = a[1]-1./3. ;
+    indexType iter = 0 ;
+    if ( triple_root ) {
+      nr = 3 ;
+      if ( iclass == 5 ) r1 = r2 = r3 = -third * scale ;
+      else               r1 = r2 = r3 =  third * scale ;
+      return iter ;
+    } else if ( use_shifted ) {
       if ( iclass == 5 ) {
         // y^3 + A * y + (B+A/3), y = x-1/3
         // B = a[0]+1./27. ;
-        r1 -= 1./3. ;
-        iter = zeroCubicByNewtonBisection( 0, A1, a[0]+a[1]/3-2./27, r1 ) ;
-        r1 += 1./3. ;
+        r1 -= third ;
+        r3 += third * r2 ;
+        //if ( abs(r3) < machepsi ) r3 = 0 ;
+        iter = zeroCubicByNewtonBisection( 0, r2, r3, r1 ) ;
+        r1 += third ;
       } else {
         // y^3 + A * y + (B-A/3), y = x+1/3
         // B = a[0]-1./27. ;
-        r1 += 1./3. ;
-        iter = zeroCubicByNewtonBisection( 0, A1, a[0]-a[1]/3+2./27, r1 ) ;
-        r1 -= 1./3. ;
+        r1 += third ;
+        r3 -= third * r2 ;
+        //if ( abs(r3) < machepsi ) r3 = 0 ;
+        iter = zeroCubicByNewtonBisection( 0, r2, r3, r1 ) ;
+        r1 -= third ;
       }
     } else {
       iter = zeroCubicByNewtonBisection( a[2], a[1], a[0], r1 ) ;
     }
     // scale
-    r1 /= scale ;
+    r1 *= scale ;
     
-    // una extra correzione con Newton dopo riscalatura
-    valueType p  = A*r1 + B ;
-    valueType dp = A*r1 + p  ;
-    p  = p  * r1 + C ;
-    dp = dp * r1 + p ;
-    p  = p  * r1 + D ;
+    valueType p  = ((A*r1+B)*r1+C)*r1+D ;
+    valueType dp = ((4*A*r1+3*B)*r1+2*C)*r1 ;
+    
     r1 -= p/dp ;
+/*
+    valueType const pp[]  = { A, B, C, D } ;
+    valueType pH = CompHorner( pp, 3, r1, true ) ;
+    std::cout << "pH = " << pH << "\n" ;
 
+    // una extra correzione con Newton dopo riscalatura
+    valueType const dpp[] = { 3*A, 2*B, C } ;
+    for ( int k = 0 ; k < 10 ; ++k ) {
+      valueType pH  = CompHorner( pp, 3, r1, true ) ;
+      valueType dpH = (3*A*r1+2*B)*r1+C ;
+      r1 -= pH/dpH ;
+    }
+
+    pH = CompHorner( pp, 3, r1, true ) ;
+    std::cout << "pH = " << pH << "\n" ;
+*/
     // deflate
     valueType b0, b1 ;
     deflateCubicPolynomial( A, B, C, D, r1, b1, b0 ) ;
@@ -914,7 +1024,7 @@ namespace PolynomialRoots {
     */
     if ( nr > 0 ) {
       iter += zeroQuarticByNewtonBisection( q3, q2, q1, q0, r1 ) ;
-      r1 /= scale ;
+      r1 *= scale ;
 
       /*
       ..  Find remaining roots -> reduce to cubic. The reduction to a cubic polynomial
@@ -954,7 +1064,7 @@ namespace PolynomialRoots {
         valueType x = q3 >= 0 ? 2 : -2 ; // initial root -> target = smaller mag root
         iter += zeroHexicByNewtonBisection( q3, q2, q1, q0, x ) ;
 
-        a = x/scale ;   // 1st real component -> a
+        a = x*scale ;   // 1st real component -> a
         b = -A3/2 - a ; // 2nd real component -> b
 
         x = 4 * a + A3 ; // Q'''(a)
