@@ -7,16 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9060F991F9BB60D00A1BF95 /* PolynomialRoots-Utils.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9060F981F9BB60C00A1BF95 /* PolynomialRoots-Utils.hh */; };
+		D9060F9B1F9BF10300A1BF95 /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9060F9A1F9BF10300A1BF95 /* PolynomialRoots-3-Quartic.cc */; };
+		D9060F9C1F9BF5DE00A1BF95 /* check_3_quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9EA83FB1F9AA68800F89883 /* check_3_quartic.cc */; };
+		D9060F9F1F9BF5FE00A1BF95 /* libquartic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D973F4361C503E1D001156FE /* libquartic.a */; };
 		D973F4411C503E28001156FE /* PolynomialRoots.cc in Sources */ = {isa = PBXBuildFile; fileRef = D92E44811C4D4FAA00028D8E /* PolynomialRoots.cc */; };
 		D973F4421C503E2A001156FE /* PolynomialRoots-Flocke.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9E404B71C49640E00C4B080 /* PolynomialRoots-Flocke.cc */; };
 		D973F4451C503E73001156FE /* libquartic.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = D973F4361C503E1D001156FE /* libquartic.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D9EA83FC1F9AA69300F89883 /* check_quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9EA83FA1F9AA68800F89883 /* check_quadratic.cc */; };
+		D98AAA541F9B616600E28E36 /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D98AAA521F9B616500E28E36 /* PolynomialRoots-1-Quadratic.cc */; };
+		D98AAA551F9B616600E28E36 /* PolynomialRoots-2-Cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D98AAA531F9B616500E28E36 /* PolynomialRoots-2-Cubic.cc */; };
+		D98AAA5C1F9B636E00E28E36 /* libquartic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D973F4361C503E1D001156FE /* libquartic.a */; };
+		D98AAA631F9B639500E28E36 /* check_2_cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D98AAA621F9B639500E28E36 /* check_2_cubic.cc */; };
+		D9EA83FC1F9AA69300F89883 /* check_1_quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9EA83FA1F9AA68800F89883 /* check_1_quadratic.cc */; };
 		D9EA83FD1F9AA69E00F89883 /* PolynomialRoots.hh in Headers */ = {isa = PBXBuildFile; fileRef = D9E404B81C49640E00C4B080 /* PolynomialRoots.hh */; };
-		D9EA83FE1F9AA6AB00F89883 /* PolynomialRoots-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9EA83E61F9A9B8E00F89883 /* PolynomialRoots-Quadratic.cc */; };
 		D9EA84001F9AA6D100F89883 /* libquartic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D973F4361C503E1D001156FE /* libquartic.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D9060F9D1F9BF5F700A1BF95 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D95395291C478D2600520275 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D973F4351C503E1D001156FE;
+			remoteInfo = quartic;
+		};
+		D98AAA581F9B636E00E28E36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D95395291C478D2600520275 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D973F4351C503E1D001156FE;
+			remoteInfo = quartic;
+		};
 		D9EA84011F9AA6DB00F89883 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D95395291C478D2600520275 /* Project object */;
@@ -27,24 +48,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D953952F1C478D2600520275 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-		D973F4251C50202A001156FE /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		D973F4441C503E65001156FE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 8;
@@ -56,6 +59,15 @@
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 		D973F4481C504453001156FE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		D98AAA5D1F9B636E00E28E36 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -76,38 +88,26 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D9060F981F9BB60C00A1BF95 /* PolynomialRoots-Utils.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "PolynomialRoots-Utils.hh"; sourceTree = "<group>"; };
+		D9060F9A1F9BF10300A1BF95 /* PolynomialRoots-3-Quartic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-3-Quartic.cc"; sourceTree = "<group>"; };
 		D90C1E7C1C49B15A001D153C /* PolynomialRoots-Jenkins-Traub.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-Jenkins-Traub.cc"; sourceTree = "<group>"; };
 		D92E44811C4D4FAA00028D8E /* PolynomialRoots.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolynomialRoots.cc; sourceTree = "<group>"; };
-		D95395311C478D2600520275 /* PolynomialRoots */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PolynomialRoots; sourceTree = BUILT_PRODUCTS_DIR; };
-		D973F4271C50202A001156FE /* test4 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test4; sourceTree = BUILT_PRODUCTS_DIR; };
 		D973F4361C503E1D001156FE /* libquartic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libquartic.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		D973F44A1C504453001156FE /* check */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = check; sourceTree = BUILT_PRODUCTS_DIR; };
+		D973F44A1C504453001156FE /* check_3_quartic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = check_3_quartic; sourceTree = BUILT_PRODUCTS_DIR; };
+		D98AAA521F9B616500E28E36 /* PolynomialRoots-1-Quadratic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-1-Quadratic.cc"; sourceTree = "<group>"; };
+		D98AAA531F9B616500E28E36 /* PolynomialRoots-2-Cubic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-2-Cubic.cc"; sourceTree = "<group>"; };
+		D98AAA611F9B636E00E28E36 /* check_2_cubic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = check_2_cubic; sourceTree = BUILT_PRODUCTS_DIR; };
+		D98AAA621F9B639500E28E36 /* check_2_cubic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = check_2_cubic.cc; sourceTree = "<group>"; };
 		D9E404B71C49640E00C4B080 /* PolynomialRoots-Flocke.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-Flocke.cc"; sourceTree = "<group>"; };
 		D9E404B81C49640E00C4B080 /* PolynomialRoots.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PolynomialRoots.hh; sourceTree = "<group>"; };
-		D9EA83E61F9A9B8E00F89883 /* PolynomialRoots-Quadratic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-Quadratic.cc"; sourceTree = "<group>"; };
-		D9EA83F51F9AA61600F89883 /* check_quadratic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = check_quadratic; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9EA83F51F9AA61600F89883 /* check_1_quadratic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = check_1_quadratic; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9EA83F71F9AA68800F89883 /* test4.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test4.cc; sourceTree = "<group>"; };
 		D9EA83F81F9AA68800F89883 /* test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test.cc; sourceTree = "<group>"; };
-		D9EA83F91F9AA68800F89883 /* test.cc_OLD */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.cc_OLD; sourceTree = "<group>"; };
-		D9EA83FA1F9AA68800F89883 /* check_quadratic.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = check_quadratic.cc; sourceTree = "<group>"; };
-		D9EA83FB1F9AA68800F89883 /* check.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = check.cc; sourceTree = "<group>"; };
+		D9EA83FA1F9AA68800F89883 /* check_1_quadratic.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = check_1_quadratic.cc; sourceTree = "<group>"; };
+		D9EA83FB1F9AA68800F89883 /* check_3_quartic.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = check_3_quartic.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D953952E1C478D2600520275 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D973F4241C50202A001156FE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D973F4331C503E1D001156FE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -119,6 +119,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9060F9F1F9BF5FE00A1BF95 /* libquartic.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D98AAA5B1F9B636E00E28E36 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D98AAA5C1F9B636E00E28E36 /* libquartic.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,11 +155,10 @@
 		D95395321C478D2600520275 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D95395311C478D2600520275 /* PolynomialRoots */,
-				D973F4271C50202A001156FE /* test4 */,
 				D973F4361C503E1D001156FE /* libquartic.a */,
-				D973F44A1C504453001156FE /* check */,
-				D9EA83F51F9AA61600F89883 /* check_quadratic */,
+				D973F44A1C504453001156FE /* check_3_quartic */,
+				D9EA83F51F9AA61600F89883 /* check_1_quadratic */,
+				D98AAA611F9B636E00E28E36 /* check_2_cubic */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,8 +167,11 @@
 			isa = PBXGroup;
 			children = (
 				D9E404B81C49640E00C4B080 /* PolynomialRoots.hh */,
+				D9060F981F9BB60C00A1BF95 /* PolynomialRoots-Utils.hh */,
 				D92E44811C4D4FAA00028D8E /* PolynomialRoots.cc */,
-				D9EA83E61F9A9B8E00F89883 /* PolynomialRoots-Quadratic.cc */,
+				D98AAA521F9B616500E28E36 /* PolynomialRoots-1-Quadratic.cc */,
+				D98AAA531F9B616500E28E36 /* PolynomialRoots-2-Cubic.cc */,
+				D9060F9A1F9BF10300A1BF95 /* PolynomialRoots-3-Quartic.cc */,
 				D9E404B71C49640E00C4B080 /* PolynomialRoots-Flocke.cc */,
 				D90C1E7C1C49B15A001D153C /* PolynomialRoots-Jenkins-Traub.cc */,
 			);
@@ -170,11 +181,11 @@
 		D9EA83F61F9AA68800F89883 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				D9EA83FA1F9AA68800F89883 /* check_1_quadratic.cc */,
+				D98AAA621F9B639500E28E36 /* check_2_cubic.cc */,
+				D9EA83FB1F9AA68800F89883 /* check_3_quartic.cc */,
 				D9EA83F71F9AA68800F89883 /* test4.cc */,
 				D9EA83F81F9AA68800F89883 /* test.cc */,
-				D9EA83F91F9AA68800F89883 /* test.cc_OLD */,
-				D9EA83FA1F9AA68800F89883 /* check_quadratic.cc */,
-				D9EA83FB1F9AA68800F89883 /* check.cc */,
 			);
 			path = test;
 			sourceTree = SOURCE_ROOT;
@@ -194,46 +205,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9EA83FD1F9AA69E00F89883 /* PolynomialRoots.hh in Headers */,
+				D9060F991F9BB60D00A1BF95 /* PolynomialRoots-Utils.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		D95395301C478D2600520275 /* PolynomialRoots */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D95395381C478D2600520275 /* Build configuration list for PBXNativeTarget "PolynomialRoots" */;
-			buildPhases = (
-				D953952D1C478D2600520275 /* Sources */,
-				D953952E1C478D2600520275 /* Frameworks */,
-				D953952F1C478D2600520275 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = PolynomialRoots;
-			productName = rpoly;
-			productReference = D95395311C478D2600520275 /* PolynomialRoots */;
-			productType = "com.apple.product-type.tool";
-		};
-		D973F4261C50202A001156FE /* test4 */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D973F42B1C50202A001156FE /* Build configuration list for PBXNativeTarget "test4" */;
-			buildPhases = (
-				D973F4231C50202A001156FE /* Sources */,
-				D973F4241C50202A001156FE /* Frameworks */,
-				D973F4251C50202A001156FE /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = test4;
-			productName = test4;
-			productReference = D973F4271C50202A001156FE /* test4 */;
-			productType = "com.apple.product-type.tool";
-		};
 		D973F4351C503E1D001156FE /* quartic */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D973F43E1C503E1D001156FE /* Build configuration list for PBXNativeTarget "quartic" */;
@@ -252,9 +230,9 @@
 			productReference = D973F4361C503E1D001156FE /* libquartic.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		D973F4491C504453001156FE /* check */ = {
+		D973F4491C504453001156FE /* check_3_quartic */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D973F44E1C504453001156FE /* Build configuration list for PBXNativeTarget "check" */;
+			buildConfigurationList = D973F44E1C504453001156FE /* Build configuration list for PBXNativeTarget "check_3_quartic" */;
 			buildPhases = (
 				D973F4461C504453001156FE /* Sources */,
 				D973F4471C504453001156FE /* Frameworks */,
@@ -263,15 +241,34 @@
 			buildRules = (
 			);
 			dependencies = (
+				D9060F9E1F9BF5F700A1BF95 /* PBXTargetDependency */,
 			);
-			name = check;
+			name = check_3_quartic;
 			productName = check;
-			productReference = D973F44A1C504453001156FE /* check */;
+			productReference = D973F44A1C504453001156FE /* check_3_quartic */;
 			productType = "com.apple.product-type.tool";
 		};
-		D9EA83E91F9AA61600F89883 /* check_quadratic */ = {
+		D98AAA561F9B636E00E28E36 /* check_2_cubic */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D9EA83F21F9AA61600F89883 /* Build configuration list for PBXNativeTarget "check_quadratic" */;
+			buildConfigurationList = D98AAA5E1F9B636E00E28E36 /* Build configuration list for PBXNativeTarget "check_2_cubic" */;
+			buildPhases = (
+				D98AAA591F9B636E00E28E36 /* Sources */,
+				D98AAA5B1F9B636E00E28E36 /* Frameworks */,
+				D98AAA5D1F9B636E00E28E36 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D98AAA571F9B636E00E28E36 /* PBXTargetDependency */,
+			);
+			name = check_2_cubic;
+			productName = check;
+			productReference = D98AAA611F9B636E00E28E36 /* check_2_cubic */;
+			productType = "com.apple.product-type.tool";
+		};
+		D9EA83E91F9AA61600F89883 /* check_1_quadratic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9EA83F21F9AA61600F89883 /* Build configuration list for PBXNativeTarget "check_1_quadratic" */;
 			buildPhases = (
 				D9EA83EA1F9AA61600F89883 /* Sources */,
 				D9EA83F01F9AA61600F89883 /* Frameworks */,
@@ -282,9 +279,9 @@
 			dependencies = (
 				D9EA84021F9AA6DB00F89883 /* PBXTargetDependency */,
 			);
-			name = check_quadratic;
+			name = check_1_quadratic;
 			productName = check;
-			productReference = D9EA83F51F9AA61600F89883 /* check_quadratic */;
+			productReference = D9EA83F51F9AA61600F89883 /* check_1_quadratic */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -296,12 +293,6 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Enrico Bertolazzi";
 				TargetAttributes = {
-					D95395301C478D2600520275 = {
-						CreatedOnToolsVersion = 7.2;
-					};
-					D973F4261C50202A001156FE = {
-						CreatedOnToolsVersion = 7.2;
-					};
 					D973F4351C503E1D001156FE = {
 						CreatedOnToolsVersion = 7.2;
 					};
@@ -322,37 +313,24 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D95395301C478D2600520275 /* PolynomialRoots */,
-				D973F4261C50202A001156FE /* test4 */,
-				D973F4491C504453001156FE /* check */,
 				D973F4351C503E1D001156FE /* quartic */,
-				D9EA83E91F9AA61600F89883 /* check_quadratic */,
+				D9EA83E91F9AA61600F89883 /* check_1_quadratic */,
+				D98AAA561F9B636E00E28E36 /* check_2_cubic */,
+				D973F4491C504453001156FE /* check_3_quartic */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D953952D1C478D2600520275 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D973F4231C50202A001156FE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D973F4321C503E1D001156FE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D973F4421C503E2A001156FE /* PolynomialRoots-Flocke.cc in Sources */,
-				D9EA83FE1F9AA6AB00F89883 /* PolynomialRoots-Quadratic.cc in Sources */,
+				D98AAA541F9B616600E28E36 /* PolynomialRoots-1-Quadratic.cc in Sources */,
+				D98AAA551F9B616600E28E36 /* PolynomialRoots-2-Cubic.cc in Sources */,
 				D973F4411C503E28001156FE /* PolynomialRoots.cc in Sources */,
+				D9060F9B1F9BF10300A1BF95 /* PolynomialRoots-3-Quartic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +338,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9060F9C1F9BF5DE00A1BF95 /* check_3_quartic.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D98AAA591F9B636E00E28E36 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D98AAA631F9B639500E28E36 /* check_2_cubic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,13 +354,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9EA83FC1F9AA69300F89883 /* check_quadratic.cc in Sources */,
+				D9EA83FC1F9AA69300F89883 /* check_1_quadratic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		D9060F9E1F9BF5F700A1BF95 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D973F4351C503E1D001156FE /* quartic */;
+			targetProxy = D9060F9D1F9BF5F700A1BF95 /* PBXContainerItemProxy */;
+		};
+		D98AAA571F9B636E00E28E36 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D973F4351C503E1D001156FE /* quartic */;
+			targetProxy = D98AAA581F9B636E00E28E36 /* PBXContainerItemProxy */;
+		};
 		D9EA84021F9AA6DB00F89883 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D973F4351C503E1D001156FE /* quartic */;
@@ -483,34 +480,6 @@
 			};
 			name = Release;
 		};
-		D95395391C478D2600520275 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = PolynomialRoots;
-			};
-			name = Debug;
-		};
-		D953953A1C478D2600520275 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = PolynomialRoots;
-			};
-			name = Release;
-		};
-		D973F42C1C50202A001156FE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		D973F42D1C50202A001156FE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		D973F43F1C503E1D001156FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -545,6 +514,20 @@
 			};
 			name = Release;
 		};
+		D98AAA5F1F9B636E00E28E36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D98AAA601F9B636E00E28E36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		D9EA83F31F9AA61600F89883 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -571,24 +554,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D95395381C478D2600520275 /* Build configuration list for PBXNativeTarget "PolynomialRoots" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D95395391C478D2600520275 /* Debug */,
-				D953953A1C478D2600520275 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D973F42B1C50202A001156FE /* Build configuration list for PBXNativeTarget "test4" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D973F42C1C50202A001156FE /* Debug */,
-				D973F42D1C50202A001156FE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		D973F43E1C503E1D001156FE /* Build configuration list for PBXNativeTarget "quartic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -598,7 +563,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D973F44E1C504453001156FE /* Build configuration list for PBXNativeTarget "check" */ = {
+		D973F44E1C504453001156FE /* Build configuration list for PBXNativeTarget "check_3_quartic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D973F44F1C504453001156FE /* Debug */,
@@ -607,7 +572,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D9EA83F21F9AA61600F89883 /* Build configuration list for PBXNativeTarget "check_quadratic" */ = {
+		D98AAA5E1F9B636E00E28E36 /* Build configuration list for PBXNativeTarget "check_2_cubic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D98AAA5F1F9B636E00E28E36 /* Debug */,
+				D98AAA601F9B636E00E28E36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9EA83F21F9AA61600F89883 /* Build configuration list for PBXNativeTarget "check_1_quadratic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D9EA83F31F9AA61600F89883 /* Debug */,
