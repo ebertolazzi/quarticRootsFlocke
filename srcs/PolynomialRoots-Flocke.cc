@@ -23,61 +23,18 @@
 #include <algorithm>
 #include <limits>
 
+#include "PolynomialRoots-Utils.hh"
+
 namespace PolynomialRoots {
 
   using std::pair ;
   using std::abs ;
   using std::pow ;
 
-  static valueType const machepsi      = std::numeric_limits<valueType>::epsilon() ;
-  static valueType const third         = 1./3. ;
-  static valueType const one27th       = 1./27. ;
-  static valueType const two27th       = 2./27. ;
-  static int       const bitsValueType = std::numeric_limits<valueType>::digits ;
-  static valueType const splitFactor   = (long(1)<<(bitsValueType-1))+1 ;
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  // a + b = x + err
-  static
-  inline
-  void
-  TwoSum( valueType   a,
-          valueType   b,
-          valueType & x,
-          valueType & y ) {
-    x = a+b ;
-    valueType z = x-a ;
-    y = (a-(x-z))+(b-z) ;
-    //if ( abs(a) < abs(b) ) std::swap(a,b) ;
-    //x = a+b ;
-    //valueType z = x - a;
-    //y = b-z ;
-  }
-
-  // a = x + y
-  static
-  inline
-  void
-  Split( valueType a, valueType & x, valueType & y ) {
-    valueType c = splitFactor*a ;
-    x = c-(c-a) ;
-    y = a-x ;
-  }
-
-  // a * b = x + err
-  static
-  inline
-  void
-  TwoProduct( valueType   a,
-              valueType   b,
-              valueType & x,
-              valueType & y ) {
-    valueType a1, a2, b1, b2 ;
-    Split( a, a1, a2 ) ;
-    Split( b, b1, b2 ) ;
-    x = a*b ;
-    y = a2*b2-(((x-a1*b1)-a2*b1)-a1*b2) ;
-  }
+  static valueType const machepsi = std::numeric_limits<valueType>::epsilon() ;
+  static valueType const third    = 1./3. ;
+  static valueType const one27th  = 1./27. ;
+  static valueType const two27th  = 2./27. ;
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // stable computation of polinomial

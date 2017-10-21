@@ -27,7 +27,41 @@ namespace PolynomialRoots {
 
   using std::abs ;
   static valueType const machepsi = std::numeric_limits<valueType>::epsilon() ;
-  static valueType const sqrtepsi = std::sqrt(machepsi) ;
+
+  valueType
+  Quadratic::eval( valueType x ) const {
+    if ( std::abs(x) > 1 ) {
+      valueType z  = 1/x ;
+      valueType x2 = x*x ;
+      return ((c*z+b)*z+a)*x2 ;
+    } else {
+      return (a*x+b)*x+c ;
+    }
+  }
+
+  complexType
+  Quadratic::eval( complexType const & x ) const {
+    valueType absx = std::abs(x) ;
+    if ( absx > 1 ) {
+      complexType x2 = x*x ;
+      complexType z  = x/absx ;
+      return ((((c*z)/absx+b)*z)/absx+a)*x2 ;
+    } else {
+      return (a*x+b)*x+c ;
+    }
+  }
+
+  void
+  Quadratic::eval( valueType x, valueType & p, valueType & dp ) const {
+    if ( std::abs(x) > 1 ) {
+      valueType z  = 1/x ;
+      valueType x2 = x*x ;
+      p  = ((c*z+b)*z+a)*x2 ;
+    } else {
+      p  = (a*x+b)*x+c ;
+    }
+    dp = 2*a*x+b ;
+  }
 
   /*\
    *  Calculate the zeros of the quadratic a*z^2 + b*z + c.
@@ -110,7 +144,7 @@ namespace PolynomialRoots {
   bool
   Quadratic::check( std::ostream & s ) const {
     bool ok = true ;
-    valueType epsi = 10*hypot(a,b)*machepsi ;
+    valueType epsi = 10*(std::abs(a)+std::abs(b)+std::abs(c))*machepsi ;
     if ( cplx ) {
       valueType z0 = std::abs(eval( root0() ));
       valueType z1 = std::abs(eval( root1() ));
@@ -135,4 +169,4 @@ namespace PolynomialRoots {
 
 }
 
-// EOF: PolynomialRoots-Quadratic.cc
+// EOF: PolynomialRoots-1-Quadratic.cc

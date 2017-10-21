@@ -149,6 +149,7 @@ namespace PolynomialRoots {
 
 }
 
+/*
 extern "C"
 void
 quartic_solver_( double op[], int & degree, double zeror[], double zeroi[] ) {
@@ -176,5 +177,6 @@ quartic_solver_( double op[], int & degree, double zeror[], double zeroi[] ) {
     break ;
   }
 }
+*/
 
 // EOF: PolynomialRoots.cc

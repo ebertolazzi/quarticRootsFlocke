@@ -41,7 +41,7 @@ do_test( double const p[3] ) {
   qsolve.info(cout) ;
   if ( !qsolve.check(cout) ) {
     cout << "\nFailed!\n\n\n" ;
-    //std::exit(0) ;
+    std::exit(0) ;
   }
 }
 
@@ -50,5 +50,6 @@ main() {
   cout.precision(20) ;
   for ( int k = 0 ; k < sizeof(qq)/sizeof(qq[0]) ; ++k )
     do_test(qq[k]);
+  cout << "\n\nALL DONE!\n" ;
   return 0 ;
 }
