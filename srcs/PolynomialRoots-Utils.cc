@@ -4,7 +4,7 @@
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
- |         | __/ _   ,_         | __/ _   ,_                                |
+ |         | __/ _   ,_         | __/ _   ,_                                | 
  |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
  |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
  |                           /|                   /|                        |
@@ -17,18 +17,16 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#include "PolynomialRoots.hh"
-#include <cmath>
-#include <iostream>
-#include <algorithm>
-#include <limits>
+#include "PolynomialRoots-Utils.hh"
 
 namespace PolynomialRoots {
+
+  static valueType const machepsi = std::numeric_limits<valueType>::epsilon() ;
 
   using std::pair ;
   using std::abs ;
   using std::pow ;
-
+    
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // stable computation of polinomial
   // p0 + p1*x + p2*x^2 + ... + pn*x^n
@@ -50,9 +48,9 @@ namespace PolynomialRoots {
     }
     return res*pow(x,Degree) ;
   }
-
+    
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+    
   std::complex<valueType>
   evalPolyC( valueType const         op[],
              indexType               Degree,
@@ -68,9 +66,9 @@ namespace PolynomialRoots {
     }
     return res*pow(x,Degree) ;
   }
-
+    
   //============================================================================
-
+    
   /*
   ..  scale roots by pair.second, after scaling the polinomial has the form
   ..
@@ -79,7 +77,7 @@ namespace PolynomialRoots {
   ..  pair.first is the index such that p[pair.first] = +-1
   ..
   */
-
+    
   static
   pair<indexType,valueType>
   scalePolynomial( indexType       n, // degree
@@ -101,13 +99,13 @@ namespace PolynomialRoots {
     ps[n] = 1 ;
     return res ;
   }
-
+    
   //============================================================================
-
+    
   /*
   .. divide a(x)  by (x-r) so that a(x) = (x-r) * b(x)
   */
-
+    
   static
   void
   deflatePolynomial( indexType       n, // degree
@@ -147,36 +145,113 @@ namespace PolynomialRoots {
     }
   }
 
-}
-
-/*
-extern "C"
-void
-quartic_solver_( double op[], int & degree, double zeror[], double zeroi[] ) {
-  double r1, r2, r3, r4 ;
-  int nr, nc ;
-  PolynomialRoots::solveQuartic( op[0], op[1], op[2], op[3], op[4], r1, r2, r3, r4, nr, nc ) ;
-  switch ( nr ) {
-  case 4:
-    zeror[0] = r1 ; zeroi[0] = 0 ;
-    zeror[1] = r2 ; zeroi[1] = 0 ;
-    zeror[2] = r3 ; zeroi[2] = 0 ;
-    zeror[3] = r4 ; zeroi[3] = 0 ;
-    break ;
-  case 2:
-    zeror[0] = r1 ; zeroi[0] = r2 ;
-    zeror[1] = r1 ; zeroi[1] = -r2 ;
-    zeror[2] = r3 ; zeroi[2] = r4 ;
-    zeror[3] = r3 ; zeroi[3] = -r4 ;
-    break ;
-  case 0:
-    zeror[0] = r1 ; zeroi[0] = 0 ;
-    zeror[1] = r2 ; zeroi[1] = 0 ;
-    zeror[2] = r3 ; zeroi[2] = r4 ;
-    zeror[3] = r3 ; zeroi[3] = -r4 ;
-    break ;
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // stable computation of polinomial
+  // p0 + p1*x + p2*x^2 + ... + pn*x^n
+  //
+  // (p0/x^n + p1/x^(n-1) + p2/(x^(n-2) + ... + pn)*x^n
+  //
+  valueType
+  CompHorner( valueType const p[],
+              indexType       Degree,
+              valueType       x,
+              bool            reverse ) {
+        
+    valueType xabs = std::abs(x) ;
+    if ( xabs > 1 ) { x = valueType(1)/x ; reverse = !reverse ; }
+    indexType ii0 = reverse ? 0 : Degree ;
+    valueType res(p[ii0]) ;
+    valueType c = 0 ;
+    for ( indexType i = 1 ; i <= Degree ; ++i ) {
+      indexType ii = reverse ? i : Degree-i ;
+      valueType tmp, pi, sigma ;
+      TwoProduct( res, x, tmp, pi ) ;
+      TwoSum( tmp, p[ii], res, sigma ) ;
+      c = c * x + (pi+sigma) ;
+    }
+    res += c ;
+    if ( xabs > 1 ) res *= pow(x,Degree) ;
+    return res ;
   }
-}
-*/
+    
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //
+  // x^3 + A x^2 + B x + C
+  static
+  inline
+  void
+  scaleCubicMonicPolynomial( valueType   A,
+                             valueType   B,
+                             valueType   C,
+                             valueType & AS,
+                             valueType & BS,
+                             valueType & CS,
+                             indexType & i_case,
+                             valueType & scale ) {
+        
+    valueType a = abs(A) ;
+    valueType b = sqrt(abs(B)) ;
+    valueType c = cbrt(abs(C)) ;
+        
+    if ( a < b ) {
+      if ( b < c ) i_case = 0 ; // a < b < c --> c MAX
+      else         i_case = 1 ; // a < b and c <= b --> b MAX
+    } else {
+      if ( a < c ) i_case = 0 ; // b <= a < c --> c MAX
+      else         i_case = 2 ; // b <= a  and c <= a --> a MAX
+    }
+        
+    switch ( i_case ) {
+    case 0:
+      scale = c ;
+      AS    = A/c ;
+      BS    = (B/c)/c ;
+      CS    = C > 0 ? 1 : -1 ;
+      break ;
+    case 1:
+      scale = b ;
+      AS    = A/b ;
+      BS    = B > 0 ? 1 : -1 ;
+      CS    = ((C/b)/b)/b ;
+      break ;
+    case 2:
+      scale = a ;
+      AS    = A > 0 ? 1 : -1 ;
+      BS    = (B/a)/a ;
+      CS    = ((C/a)/a)/a ;
+      break ;
+    }
+  }
+    
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //
+  // a3*x^3 + a2*x^2 + a1*x + a0 = (x-r)*(a3*x^2+b1*x+b0)
+  static
+  void
+  deflateCubicPolynomial( valueType   a3,
+                          valueType   a2,
+                          valueType   a1,
+                          valueType   a0,
+                          valueType   r,
+                          valueType & b1,
+                          valueType & b0 ) {
+    indexType i_cross  = 0 ;
+    valueType r2       = r*r ;
+    valueType v_cross  = abs(a0) ;
+    valueType v_cross1 = abs(a1*r) ;
+    if ( v_cross1 > v_cross ) { v_cross = v_cross1 ; i_cross = 1 ; }
+      v_cross1 = abs(a2*r2) ;
+      if ( v_cross1 > v_cross ) { v_cross = v_cross1 ; i_cross = 2 ; }
+      v_cross1 = abs(a3*r*r2) ;
+      if ( v_cross1 > v_cross ) i_cross = 3 ;
+      switch ( i_cross ) {
+      case 0: b1 = a2+a3*r ; b0 = a1+r*b1 ; break;
+      case 1: b1 = a2+a3*r ; b0 = -a0/r   ; break;
+      case 2:
+      case 3: b0 = -a0/r ; b1 = (b0-a1)/r ; break;
+    }
+  }
 
-// EOF: PolynomialRoots.cc
+}
+
+// EOF: PolynomialRoots-Utils.cc
