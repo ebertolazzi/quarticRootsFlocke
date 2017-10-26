@@ -31,6 +31,45 @@ namespace PolynomialRoots {
   static valueType const one27th  = 1./27. ;
   static valueType const two27th  = 2./27. ;
 
+  indexType
+  Cubic::getRealRoots( valueType r[] ) const {
+    indexType nr = 0 ;
+    if ( cplx ) {
+      if ( nrts > 2 ) r[nr++] = r2 ;
+    } else {
+      if ( nrts > 0 ) r[nr++] = r0 ;
+      if ( nrts > 1 ) r[nr++] = r1 ;
+      if ( nrts > 2 ) r[nr++] = r2 ;
+    }
+    return nr ;
+  }
+
+  indexType
+  Cubic::getPositiveRoots( valueType r[] ) const {
+    indexType nr = 0 ;
+    if ( cplx ) {
+      if ( nrts > 2 && r2 > 0  ) r[nr++] = r2 ;
+    } else {
+      if ( nrts > 0 && r0 > 0 ) r[nr++] = r0 ;
+      if ( nrts > 1 && r1 > 0 ) r[nr++] = r1 ;
+      if ( nrts > 2 && r2 > 0 ) r[nr++] = r2 ;
+    }
+    return nr ;
+  }
+
+  indexType
+  Cubic::getNegativeRoots( valueType r[] ) const {
+    indexType nr = 0 ;
+    if ( cplx ) {
+      if ( nrts > 2 && r2 < 0  ) r[nr++] = r2 ;
+    } else {
+      if ( nrts > 0 && r0 < 0 ) r[nr++] = r0 ;
+      if ( nrts > 1 && r1 < 0 ) r[nr++] = r1 ;
+      if ( nrts > 2 && r2 < 0 ) r[nr++] = r2 ;
+    }
+    return nr ;
+  }
+
   valueType
   Cubic::eval( valueType x ) const {
     if ( std::abs(x) > 1 ) {

@@ -69,6 +69,10 @@ namespace PolynomialRoots {
     bool      complexRoots() const { return cplx ; }
     bool      doubleRoot()   const { return dblx ; }
 
+    indexType getRealRoots( valueType r[] ) const ;
+    indexType getPositiveRoots( valueType r[] ) const ;
+    indexType getNegativeRoots( valueType r[] ) const ;
+
     valueType real_root0() const { return r0 ; }
     valueType real_root1() const { return r1 ; }
 
@@ -131,9 +135,9 @@ namespace PolynomialRoots {
 
   public:
 
-    Cubic() : A(0), B(0), C(0), D(0), nrts(0), cplx(false), trpx(false), iter(0) {}
+    Cubic() : A(0), B(0), C(0), D(0), nrts(0), iter(0), cplx(false), trpx(false) {}
     Cubic( valueType _a, valueType _b, valueType _c, valueType _d )
-    : A(_a), B(_b), C(_c), D(_d), nrts(0), cplx(false), trpx(false), iter(0) {
+    : A(_a), B(_b), C(_c), D(_d), nrts(0), iter(0), cplx(false), trpx(false) {
       findRoots();
     }
 
@@ -147,6 +151,10 @@ namespace PolynomialRoots {
     bool      complexRoots() const { return cplx ; }
     bool      doubleRoot()   const { return dblx ; }
     bool      tripleRoot()   const { return trpx ; }
+
+    indexType getRealRoots( valueType r[] ) const ;
+    indexType getPositiveRoots( valueType r[] ) const ;
+    indexType getNegativeRoots( valueType r[] ) const ;
 
     valueType real_root0() const { return r0 ; }
     valueType real_root1() const { return r1 ; }
@@ -225,9 +233,9 @@ namespace PolynomialRoots {
 
   public:
 
-    Quartic() : A(0), B(0), C(0), D(0), E(0), nreal(0), ncplx(0), iter(0) {}
+    Quartic() : A(0), B(0), C(0), D(0), E(0), iter(0), nreal(0), ncplx(0) {}
     Quartic( valueType _a, valueType _b, valueType _c, valueType _d, valueType _e )
-    : A(_a), B(_b), C(_c), D(_d), E(_e), nreal(0), ncplx(0), iter(0) {
+    : A(_a), B(_b), C(_c), D(_d), E(_e), iter(0), nreal(0), ncplx(0) {
       findRoots();
     }
 
@@ -239,6 +247,10 @@ namespace PolynomialRoots {
 
     indexType numRealRoots()    const { return nreal ; }
     indexType numComplexRoots() const { return ncplx ; }
+
+    indexType getRealRoots( valueType r[] ) const ;
+    indexType getPositiveRoots( valueType r[] ) const ;
+    indexType getNegativeRoots( valueType r[] ) const ;
 
     valueType real_root0() const { return r0 ; }
     valueType real_root1() const { return r1 ; }

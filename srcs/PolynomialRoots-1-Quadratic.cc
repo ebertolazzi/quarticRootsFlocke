@@ -28,6 +28,36 @@ namespace PolynomialRoots {
   using std::abs ;
   static valueType const machepsi = std::numeric_limits<valueType>::epsilon() ;
 
+  indexType
+  Quadratic::getRealRoots( valueType r[] ) const {
+    indexType nr = 0 ;
+    if ( !cplx ) {
+      r[nr++] = r0 ;
+      if ( nrts > 1 ) r[nr++] = r1 ;
+    }
+    return nr ;
+  }
+
+  indexType
+  Quadratic::getPositiveRoots( valueType r[] ) const {
+    indexType nr = 0 ;
+    if ( !cplx ) {
+      if ( r0 > 0 ) r[nr++] = r0 ;
+      if ( nrts > 1 && r1 > 0 ) r[nr++] = r1 ;
+    }
+    return nr ;
+  }
+
+  indexType
+  Quadratic::getNegativeRoots( valueType r[] ) const {
+    indexType nr = 0 ;
+    if ( !cplx ) {
+      if ( r0 < 0 ) r[nr++] = r0 ;
+      if ( nrts > 1 && r1 < 0 ) r[nr++] = r1 ;
+    }
+    return nr ;
+  }
+
   valueType
   Quadratic::eval( valueType x ) const {
     if ( std::abs(x) > 1 ) {

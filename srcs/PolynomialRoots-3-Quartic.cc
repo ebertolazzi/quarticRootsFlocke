@@ -28,6 +28,36 @@ namespace PolynomialRoots {
   using std::abs ;
   static valueType const machepsi = std::numeric_limits<valueType>::epsilon() ;
 
+  indexType
+  Quartic::getRealRoots( valueType r[] ) const {
+    indexType nr = 0 ;
+    if ( !cplx0() ) r[nr++] = r0 ;
+    if ( !cplx1() ) r[nr++] = r1 ;
+    if ( !cplx2() ) r[nr++] = r2 ;
+    if ( !cplx3() ) r[nr++] = r3 ;
+    return nr ;
+  }
+
+  indexType
+  Quartic::getPositiveRoots( valueType r[] ) const {
+    indexType nr = 0 ;
+    if ( !cplx0() && r0 > 0 ) r[nr++] = r0 ;
+    if ( !cplx1() && r1 > 0 ) r[nr++] = r1 ;
+    if ( !cplx2() && r2 > 0 ) r[nr++] = r2 ;
+    if ( !cplx3() && r3 > 0 ) r[nr++] = r3 ;
+    return nr ;
+  }
+
+  indexType
+  Quartic::getNegativeRoots( valueType r[] ) const {
+    indexType nr = 0 ;
+    if ( !cplx0() && r0 < 0 ) r[nr++] = r0 ;
+    if ( !cplx1() && r1 < 0 ) r[nr++] = r1 ;
+    if ( !cplx2() && r2 < 0 ) r[nr++] = r2 ;
+    if ( !cplx3() && r3 < 0 ) r[nr++] = r3 ;
+    return nr ;
+  }
+
   valueType
   Quartic::eval( valueType x ) const {
     if ( std::abs(x) > 1 ) {
