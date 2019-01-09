@@ -1,5 +1,5 @@
-Rpoly
-=====
+quarticRootsFlocke
+==================
 
 Port to C++ of Jenkins-Traub real
 polynomial root finder and the algorithm
