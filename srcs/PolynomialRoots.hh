@@ -350,6 +350,7 @@ namespace PolynomialRoots {
               valueType       x,
               bool            reverse );
 
+  // find roots of a generic polinomial using Jenkins-Traub method
   int
   roots( valueType const op[],
          indexType       Degree,
