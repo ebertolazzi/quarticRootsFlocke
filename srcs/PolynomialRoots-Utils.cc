@@ -21,11 +21,11 @@
 
 namespace PolynomialRoots {
 
-  static valueType const machepsi = std::numeric_limits<valueType>::epsilon() ;
+  static valueType const machepsi = std::numeric_limits<valueType>::epsilon();
 
-  using std::pair ;
-  using std::abs ;
-  using std::pow ;
+  using std::pair;
+  using std::abs;
+  using std::pow;
     
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // stable computation of polinomial
@@ -38,15 +38,15 @@ namespace PolynomialRoots {
             indexType       Degree,
             valueType       x,
             bool            reverse ) {
-    valueType res(0) ;
-    valueType xabs = std::abs(x) ;
-    if ( xabs > 1 ) { x = valueType(1)/x ; reverse = !reverse ; }
+    valueType res(0);
+    valueType xabs = std::abs(x);
+    if ( xabs > 1 ) { x = valueType(1)/x; reverse = !reverse; }
     if ( reverse ) {
-      for ( indexType i = 0 ; i <= Degree ; ++i ) res = res*x + op[i] ;
+      for ( indexType i = 0; i <= Degree; ++i ) res = res*x + op[i];
     } else {
-      for ( indexType i = 0 ; i <= Degree ; ++i ) res = res*x + op[Degree-i] ;
+      for ( indexType i = 0; i <= Degree; ++i ) res = res*x + op[Degree-i];
     }
-    return res*pow(x,Degree) ;
+    return res*pow(x,Degree);
   }
     
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -56,15 +56,15 @@ namespace PolynomialRoots {
              indexType               Degree,
              std::complex<valueType> x,
              bool                    reverse ) {
-    std::complex<valueType> res(0,0) ;
-    valueType xabs = std::norm(x) ;
-    if ( xabs > 1 ) { x = valueType(1)/x ; reverse = !reverse ; }
+    std::complex<valueType> res(0,0);
+    valueType xabs = std::norm(x);
+    if ( xabs > 1 ) { x = valueType(1)/x; reverse = !reverse; }
     if ( reverse ) {
-      for ( indexType i = 0 ; i <= Degree ; ++i ) res = res*x + op[i] ;
+      for ( indexType i = 0; i <= Degree; ++i ) res = res*x + op[i];
     } else {
-      for ( indexType i = 0 ; i <= Degree ; ++i ) res = res*x + op[Degree-i] ;
+      for ( indexType i = 0; i <= Degree; ++i ) res = res*x + op[Degree-i];
     }
-    return res*pow(x,Degree) ;
+    return res*pow(x,Degree);
   }
     
   //============================================================================
@@ -83,21 +83,21 @@ namespace PolynomialRoots {
   scalePolynomial( indexType       n, // degree
                    valueType const p[],
                    valueType       ps[] ) {
-    indexType i_max = n ;
-    valueType an    = p[n] ;
-    valueType scale = -1 ;
-    indexType i = n ;
+    indexType i_max = n;
+    valueType an    = p[n];
+    valueType scale = -1;
+    indexType i = n;
     while ( --i >= 0 ) {
-      ps[i] = p[i]/an ;
-      valueType scale1 = pow( abs(ps[i]), 1.0/(n-i) ) ;
-      if ( scale1 > scale ) { scale = scale1 ; i_max = i ; }
+      ps[i] = p[i]/an;
+      valueType scale1 = pow( abs(ps[i]), 1.0/(n-i) );
+      if ( scale1 > scale ) { scale = scale1; i_max = i; }
     }
     // scale coeffs
-    pair<indexType,valueType> res(i_max,scale) ;
-    valueType s = scale ;
-    for ( i = 1 ; i <= n ; ++i, s *= scale ) ps[n-i] /= s ;
-    ps[n] = 1 ;
-    return res ;
+    pair<indexType,valueType> res(i_max,scale);
+    valueType s = scale;
+    for ( i = 1; i <= n; ++i, s *= scale ) ps[n-i] /= s;
+    ps[n] = 1;
+    return res;
   }
     
   //============================================================================
@@ -116,32 +116,32 @@ namespace PolynomialRoots {
     // G. Peters and J. H. Wilkinson.
     // Practical problems arising in the solution of polynomial equations.
     // J. Inst. Math. Appl. 8 (1971), 16–35.
-    indexType i_cross = 0 ;
-    valueType v_cross = abs(a[0]) ;
-    valueType r1 = r ;
-    for ( indexType i = 1 ; i < n ; ++i, r1 *= r ) {
-      valueType v_cross1 = abs(a[i]*r1) ;
+    indexType i_cross = 0;
+    valueType v_cross = abs(a[0]);
+    valueType r1 = r;
+    for ( indexType i = 1; i < n; ++i, r1 *= r ) {
+      valueType v_cross1 = abs(a[i]*r1);
       if ( v_cross1 > v_cross )
-        { v_cross = v_cross1 ; i_cross = i ; }
+        { v_cross = v_cross1; i_cross = i; }
     }
-    b[n-1] = 1 ;
+    b[n-1] = 1;
     if ( a[n] == 1 ) {
       if ( i_cross > 0 ) {
-        b[0] = -a[0] / r ;
-        for ( indexType j = 1 ; j < i_cross ; ++j )
-          b[j] = (a[j]-b[j-1]) / r ;
+        b[0] = -a[0] / r;
+        for ( indexType j = 1; j < i_cross; ++j )
+          b[j] = (a[j]-b[j-1]) / r;
       }
-      for ( indexType j = n-2 ; j >= i_cross ; --j )
-        b[j] = a[j+1]+r*b[j+1] ;
+      for ( indexType j = n-2; j >= i_cross; --j )
+        b[j] = a[j+1]+r*b[j+1];
     } else {
-      valueType an = a[n] ;
+      valueType an = a[n];
       if ( i_cross > 0 ) {
-        b[0] = -(a[0]/an) / r ;
-        for ( indexType j = 1 ; j < i_cross ; ++j )
-          b[j] = (a[j]/an-b[j-1]) / r ;
+        b[0] = -(a[0]/an) / r;
+        for ( indexType j = 1; j < i_cross; ++j )
+          b[j] = (a[j]/an-b[j-1]) / r;
       }
-      for ( indexType j = n-2 ; j >= i_cross ; --j )
-        b[j] = a[j+1]/an+r*b[j+1] ;
+      for ( indexType j = n-2; j >= i_cross; --j )
+        b[j] = a[j+1]/an+r*b[j+1];
     }
   }
 
@@ -157,21 +157,21 @@ namespace PolynomialRoots {
               valueType       x,
               bool            reverse ) {
         
-    valueType xabs = std::abs(x) ;
-    if ( xabs > 1 ) { x = valueType(1)/x ; reverse = !reverse ; }
-    indexType ii0 = reverse ? 0 : Degree ;
-    valueType res(p[ii0]) ;
-    valueType c = 0 ;
-    for ( indexType i = 1 ; i <= Degree ; ++i ) {
-      indexType ii = reverse ? i : Degree-i ;
-      valueType tmp, pi, sigma ;
-      TwoProduct( res, x, tmp, pi ) ;
-      TwoSum( tmp, p[ii], res, sigma ) ;
-      c = c * x + (pi+sigma) ;
+    valueType xabs = std::abs(x);
+    if ( xabs > 1 ) { x = valueType(1)/x; reverse = !reverse; }
+    indexType ii0 = reverse ? 0 : Degree;
+    valueType res(p[ii0]);
+    valueType c = 0;
+    for ( indexType i = 1; i <= Degree; ++i ) {
+      indexType ii = reverse ? i : Degree-i;
+      valueType tmp, pi, sigma;
+      TwoProduct( res, x, tmp, pi );
+      TwoSum( tmp, p[ii], res, sigma );
+      c = c * x + (pi+sigma);
     }
-    res += c ;
-    if ( xabs > 1 ) res *= pow(x,Degree) ;
-    return res ;
+    res += c;
+    if ( xabs > 1 ) res *= pow(x,Degree);
+    return res;
   }
     
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -189,37 +189,37 @@ namespace PolynomialRoots {
                              indexType & i_case,
                              valueType & scale ) {
         
-    valueType a = abs(A) ;
-    valueType b = sqrt(abs(B)) ;
-    valueType c = cbrt(abs(C)) ;
+    valueType a = abs(A);
+    valueType b = sqrt(abs(B));
+    valueType c = cbrt(abs(C));
         
     if ( a < b ) {
-      if ( b < c ) i_case = 0 ; // a < b < c --> c MAX
-      else         i_case = 1 ; // a < b and c <= b --> b MAX
+      if ( b < c ) i_case = 0; // a < b < c --> c MAX
+      else         i_case = 1; // a < b and c <= b --> b MAX
     } else {
-      if ( a < c ) i_case = 0 ; // b <= a < c --> c MAX
-      else         i_case = 2 ; // b <= a  and c <= a --> a MAX
+      if ( a < c ) i_case = 0; // b <= a < c --> c MAX
+      else         i_case = 2; // b <= a  and c <= a --> a MAX
     }
         
     switch ( i_case ) {
     case 0:
-      scale = c ;
-      AS    = A/c ;
-      BS    = (B/c)/c ;
-      CS    = C > 0 ? 1 : -1 ;
-      break ;
+      scale = c;
+      AS    = A/c;
+      BS    = (B/c)/c;
+      CS    = C > 0 ? 1 : -1;
+      break;
     case 1:
-      scale = b ;
-      AS    = A/b ;
-      BS    = B > 0 ? 1 : -1 ;
-      CS    = ((C/b)/b)/b ;
-      break ;
+      scale = b;
+      AS    = A/b;
+      BS    = B > 0 ? 1 : -1;
+      CS    = ((C/b)/b)/b;
+      break;
     case 2:
-      scale = a ;
-      AS    = A > 0 ? 1 : -1 ;
-      BS    = (B/a)/a ;
-      CS    = ((C/a)/a)/a ;
-      break ;
+      scale = a;
+      AS    = A > 0 ? 1 : -1;
+      BS    = (B/a)/a;
+      CS    = ((C/a)/a)/a;
+      break;
     }
   }
     
@@ -235,20 +235,20 @@ namespace PolynomialRoots {
                           valueType   r,
                           valueType & b1,
                           valueType & b0 ) {
-    indexType i_cross  = 0 ;
-    valueType r2       = r*r ;
-    valueType v_cross  = abs(a0) ;
-    valueType v_cross1 = abs(a1*r) ;
-    if ( v_cross1 > v_cross ) { v_cross = v_cross1 ; i_cross = 1 ; }
-      v_cross1 = abs(a2*r2) ;
-      if ( v_cross1 > v_cross ) { v_cross = v_cross1 ; i_cross = 2 ; }
-      v_cross1 = abs(a3*r*r2) ;
-      if ( v_cross1 > v_cross ) i_cross = 3 ;
+    indexType i_cross  = 0;
+    valueType r2       = r*r;
+    valueType v_cross  = abs(a0);
+    valueType v_cross1 = abs(a1*r);
+    if ( v_cross1 > v_cross ) { v_cross = v_cross1; i_cross = 1; }
+      v_cross1 = abs(a2*r2);
+      if ( v_cross1 > v_cross ) { v_cross = v_cross1; i_cross = 2; }
+      v_cross1 = abs(a3*r*r2);
+      if ( v_cross1 > v_cross ) i_cross = 3;
       switch ( i_cross ) {
-      case 0: b1 = a2+a3*r ; b0 = a1+r*b1 ; break;
-      case 1: b1 = a2+a3*r ; b0 = -a0/r   ; break;
+      case 0: b1 = a2+a3*r; b0 = a1+r*b1; break;
+      case 1: b1 = a2+a3*r; b0 = -a0/r;   break;
       case 2:
-      case 3: b0 = -a0/r ; b1 = (b0-a1)/r ; break;
+      case 3: b0 = -a0/r; b1 = (b0-a1)/r; break;
     }
   }
 

@@ -39,12 +39,12 @@
 
 namespace PolynomialRoots {
 
-  typedef double valueType ;
-  typedef int    indexType ;
-  typedef std::complex<valueType> complexType ;
+  typedef double valueType;
+  typedef int    indexType;
+  typedef std::complex<valueType> complexType;
 
-  static int       const bitsValueType = std::numeric_limits<valueType>::digits ;
-  static valueType const splitFactor   = (long(1)<<(bitsValueType-1))+1 ;
+  static int       const bitsValueType = std::numeric_limits<valueType>::digits;
+  static valueType const splitFactor   = (long(1)<<(bitsValueType-1))+1;
 
   /*
   ||         _   _ _
@@ -62,9 +62,9 @@ namespace PolynomialRoots {
           valueType   b,
           valueType & x,
           valueType & err ) {
-    x = a+b ;
-    valueType z = x-a ;
-    err = (a-(x-z))+(b-z) ;
+    x = a+b;
+    valueType z = x-a;
+    err = (a-(x-z))+(b-z);
   }
 
   static
@@ -74,9 +74,9 @@ namespace PolynomialRoots {
           complexType   b,
           complexType & x,
           complexType & err ) {
-    valueType s1, e1, s2, e2  ;
-    TwoSum( a.real(), b.real(), s1, e1 ) ;
-    TwoSum( a.imag(), b.imag(), s2, e2 ) ;
+    valueType s1, e1, s2, e2;
+    TwoSum( a.real(), b.real(), s1, e1 );
+    TwoSum( a.imag(), b.imag(), s2, e2 );
     x   = complexType(s1,s2);
     err = complexType(e1,e2);
   }
@@ -86,9 +86,9 @@ namespace PolynomialRoots {
   inline
   void
   Split( valueType a, valueType & x, valueType & y ) {
-    valueType c = splitFactor*a ;
-    x = c-(c-a) ;
-    y = a-x ;
+    valueType c = splitFactor*a;
+    x = c-(c-a);
+    y = a-x;
   }
 
   // a * b = x + err
@@ -99,11 +99,11 @@ namespace PolynomialRoots {
               valueType   b,
               valueType & x,
               valueType & err ) {
-    valueType a1, a2, b1, b2 ;
-    Split( a, a1, a2 ) ;
-    Split( b, b1, b2 ) ;
-    x   = a*b ;
-    err = a2*b2-(((x-a1*b1)-a2*b1)-a1*b2) ;
+    valueType a1, a2, b1, b2;
+    Split( a, a1, a2 );
+    Split( b, b1, b2 );
+    x   = a*b;
+    err = a2*b2-(((x-a1*b1)-a2*b1)-a1*b2);
   }
 
   static
@@ -115,7 +115,7 @@ namespace PolynomialRoots {
               complexType & e,
               complexType & f,
               complexType & g ) {
-    valueType z1, z2, z3, z4, z5, z6, h1, h2, h3, h4, h5, h6 ;
+    valueType z1, z2, z3, z4, z5, z6, h1, h2, h3, h4, h5, h6;
     TwoProduct(a.real(), b.real(), z1, h1 );
     TwoProduct(a.imag(), b.imag(), z2, h2 );
     TwoProduct(a.real(), b.imag(), z3, h3 );

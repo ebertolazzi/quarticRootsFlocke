@@ -7,8 +7,8 @@
 #include <iostream>
 #include <iomanip>
 
-using namespace std ;
-using namespace PolynomialRoots ;
+using namespace std;
+using namespace PolynomialRoots;
 
 // Set the polynomial coefficients corresponding and the exact roots.
 
@@ -31,25 +31,25 @@ double qq[][3] = {
   { 1e-10, 50,  50 },
   { 100,  1e-10,  50 },
   { 100,  50,  1e-10 }
-} ;
+};
 
 static
 void
 do_test( double const p[3] ) {
-  Quadratic qsolve(p[0],p[1],p[2]) ;
-  cout.precision(8) ;
-  qsolve.info(cout) ;
+  Quadratic qsolve(p[0],p[1],p[2]);
+  cout.precision(8);
+  qsolve.info(cout);
   if ( !qsolve.check(cout) ) {
-    cout << "\nFailed!\n\n\n" ;
-    std::exit(0) ;
+    cout << "\nFailed!\n\n\n";
+    std::exit(0);
   }
 }
 
 int
 main() {
-  cout.precision(20) ;
-  for ( int k = 0 ; k < sizeof(qq)/sizeof(qq[0]) ; ++k )
+  cout.precision(20);
+  for ( int k = 0; k < sizeof(qq)/sizeof(qq[0]); ++k )
     do_test(qq[k]);
-  cout << "\n\nALL DONE!\n" ;
-  return 0 ;
+  cout << "\n\nALL DONE!\n";
+  return 0;
 }
