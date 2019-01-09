@@ -424,9 +424,9 @@ namespace PolynomialRoots {
     }
     if ( B == 0 && D == 0 ) { // biquadratic case
       // A x^4 + C x^2 + E
-      Quadratic qsolve( A, C, E );
-      valueType x = qsolve.real_root0();
-      valueType y = qsolve.real_root0();
+      Quadratic qsolve( A, C, E ) ;
+      valueType x = qsolve.real_root0() ;
+      valueType y = qsolve.real_root1() ;
       if ( qsolve.complexRoots() ) {
         // complex conjugate pair biquadratic roots x +/- iy.
         ncplx = 4;

@@ -99,7 +99,6 @@ do_test( double const p[5],
 int
 main() {
   cout.precision(14);
-  DO_TEST(14);
   DO_TEST(1);
   DO_TEST(2);
   DO_TEST(3);
@@ -113,6 +112,7 @@ main() {
   DO_TEST(11);
   DO_TEST(12);
   DO_TEST(13);
+  DO_TEST(14);
   cout << "\n\nALL DONE!\n";
   return 0;
 }
