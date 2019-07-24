@@ -406,7 +406,7 @@ namespace PolynomialRoots {
       r0   = a[1]-third;
       r1   = a[0]+one27th;
       trpx = abs(r0) <= machepsi && abs(r1) <= machepsi; // check for triple root
-      if ( trpx ) { r0 = r1 = r2 = -third * scale; nrts = 3; return; }
+      if ( trpx ) { r0 = r1 = r2 = third * scale; nrts = 3; return; }
       use_shifted = abs(r0) <= 0.01 && abs(r1) <= 0.01;
       r2 = guess5(a);
       break;
@@ -414,8 +414,8 @@ namespace PolynomialRoots {
       r0   = a[1]-third;
       r1   = a[0]-one27th;
       trpx = abs(r1) <= machepsi && abs(r2) <= machepsi; // check for triple root
-      if ( trpx ) { r0 = r1 = r2 = third * scale; nrts = 3; return; }
-      use_shifted = abs(r1) <= 0.01 && abs(r2) <= 0.01;
+      if ( trpx ) { r0 = r1 = r2 = -third * scale; nrts = 3; return; }
+      use_shifted = abs(r0) <= 0.01 && abs(r1) <= 0.01;
       r2 = guess6(a);
       break;
     }
