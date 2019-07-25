@@ -168,7 +168,7 @@ namespace PolynomialRoots {
       s << "\nx0 = " << r0
         << "\nx1 = " << r1;
     }
-    s << "\n";
+    s << '\n';
   }
 
   bool
@@ -180,18 +180,18 @@ namespace PolynomialRoots {
       valueType z1 = std::abs(eval( root1() ));
       s << "|p(r0)| = " << z0
         << "\n|p(r1)| = " << z1
-        << "\n";
+        << '\n';
       ok = z0 < epsi && z1 < epsi;
     } else if ( nrts == 1 ) {
       valueType z0 = eval( real_root0() );
-      s << "p(r0) = " << z0  << "\n";
+      s << "p(r0) = " << z0  << '\n';
       ok = std::abs(z0) < epsi;
     } else if ( nrts == 2 ) {
       valueType z0 = eval( real_root0() );
       valueType z1 = eval( real_root1() );
       s << "p(r0) = " << z0
         << "\np(r1) = " << z1
-        << "\n";
+        << '\n';
       ok = std::abs(z0) < epsi && std::abs(z1) < epsi;
     }
     return ok;

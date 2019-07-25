@@ -73,6 +73,21 @@ double quartic14[]         = { 714285.71428571432,
                                -2.2737367544323206e-13,
                                -22.526485131747265 };
 
+double r = sqrt(2.0);
+double rootQuarticReal15[] = { 0, r, r, r };
+double rootQuarticImag15[] = { 0, 0, 0, 0 };
+double quartic15[]         = { 1, -3*r, 6, -2*r, 0 };
+//double quartic15[]         = { 0, 1, -3*r, 6, -2*r };
+
+double rootQuarticReal16[] = { -r, -r, -r, 0 };
+double rootQuarticImag16[] = { 0, 0, 0, 0 };
+double quartic16[]         = { 1, 3*r, 6, 2*r, 0 };
+//double quartic16[]         = { 0, 1, 3*r, 6, 2*r };
+
+double rootQuarticReal17[] = { 19.01804207, 3.926187087, 0.5001001646e-3, 3.336516286 };
+double rootQuarticImag17[] = { 0, 0, 0, 0 };
+double quartic17[]         = { 0.000158925, -0.00657522, 0.0801029, -0.2, 0.01 };
+
 #define DO_TEST( N ) do_test( quartic##N, rootQuarticReal##N, rootQuarticImag##N );
 
 static
@@ -113,6 +128,9 @@ main() {
   DO_TEST(12);
   DO_TEST(13);
   DO_TEST(14);
+  DO_TEST(15);
+  DO_TEST(16);
+  DO_TEST(17);
   cout << "\n\nALL DONE!\n";
   return 0;
 }

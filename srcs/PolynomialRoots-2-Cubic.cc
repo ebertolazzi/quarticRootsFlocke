@@ -230,22 +230,26 @@ namespace PolynomialRoots {
   static
   inline
   valueType
-  evalMonicCubic( valueType x,
-                  valueType a,
-                  valueType b,
-                  valueType c ) {
+  evalMonicCubic(
+    valueType x,
+    valueType a,
+    valueType b,
+    valueType c
+  ) {
     return ((x+a)*x+b)*x+c;
   }
 
   static
   inline
   void
-  evalMonicCubic( valueType   x,
-                  valueType   a,
-                  valueType   b,
-                  valueType   c,
-                  valueType & p,
-                  valueType & dp ) {
+  evalMonicCubic(
+    valueType   x,
+    valueType   a,
+    valueType   b,
+    valueType   c,
+    valueType & p,
+    valueType & dp
+  ) {
     p  = x + a;
     dp = x + p;
     p  = p  * x + b;
@@ -256,10 +260,12 @@ namespace PolynomialRoots {
   // x^3 + a * x^2 + b * x + c
   static
   indexType
-  NewtonBisection( valueType   a,
-                   valueType   b,
-                   valueType   c,
-                   valueType & x ) {
+  NewtonBisection(
+    valueType   a,
+    valueType   b,
+    valueType   c,
+    valueType & x
+  ) {
     valueType p, dp;
     evalMonicCubic( x, a, b, c, p, dp );
     valueType t = p; // save p(x) for sign comparison
@@ -465,7 +471,7 @@ namespace PolynomialRoots {
     r1   = qsolve.real_root1();
     if ( !cplx ) { // if real roots sort it!
       if ( r1 > r2 ) std::swap(r1,r2);
-      if ( r1 > r0 ) std::swap(r0,r1);
+      if ( r0 > r1 ) std::swap(r0,r1);
     }
 
   }
@@ -479,14 +485,14 @@ namespace PolynomialRoots {
       << "\ndouble   = " << (dblx?"YES":"NO");
     if ( cplx ) {
       s << "\nx0 = " << r0
-        << "\nx1 = (" << r1 << "," << r2 << ")"
-        << "\nx2 = (" << r1 << "," << -r2 << ")";
+        << "\nx1 = (" << r1 << "," << r2 << ")";
+      if ( nrts > 2 ) s << "\nx2 = (" << r1 << "," << -r2 << ")";
     } else {
-      s << "\nx0 = " << r0
-        << "\nx1 = " << r1
-        << "\nx2 = " << r2;
+      if ( nrts > 0 ) s << "\nx0 = " << r0;
+      if ( nrts > 1 ) s << "\nx1 = " << r1;
+      if ( nrts > 2 ) s << "\nx2 = " << r2;
     }
-    s << "\n";
+    s << '\n';
   }
 
   bool
@@ -500,18 +506,18 @@ namespace PolynomialRoots {
       s << "|p(r0)| = " << z0
         << "\n|p(r1)| = " << z1
         << "\n|p(r2)| = " << z2
-        << "\n";
+        << '\n';
       ok = z0 < epsi && z1 < epsi && z2 < epsi;
     } else if ( nrts == 1 ) {
       valueType z0 = eval( real_root0() );
-      s << "p(r0) = " << z0  << "\n";
+      s << "p(r0) = " << z0  << '\n';
       ok = std::abs(z0) < epsi;
     } else if ( nrts == 2 ) {
       valueType z0 = std::abs(eval( root0() ));
       valueType z1 = std::abs(eval( root1() ));
       s << "p(r0) = " << z0
         << "\np(r1) = " << z1
-        << "\n";
+        << '\n';
       ok = std::abs(z0) < epsi && std::abs(z1) < epsi;
     } else if ( nrts == 3 ) {
       if ( cplx ) {
@@ -521,7 +527,7 @@ namespace PolynomialRoots {
         s << "p(r0) = " << z0
           << "\np(r1) = " << z1
           << "\np(r2) = " << z2
-          << "\n";
+          << '\n';
         ok = std::abs(z0) < epsi && std::abs(z1) < epsi && std::abs(z2) < epsi;
       } else {
         valueType z0 = eval( real_root0() );
@@ -530,7 +536,7 @@ namespace PolynomialRoots {
         s << "p(r0) = " << z0
           << "\np(r1) = " << z1
           << "\np(r2) = " << z2
-          << "\n";
+          << '\n';
         ok = std::abs(z0) < epsi && std::abs(z1) < epsi && std::abs(z2) < epsi;
       }
     }

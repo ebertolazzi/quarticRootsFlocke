@@ -87,16 +87,18 @@ namespace PolynomialRoots {
   static
   inline
   void
-  scaleQuarticMonicPolynomial( valueType   A,
-                               valueType   B,
-                               valueType   C,
-                               valueType   D,
-                               valueType & AS,
-                               valueType & BS,
-                               valueType & CS,
-                               valueType & DS,
-                               indexType & i_case,
-                               valueType & scale ) {
+  scaleQuarticMonicPolynomial(
+    valueType   A,
+    valueType   B,
+    valueType   C,
+    valueType   D,
+    valueType & AS,
+    valueType & BS,
+    valueType & CS,
+    valueType & DS,
+    indexType & i_case,
+    valueType & scale
+  ) {
 
     valueType a = abs(A);
     valueType b = sqrt(abs(B));
@@ -157,24 +159,28 @@ namespace PolynomialRoots {
   static
   inline
   valueType
-  evalMonicQuartic( valueType x,
-                    valueType a,
-                    valueType b,
-                    valueType c,
-                    valueType d ) {
+  evalMonicQuartic(
+    valueType x,
+    valueType a,
+    valueType b,
+    valueType c,
+    valueType d
+  ) {
     return (((x+a)*x+b)*x+c)*x+d;
   }
 
   static
   inline
   void
-  evalMonicQuartic( valueType   x,
-                    valueType   a,
-                    valueType   b,
-                    valueType   c,
-                    valueType   d,
-                    valueType & p,
-                    valueType & dp ) {
+  evalMonicQuartic(
+    valueType   x,
+    valueType   a,
+    valueType   b,
+    valueType   c,
+    valueType   d,
+    valueType & p,
+    valueType & dp
+  ) {
     p  = x + a;
     dp = x + p;
     p  = p  * x + b;
@@ -189,11 +195,13 @@ namespace PolynomialRoots {
   static
   inline
   valueType
-  evalHexic( valueType x,
-             valueType q3,
-             valueType q2,
-             valueType q1,
-             valueType q0 ) {
+  evalHexic(
+    valueType x,
+    valueType q3,
+    valueType q2,
+    valueType q1,
+    valueType q0
+  ) {
     valueType t1 = x + q3;
     valueType t2 = x + t1;
     valueType t3 = x + t2;
@@ -210,13 +218,15 @@ namespace PolynomialRoots {
   static
   inline
   void
-  evalHexic( valueType   x,
-             valueType   q3,
-             valueType   q2,
-             valueType   q1,
-             valueType   q0,
-             valueType & p,
-             valueType & dp ) {
+  evalHexic(
+    valueType   x,
+    valueType   q3,
+    valueType   q2,
+    valueType   q1,
+    valueType   q0,
+    valueType & p,
+    valueType & dp
+  ) {
     valueType t1 = x + q3;
     valueType t2 = x + t1;
     valueType t3 = x + t2;
@@ -236,15 +246,17 @@ namespace PolynomialRoots {
   // a4*x^4 + a3*x^3 + a2*x^2 + a1*x + a0 = (x-r)*(a4*x^3+b2*x^2+b1*x+b0)
   static
   void
-  deflateQuarticPolynomial( valueType   a4,
-                            valueType   a3,
-                            valueType   a2,
-                            valueType   a1,
-                            valueType   a0,
-                            valueType   r,
-                            valueType & b2,
-                            valueType & b1,
-                            valueType & b0 ) {
+  deflateQuarticPolynomial(
+    valueType   a4,
+    valueType   a3,
+    valueType   a2,
+    valueType   a1,
+    valueType   a0,
+    valueType   r,
+    valueType & b2,
+    valueType & b1,
+    valueType & b0
+  ) {
     indexType i_cross  = 0;
     valueType r2       = r*r;
     valueType v_cross  = abs(a0);
@@ -277,11 +289,13 @@ namespace PolynomialRoots {
   // Translate to C from Polynomial234RootSolvers
   static
   indexType
-  zeroQuarticByNewtonBisection( valueType const a,
-                                valueType const b,
-                                valueType const c,
-                                valueType const d,
-                                valueType     & x ) {
+  zeroQuarticByNewtonBisection(
+    valueType  a,
+    valueType  b,
+    valueType  c,
+    valueType  d,
+    valueType & x
+  ) {
 
     valueType p, dp;
     evalMonicQuartic( x, a, b, c, d, p, dp );
@@ -328,11 +342,13 @@ namespace PolynomialRoots {
   // Translate to C from Polynomial234RootSolvers
   static
   indexType
-  zeroHexicByNewtonBisection( valueType   q3,
-                              valueType   q2,
-                              valueType   q1,
-                              valueType   q0,
-                              valueType & x ) {
+  zeroHexicByNewtonBisection(
+    valueType   q3,
+    valueType   q2,
+    valueType   q1,
+    valueType   q0,
+    valueType & x
+  ) {
     valueType p, dp;
     evalHexic( x, q3, q2, q1, q0, p, dp );
     valueType t = p; // save p(x) for sign comparison
@@ -401,20 +417,25 @@ namespace PolynomialRoots {
     if ( A == 0 ) {
       Cubic csolve( B, C, D, E );
       nreal = csolve.numRoots();
-      if ( csolve.complexRoots() ) { ncplx  = 2; nreal -= 2; }
-      r0 = csolve.real_root0();
-      r1 = csolve.real_root1();
-      r2 = csolve.real_root2();
+      switch ( nreal ) {
+       case 3: r2 = csolve.real_root2();
+       case 2: r1 = csolve.real_root1();
+       case 1: r0 = csolve.real_root0();
+      }
+      if ( csolve.complexRoots() ) { ncplx = 2; nreal -= 2; }
       return;
     }
     if ( E == 0 ) {
       Cubic csolve( A, B, C, D );
-      nreal = csolve.numRoots()+1;
-      if ( csolve.complexRoots() ) { ncplx  = 2; nreal -= 2; }
-      r0 = csolve.real_root0();
-      r1 = csolve.real_root1();
-      r2 = csolve.real_root2();
-      r3 = 0;
+      nreal = csolve.numRoots();
+      r0 = r1 = r2 = r3 = 0;
+      switch ( nreal ) {
+       case 3: r2 = csolve.real_root2();
+       case 2: r1 = csolve.real_root1();
+       case 1: r0 = csolve.real_root0();
+      }
+      ++nreal;
+      if ( csolve.complexRoots() ) { ncplx = 2; nreal -= 2; }
       if ( nreal == 4 ) { // caso regolare, 4 radici reali maintain order
         if ( r3 < r2 ) std::swap(r2,r3);
         if ( r2 < r1 ) std::swap(r1,r2);
@@ -656,9 +677,9 @@ namespace PolynomialRoots {
         valueType y = A2/2 - 3*(a*a); // Q''(a) / 2
         valueType z = y * y - x;
         z = z > 0 ? sqrt(z) : 0;     // force discriminant to be >= 0
-                                      // square root of discriminant
+                                     // square root of discriminant
         y = y > 0 ? y + z : y - z;   // larger magnitude root
-        x /= y;                     // smaller magnitude root
+        x /= y;                      // smaller magnitude root
         c = y < 0 ? 0 : sqrt(y);     // ensure root of biquadratic > 0
         d = x < 0 ? 0 : sqrt(x);     // large magnitude imaginary component
       }
@@ -679,17 +700,17 @@ namespace PolynomialRoots {
       s << "\nx0 = (" << r0 << "," << r1 << ")"
         << "\nx1 = (" << r0 << "," << -r1 << ")";
     } else {
-      s << "\nx0 = " << r0
-        << "\nx1 = " << r1;
+      if ( nreal > 0 ) s << "\nx0 = " << r0;
+      if ( nreal > 1 ) s << "\nx1 = " << r1;
     }
     if ( ncplx > 2 ) {
       s << "\nx2 = (" << r2 << "," << r3 << ")"
         << "\nx3 = (" << r2 << "," << -r3 << ")";
     } else {
-      s << "\nx2 = " << r2
-        << "\nx3 = " << r3;
+      if ( nreal > 2 ) s << "\nx2 = " << r2;
+      if ( nreal > 3 ) s << "\nx3 = " << r3;
     }
-    s << "\n";
+    s << '\n';
   }
 
   bool
@@ -699,24 +720,36 @@ namespace PolynomialRoots {
     if ( ncplx > 0 ) {
       valueType z0 = std::abs(eval( root0() ));
       valueType z1 = std::abs(eval( root1() ));
-      s << "|p(r0)| = " << z0 << "\n|p(r1)| = " << z1 << "\n";
+      s << "|p(r0)| = " << z0 << "\n|p(r1)| = " << z1 << '\n';
       ok = ok && std::abs(z0) < epsi && std::abs(z1) < epsi;
     } else {
-      valueType z0 = eval( real_root0() );
-      valueType z1 = eval( real_root1() );
-      s << "p(r0) = " << z0 << "\np(r1) = " << z1 << "\n";
-      ok = ok && std::abs(z0) < epsi && std::abs(z1) < epsi;
+      if ( nreal > 0 ) {
+        valueType z0 = eval( real_root0() );
+        s << "p(r0) = " << z0 << '\n';
+        ok = ok && std::abs(z0) < epsi;
+      }
+      if ( nreal > 1 ) {
+        valueType z1 = eval( real_root1() );
+        s << "p(r1) = " << z1 << '\n';
+        ok = ok && std::abs(z1) < epsi;
+      }
     }
     if ( ncplx > 2 ) {
       valueType z2 = std::abs(eval( root2() ));
       valueType z3 = std::abs(eval( root3() ));
-      s << "|p(r2)| = " << z2 << "\n|p(r3)| = " << z3 << "\n";
+      s << "|p(r2)| = " << z2 << "\n|p(r3)| = " << z3 << '\n';
       ok = ok && std::abs(z2) < epsi && std::abs(z3) < epsi;
     } else {
-      valueType z2 = eval( real_root2() );
-      valueType z3 = eval( real_root3() );
-      s << "p(r2) = " << z2 << "\np(r3) = " << z3 << "\n";
-      ok = ok && std::abs(z2) < epsi && std::abs(z3) < epsi;;
+      if ( nreal > 2 ) {
+        valueType z2 = eval( real_root2() );
+        s << "p(r2) = " << z2 << '\n';
+        ok = ok && std::abs(z2) < epsi;
+      }
+      if ( nreal > 3 ) {
+        valueType z3 = eval( real_root3() );
+        s << "p(r3) = " << z3 << '\n';
+        ok = ok && std::abs(z3) < epsi;
+      }
     }
     return ok;
   }

@@ -17,11 +17,12 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
+#include "PolynomialRoots.hh"
 #include "PolynomialRoots-Utils.hh"
 
 namespace PolynomialRoots {
 
-  static valueType const machepsi = std::numeric_limits<valueType>::epsilon();
+  // static valueType const machepsi = std::numeric_limits<valueType>::epsilon();
 
   using std::pair;
   using std::abs;
@@ -34,10 +35,12 @@ namespace PolynomialRoots {
   // (p0/x^n + p1/x^(n-1) + p2/(x^(n-2) + ... + pn)*x^n
   //
   valueType
-  evalPoly( valueType const op[],
-            indexType       Degree,
-            valueType       x,
-            bool            reverse ) {
+  evalPoly(
+    valueType const op[],
+    indexType       Degree,
+    valueType       x,
+    bool            reverse
+  ) {
     valueType res(0);
     valueType xabs = std::abs(x);
     if ( xabs > 1 ) { x = valueType(1)/x; reverse = !reverse; }
@@ -52,10 +55,12 @@ namespace PolynomialRoots {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
   std::complex<valueType>
-  evalPolyC( valueType const         op[],
-             indexType               Degree,
-             std::complex<valueType> x,
-             bool                    reverse ) {
+  evalPolyC(
+    valueType const         op[],
+    indexType               Degree,
+    std::complex<valueType> x,
+    bool                    reverse
+  ) {
     std::complex<valueType> res(0,0);
     valueType xabs = std::norm(x);
     if ( xabs > 1 ) { x = valueType(1)/x; reverse = !reverse; }
@@ -80,9 +85,11 @@ namespace PolynomialRoots {
     
   static
   pair<indexType,valueType>
-  scalePolynomial( indexType       n, // degree
-                   valueType const p[],
-                   valueType       ps[] ) {
+  scalePolynomial(
+    indexType       n, // degree
+    valueType const p[],
+    valueType       ps[]
+  ) {
     indexType i_max = n;
     valueType an    = p[n];
     valueType scale = -1;
@@ -108,10 +115,12 @@ namespace PolynomialRoots {
     
   static
   void
-  deflatePolynomial( indexType       n, // degree
-                     valueType const a[],
-                     valueType       r,
-                     valueType       b[] ) {
+  deflatePolynomial(
+    indexType       n, // degree
+    valueType const a[],
+    valueType       r,
+    valueType       b[]
+  ) {
     // crossover index for forward/backward deflation
     // G. Peters and J. H. Wilkinson.
     // Practical problems arising in the solution of polynomial equations.
@@ -152,10 +161,12 @@ namespace PolynomialRoots {
   // (p0/x^n + p1/x^(n-1) + p2/(x^(n-2) + ... + pn)*x^n
   //
   valueType
-  CompHorner( valueType const p[],
-              indexType       Degree,
-              valueType       x,
-              bool            reverse ) {
+  CompHorner(
+    valueType const p[],
+    indexType       Degree,
+    valueType       x,
+    bool            reverse
+  ) {
         
     valueType xabs = std::abs(x);
     if ( xabs > 1 ) { x = valueType(1)/x; reverse = !reverse; }
@@ -180,14 +191,16 @@ namespace PolynomialRoots {
   static
   inline
   void
-  scaleCubicMonicPolynomial( valueType   A,
-                             valueType   B,
-                             valueType   C,
-                             valueType & AS,
-                             valueType & BS,
-                             valueType & CS,
-                             indexType & i_case,
-                             valueType & scale ) {
+  scaleCubicMonicPolynomial(
+    valueType   A,
+    valueType   B,
+    valueType   C,
+    valueType & AS,
+    valueType & BS,
+    valueType & CS,
+    indexType & i_case,
+    valueType & scale
+  ) {
         
     valueType a = abs(A);
     valueType b = sqrt(abs(B));
@@ -228,13 +241,15 @@ namespace PolynomialRoots {
   // a3*x^3 + a2*x^2 + a1*x + a0 = (x-r)*(a3*x^2+b1*x+b0)
   static
   void
-  deflateCubicPolynomial( valueType   a3,
-                          valueType   a2,
-                          valueType   a1,
-                          valueType   a0,
-                          valueType   r,
-                          valueType & b1,
-                          valueType & b0 ) {
+  deflateCubicPolynomial(
+    valueType   a3,
+    valueType   a2,
+    valueType   a1,
+    valueType   a0,
+    valueType   r,
+    valueType & b1,
+    valueType & b0
+  ) {
     indexType i_cross  = 0;
     valueType r2       = r*r;
     valueType v_cross  = abs(a0);

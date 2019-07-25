@@ -58,10 +58,12 @@ namespace PolynomialRoots {
   static
   inline
   void
-  TwoSum( valueType   a,
-          valueType   b,
-          valueType & x,
-          valueType & err ) {
+  TwoSum(
+    valueType   a,
+    valueType   b,
+    valueType & x,
+    valueType & err
+  ) {
     x = a+b;
     valueType z = x-a;
     err = (a-(x-z))+(b-z);
@@ -70,10 +72,12 @@ namespace PolynomialRoots {
   static
   inline
   void
-  TwoSum( complexType   a,
-          complexType   b,
-          complexType & x,
-          complexType & err ) {
+  TwoSum(
+    complexType   a,
+    complexType   b,
+    complexType & x,
+    complexType & err
+  ) {
     valueType s1, e1, s2, e2;
     TwoSum( a.real(), b.real(), s1, e1 );
     TwoSum( a.imag(), b.imag(), s2, e2 );
@@ -95,10 +99,12 @@ namespace PolynomialRoots {
   static
   inline
   void
-  TwoProduct( valueType   a,
-              valueType   b,
-              valueType & x,
-              valueType & err ) {
+  TwoProduct(
+    valueType   a,
+    valueType   b,
+    valueType & x,
+    valueType & err
+  ) {
     valueType a1, a2, b1, b2;
     Split( a, a1, a2 );
     Split( b, b1, b2 );
@@ -109,12 +115,14 @@ namespace PolynomialRoots {
   static
   inline
   void
-  TwoProduct( complexType   a,
-              complexType   b,
-              complexType & p,
-              complexType & e,
-              complexType & f,
-              complexType & g ) {
+  TwoProduct(
+    complexType   a,
+    complexType   b,
+    complexType & p,
+    complexType & e,
+    complexType & f,
+    complexType & g
+  ) {
     valueType z1, z2, z3, z4, z5, z6, h1, h2, h3, h4, h5, h6;
     TwoProduct(a.real(), b.real(), z1, h1 );
     TwoProduct(a.imag(), b.imag(), z2, h2 );

@@ -333,31 +333,37 @@ namespace PolynomialRoots {
   };
 
   valueType
-  evalPoly( valueType const op[],
-            indexType       Degree,
-            valueType       x,
-            bool            reverse );
+  evalPoly(
+    valueType const op[],
+    indexType       Degree,
+    valueType       x,
+    bool            reverse
+  );
 
   std::complex<valueType>
-  evalPolyC( valueType const         op[],
-             indexType               Degree,
-             std::complex<valueType> x,
-             bool                    reverse );
+  evalPolyC(
+    valueType const         op[],
+    indexType               Degree,
+    std::complex<valueType> x,
+    bool                    reverse
+  );
 
   valueType
-  CompHorner( valueType const p[],
-              indexType       Degree,
-              valueType       x,
-              bool            reverse );
+  CompHorner(
+    valueType const p[],
+    indexType       Degree,
+    valueType       x,
+    bool            reverse
+  );
 
   // find roots of a generic polinomial using Jenkins-Traub method
   int
-  roots( valueType const op[],
-         indexType       Degree,
-         valueType       zeror[],
-         valueType       zeroi[] );
+  roots(
+    valueType const op[],
+    indexType       Degree,
+    valueType       zeror[],
+    valueType       zeroi[]
+  );
 }
-
-extern "C" void quartic_solver_( double op[], int & degree, double zeror[], double zeroi[] );
 
 #endif
