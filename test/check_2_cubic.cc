@@ -26,7 +26,7 @@ double rootCubicReal2[] = { 1, 1.000001, 1.000002 };
 double rootCubicImag2[] = { 0, 0, 0 };
 double cubic2[]         = { 1, -3.000003, +3.000006000002, -1.000003000002 };
 
-double rootCubicReal3[] = { 1.0e+80, 1.0e+77, -1.0e+81 };
+double rootCubicReal3[] = { -1.0e+81, 1.0e+77, 1.0e+80 };
 double rootCubicImag3[] = { 0, 0, 0 };
 double cubic3[]         = { 1, 8.999e+80, -1.0009e+161, +1.e+238 };
 
@@ -34,9 +34,9 @@ double rootCubicReal4[] = { 1, -1, -1.0e+24 };
 double rootCubicImag4[] = { 0, 0, 0 };
 double cubic4[]         = { 1, +1.e+24, -1.0, -1.e+24 };
 
-double rootCubicReal5[] = { 1.0e+14, 1.0e+14, -1 };
+double rootCubicReal5[] = { -1, 1.0e+14, 1.0e+14 };
 double rootCubicImag5[] = { 0, 0, 0 };
-double cubic5[]         = { 1, -1.99999999999999e+14, +0.99999999999998e+28, +1.e+28 };
+double cubic5[]         = { 1, -1.99999999999999e+14, +9.9999999999998e+27, +1.e+28 };
 
 double rootCubicReal6[] = { 1.0e+5, 1.0e+5, 1.0e+5 };
 double rootCubicImag6[] = { 0, 1, -1 };
@@ -52,7 +52,7 @@ double cubic8[]         = { 1, -2.0000001e+7, +1.00000020000001e+14, -1.00000000
 
 double rootCubicReal9[] = { -1.0e+14, 1, 1 };
 double rootCubicImag9[] = { 0, 1, -1 };
-double cubic9[]         = { 1, +0.99999999999998e+14, -1.99999999999998e+14, 2.e+14 };
+double cubic9[]         = { 1, 9.9999999999998e13, -1.99999999999998e14, 2e+14 };
 
 double r = sqrt(2.0);
 double rootCubicReal10[] = { r, r, r };
@@ -62,6 +62,10 @@ double cubic10[]         = { 1, -3*r, 6, -2*r };
 double rootCubicReal11[] = { -r, -r, -r };
 double rootCubicImag11[] = { 0, 0, 0 };
 double cubic11[]         = { 1, 3*r, 6, 2*r };
+
+double rootCubicReal12[] = { -r, -r, -r };
+double rootCubicImag12[] = { 0, 0, 0 };
+double cubic12[]         = { 2.25, 37.727978648722122, 142.67292879536021, -132.84295088443082 };
 
 static
 void
@@ -75,22 +79,24 @@ do_test( double const p[4] ) {
   }
 }
 
-#define TESTCUBIC(A) do_test3( cubic##A, rootCubicReal##A, rootCubicImag##A )
+#define DO_TEST( N ) \
+  cout << "\n\nText N." << N << '\n'; do_test( cubic##N )
 
 int
 main() {
-  cout.precision(14);
-  do_test(cubic1);
-  do_test(cubic2);
-  //do_test(cubic3); // failed
-  do_test(cubic4);
-  do_test(cubic5); // failed
-  do_test(cubic6);
-  do_test(cubic7);
-  do_test(cubic8);
-  do_test(cubic9);
-  do_test(cubic10);
-  do_test(cubic11);
+  cout.precision(18);
+  DO_TEST(1);
+  DO_TEST(2);
+  DO_TEST(3); // failed check
+  DO_TEST(4);
+  DO_TEST(5); // failed check
+  DO_TEST(6);
+  DO_TEST(7);
+  DO_TEST(8);
+  DO_TEST(9);
+  DO_TEST(10);
+  DO_TEST(11);
+  DO_TEST(12);
   cout << "\n\nALL DONE!\n";
   return 0;
 }

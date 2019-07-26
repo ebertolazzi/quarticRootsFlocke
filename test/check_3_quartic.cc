@@ -13,17 +13,17 @@ using namespace PolynomialRoots;
 // Set the polynomial coefficients corresponding and the exact roots.
 // Set the exact quartic roots.
 
-double rootQuarticReal1[] = { 1.0e+9, 1.0e+6, 1.0e+3, 1.0 };
+double rootQuarticReal1[] = { 1, 1e3, 1e6, 1e+9 };
 double rootQuarticImag1[] = { 0, 0, 0, 0 };
-double quartic1[]         = { 1,-1001001001.0, 1001002001001000.0,-1001001001000000000.0,1000000000000000000.0 };
+double quartic1[]         = { 1, -1001001001.0, 1001002001001000.0, -1001001001000000000.0, 1000000000000000000.0 };
 
 double rootQuarticReal2[] = { 1.003, 1.002, 1.001, 1.000 };
 double rootQuarticImag2[] = { 0, 0, 0, 0 };
 double quartic2[]         = { 1,-4.006,+6.018011,-4.018022006,+1.006011006 };
 
-double rootQuarticReal3[] = { 1.0e+80, -1.0e+74, -1.0e+76, -1.0e+77 };
+double rootQuarticReal3[] = { -1.0e+77, -1.0e+76, -1.0e+74, 1.0e+80 };
 double rootQuarticImag3[] = { 0, 0, 0, 0 };
-double quartic3[]         = { 1,-9.98899e+79,-1.1008989e+157,-1.010999e+233,-1.e+307 };
+double quartic3[]         = { 1, -9.988990e79, -1.100898900e157, -1.010999e233, -1e307 };
 
 double rootQuarticReal4[] = { 1.0e+14, 2, 1, -1 };
 double rootQuarticImag4[] = { 0, 0, 0, 0 };
@@ -41,9 +41,10 @@ double rootQuarticReal7[] = { -4.0, -7.0, -1.0e+6, -1.0e+6 };
 double rootQuarticImag7[] = { 0, 0, 1.0e+5, -1.0e+5 };
 double quartic7[]         = { 1,+2.000011e+6,+1.010022000028e+12,+1.1110056e+13,+2.828e+13 };
 
-double rootQuarticReal8[] = { 1.0e+8, 11.0, 1.0e+3, 1.0e+3 };
-double rootQuarticImag8[] = { 0, 0, 1, -1 };
-double quartic8[]         = {1,-1.00002011e+8,+2.01101022001e+11,-1.02200111000011e+14,+1.1000011e+15};
+double rootQuarticReal8[] = { 1.0e+3, 1.0e+3, 11.0, 1.0e+8 };
+double rootQuarticImag8[] = {      1,     -1,    0,    0   };
+double quartic8[]         = { 1, -1.00002011e8, +2.01101022001e11, -1.02200111000011e14, 1.1000011e15 };
+// 1,-1.00002011e+8,+2.01101022001e+11,-1.02200111000011e+14,+1.1000011e+15};
 
 double rootQuarticReal9[] = { 1.0e+7, 1.0e+7, 1, 1 };
 double rootQuarticImag9[] = { 1.0e+6, -1.0e+6, 2, -2 };
@@ -88,7 +89,18 @@ double rootQuarticReal17[] = { 19.01804207, 3.926187087, 0.5001001646e-3, 3.3365
 double rootQuarticImag17[] = { 0, 0, 0, 0 };
 double quartic17[]         = { 0.000158925, -0.00657522, 0.0801029, -0.2, 0.01 };
 
-#define DO_TEST( N ) do_test( quartic##N, rootQuarticReal##N, rootQuarticImag##N );
+double rootQuarticReal18[] = { -8.767990511, -8.767990511, 0.7679905093, 0.7679905118 };
+double rootQuarticImag18[] = { 0, 0, 0, 0 };
+double quartic18[]         = {
+  2.25, 36,
+  113.698199211166496525038382969796657562255859375,
+  -242.41440631066808464311179704964160919189453125,
+  102.0221256717945692571447580121457576751708984375
+};
+
+#define DO_TEST( N ) \
+  cout << "\n\nText N." << N << '\n'; \
+  do_test( quartic##N, rootQuarticReal##N, rootQuarticImag##N )
 
 static
 void
@@ -109,11 +121,13 @@ do_test( double const p[5],
   }
 }
 
-#define TESTCUBIC(A) do_test3( cubic##A, rootCubicReal##A, rootCubicImag##A )
-
 int
 main() {
   cout.precision(14);
+  //DO_TEST(9);
+  //cout << "\n\nALL DONE!\n";
+  //return 0;
+
   DO_TEST(1);
   DO_TEST(2);
   DO_TEST(3);
@@ -131,6 +145,7 @@ main() {
   DO_TEST(15);
   DO_TEST(16);
   DO_TEST(17);
+  DO_TEST(18);
   cout << "\n\nALL DONE!\n";
   return 0;
 }

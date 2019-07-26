@@ -40,10 +40,48 @@ namespace PolynomialRoots {
   typedef int    indexType;
   typedef std::complex<valueType> complexType;
 
+  valueType
+  evalPoly(
+    valueType const op[],
+    indexType       Degree,
+    valueType       x
+  );
+
+  std::complex<valueType>
+  evalPolyC(
+    valueType const                 op[],
+    indexType                       Degree,
+    std::complex<valueType> const & x
+  );
+
+  valueType
+  CompHorner(
+    valueType const p[],
+    indexType       Degree,
+    valueType       x
+  );
+
+  // find roots of a generic polinomial using Jenkins-Traub method
+  int
+  roots(
+    valueType const op[],
+    indexType       Degree,
+    valueType       zeror[],
+    valueType       zeroi[]
+  );
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  // a * x^2 + b * x + c;
+  /*\
+   |    ___                  _           _   _
+   |   / _ \ _   _  __ _  __| |_ __ __ _| |_(_) ___
+   |  | | | | | | |/ _` |/ _` | '__/ _` | __| |/ __|
+   |  | |_| | |_| | (_| | (_| | | | (_| | |_| | (__
+   |   \__\_\\__,_|\__,_|\__,_|_|  \__,_|\__|_|\___|
+   |
+   |  A * x^2 + B * x + C
+  \*/
   class Quadratic {
-    valueType a, b, c;
+    valueType ABC[3];
     valueType r0, r1;
     indexType nrts;
     bool      cplx;
@@ -53,15 +91,22 @@ namespace PolynomialRoots {
 
   public:
 
-    Quadratic() : a(0), b(0), c(0), nrts(0), cplx(false), dblx(false) {}
+    Quadratic() : nrts(0), cplx(false), dblx(false) {}
     Quadratic( valueType _a, valueType _b, valueType _c )
-    : a(_a), b(_b), c(_c), nrts(0), cplx(false), dblx(false)  {
+    : nrts(0), cplx(false), dblx(false) {
+      valueType & A = ABC[0];
+      valueType & B = ABC[1];
+      valueType & C = ABC[2];
+      A = _a; B = _b; C = _c;
       findRoots();
     }
 
     void
     setup( valueType _a, valueType _b, valueType _c ) {
-      a = _a; b = _b; c = _c;
+      valueType & A = ABC[0];
+      valueType & B = ABC[1];
+      valueType & C = ABC[2];
+      A = _a; B = _b; C = _c;
       findRoots();
     }
 
@@ -108,8 +153,13 @@ namespace PolynomialRoots {
       else        r = complexType(r1,0);
     }
 
-    valueType   eval( valueType x ) const;
-    complexType eval( complexType const & x ) const;
+    valueType
+    eval( valueType x ) const
+    { return evalPoly( ABC, 2, x ); }
+
+    complexType
+    eval( complexType const & x ) const
+    { return evalPolyC( ABC, 2, x ); }
 
     void eval( valueType x, valueType & p, valueType & dp ) const;
 
@@ -122,9 +172,18 @@ namespace PolynomialRoots {
   };
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  // A * x^3 + B * x^2 + C * x + D;
+  /*\
+   |    ____      _     _
+   |   / ___|   _| |__ (_) ___
+   |  | |  | | | | '_ \| |/ __|
+   |  | |__| |_| | |_) | | (__
+   |   \____\__,_|_.__/|_|\___|
+   |
+   |  A * x^3 + B * x^2 + C * x + D
+  \*/
+
   class Cubic {
-    valueType A, B, C, D;
+    valueType ABCD[4];
     valueType r0, r1, r2;
     indexType nrts, iter;
     bool      cplx; // complex root
@@ -135,14 +194,23 @@ namespace PolynomialRoots {
 
   public:
 
-    Cubic() : A(0), B(0), C(0), D(0), nrts(0), iter(0), cplx(false), trpx(false) {}
+    Cubic() : nrts(0), iter(0), cplx(false), trpx(false) {}
     Cubic( valueType _a, valueType _b, valueType _c, valueType _d )
-    : A(_a), B(_b), C(_c), D(_d), nrts(0), iter(0), cplx(false), trpx(false) {
+    : nrts(0), iter(0), cplx(false), trpx(false) {
+      valueType & A = ABCD[0];
+      valueType & B = ABCD[1];
+      valueType & C = ABCD[2];
+      valueType & D = ABCD[3];
+      A = _a; B = _b; C = _c; D = _d;
       findRoots();
     }
 
     void
     setup( valueType _a, valueType _b, valueType _c, valueType _d ) {
+      valueType & A = ABCD[0];
+      valueType & B = ABCD[1];
+      valueType & C = ABCD[2];
+      valueType & D = ABCD[3];
       A = _a; B = _b; C = _c; D = _d;
       findRoots();
     }
@@ -204,8 +272,13 @@ namespace PolynomialRoots {
     getRoot2( complexType & r ) const
     { r = complexType(r2,0); }
 
-    valueType   eval( valueType x ) const;
-    complexType eval( complexType const & x ) const;
+    valueType
+    eval( valueType x ) const
+    { return evalPoly( ABCD, 3, x ); }
+
+    complexType
+    eval( complexType const & x ) const
+    { return evalPolyC( ABCD, 3, x ); }
 
     void eval( valueType x, valueType & p, valueType & dp ) const;
 
@@ -218,29 +291,61 @@ namespace PolynomialRoots {
   };
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  // A * x^3 + B * x^2 + C * x + D;
+  /*\
+   |    ___                   _   _
+   |   / _ \ _   _  __ _ _ __| |_(_) ___
+   |  | | | | | | |/ _` | '__| __| |/ __|
+   |  | |_| | |_| | (_| | |  | |_| | (__
+   |   \__\_\\__,_|\__,_|_|   \__|_|\___|
+   |
+   |  A * x^3 + B * x^2 + C * x + D
+  \*/
+
   class Quartic {
-    valueType A, B, C, D, E;
+    valueType ABCDE[5];
     valueType r0, r1, r2, r3;
     indexType iter, nreal, ncplx;
 
     void findRoots();
 
-    inline bool cplx0() const { return ncplx > 0; }
-    inline bool cplx1() const { return ncplx > 0; }
-    inline bool cplx2() const { return ncplx > 2; }
-    inline bool cplx3() const { return ncplx > 2; }
+    bool cplx0() const { return ncplx > 0; }
+    bool cplx1() const { return ncplx > 0; }
+    bool cplx2() const { return ncplx > 2; }
+    bool cplx3() const { return ncplx > 2; }
 
   public:
 
-    Quartic() : A(0), B(0), C(0), D(0), E(0), iter(0), nreal(0), ncplx(0) {}
-    Quartic( valueType _a, valueType _b, valueType _c, valueType _d, valueType _e )
-    : A(_a), B(_b), C(_c), D(_d), E(_e), iter(0), nreal(0), ncplx(0) {
+    Quartic() : iter(0), nreal(0), ncplx(0) {}
+    Quartic(
+      valueType _a,
+      valueType _b,
+      valueType _c,
+      valueType _d,
+      valueType _e
+    )
+    : iter(0), nreal(0), ncplx(0) {
+      valueType & A = ABCDE[0];
+      valueType & B = ABCDE[1];
+      valueType & C = ABCDE[2];
+      valueType & D = ABCDE[3];
+      valueType & E = ABCDE[4];
+      A = _a; B = _b; C = _c; D = _d; E = _e;
       findRoots();
     }
 
     void
-    setup( valueType _a, valueType _b, valueType _c, valueType _d, valueType _e ) {
+    setup(
+      valueType _a,
+      valueType _b,
+      valueType _c,
+      valueType _d,
+      valueType _e
+    ) {
+      valueType & A = ABCDE[0];
+      valueType & B = ABCDE[1];
+      valueType & C = ABCDE[2];
+      valueType & D = ABCDE[3];
+      valueType & E = ABCDE[4];
       A = _a; B = _b; C = _c; D = _d; E = _e;
       findRoots();
     }
@@ -321,8 +426,13 @@ namespace PolynomialRoots {
       else           r = complexType(r3,0);
     }
 
-    valueType   eval( valueType x ) const;
-    complexType eval( complexType const & x ) const;
+    valueType
+    eval( valueType x ) const
+    { return evalPoly( ABCDE, 4, x ); }
+
+    complexType
+    eval( complexType const & x ) const
+    { return evalPolyC( ABCDE, 4, x ); }
 
     void
     info( std::ostream & s ) const;
@@ -332,38 +442,144 @@ namespace PolynomialRoots {
 
   };
 
+  /*\
+   |   _   _ _   _ _
+   |  | | | | |_(_) |___
+   |  | | | | __| | / __|
+   |  | |_| | |_| | \__ \
+   |   \___/ \__|_|_|___/
+  \*/
+
+  // x^3 + a*x^2 + b*x + c
+  static
+  inline
   valueType
-  evalPoly(
-    valueType const op[],
-    indexType       Degree,
-    valueType       x,
-    bool            reverse
-  );
+  evalMonicCubic(
+    valueType x,
+    valueType a,
+    valueType b,
+    valueType c
+  ) {
+    valueType p;
+    p = x + a;
+    p = p * x + b;
+    p = p * x + c;
+    return p;
+  }
 
-  std::complex<valueType>
-  evalPolyC(
-    valueType const         op[],
-    indexType               Degree,
-    std::complex<valueType> x,
-    bool                    reverse
-  );
+  static
+  inline
+  void
+  evalMonicCubic(
+    valueType   x,
+    valueType   a,
+    valueType   b,
+    valueType   c,
+    valueType & p,
+    valueType & dp
+  ) {
+    p  = x + a;
+    dp = x + p;
+    p  = p  * x + b;
+    dp = dp * x + p;
+    p  = p  * x + c;
+  }
 
+  // 3*x^2 + 2*a*x + b
+  // 6*x + 2*a
+  static
+  inline
+  void
+  evalMonicCubic(
+    valueType   x,
+    valueType   a,
+    valueType   b,
+    valueType   c,
+    valueType & p,
+    valueType & dp,
+    valueType & ddp
+  ) {
+    p   = x + a;
+    dp  = x + p;      // 2*x + a
+    p   = p  * x + b; // x^2 + a * x + b
+    ddp = 2*(x + dp);
+    dp  = dp * x + p;
+    p   = p  * x + c;
+  }
+
+  // x^4 + a*x^3 + b*x^2 + c*x + d
+  static
+  inline
   valueType
-  CompHorner(
-    valueType const p[],
-    indexType       Degree,
-    valueType       x,
-    bool            reverse
-  );
+  evalMonicQuartic(
+    valueType x,
+    valueType a,
+    valueType b,
+    valueType c,
+    valueType d
+  ) {
+    valueType p;
+    p = x + a;     // x + a
+    p = p * x + b; // x^2+ a*x + b
+    p = p * x + c; // x^3+ a*x^2 + b*x + c
+    p = p * x + d; // x^4+ a*x^3 + b*x^2 + c*x + d
+    return p;
+  }
 
-  // find roots of a generic polinomial using Jenkins-Traub method
-  int
-  roots(
-    valueType const op[],
-    indexType       Degree,
-    valueType       zeror[],
-    valueType       zeroi[]
-  );
+  static
+  inline
+  void
+  evalMonicQuartic(
+    valueType   x,
+    valueType   a,
+    valueType   b,
+    valueType   c,
+    valueType   d,
+    valueType & p,
+    valueType & dp
+  ) {
+    p  = x + a;      // x + a
+    dp = x + p;      // 2*x + a
+    p  = p  * x + b; // x^2+ a*x + b
+    dp = dp * x + p; // 3*x^2 + 2*a*x + b
+    p  = p  * x + c; // x^3+ a*x^2 + b*x + c
+    dp = dp * x + p; // 4*x^3 + 3*a*x^2 + 2*b*x + c
+    p  = p  * x + d; // x^4+ a*x^3 + b*x^2 + c*x + d
+  }
+
+  static
+  inline
+  void
+  evalMonicQuartic(
+    valueType   x,
+    valueType   a,
+    valueType   b,
+    valueType   c,
+    valueType   d,
+    valueType & p,
+    valueType & dp,
+    valueType & ddp
+  ) {
+    // p_{n+1}(x)   = x * p_{n}(x) + b_{n}
+    // p'_{n+1}(x)  = x * p'_{n}(x) + p_{n}(x)
+    // p''_{n+1}(x) = x * p''_{n}(x) + 2*p'_{n}(x)
+    // ddp = 0;
+    // dp  = 1;
+    p   = x + a;     // x + a
+
+    ddp = 2;
+    dp  = x + p;
+    p   = p * x + b;
+
+    ddp = ddp * x + 2 * dp;
+    dp  = dp * x + p;
+    p   = p * x + c;
+
+    ddp = ddp * x + 2 * dp;
+    dp  = dp * x + p;
+    p   = p * x + d;
+  }
+
 }
 
 #endif

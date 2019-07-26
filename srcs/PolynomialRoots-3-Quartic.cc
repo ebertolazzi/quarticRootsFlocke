@@ -58,29 +58,6 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  valueType
-  Quartic::eval( valueType x ) const {
-    if ( std::abs(x) > 1 ) {
-      valueType x2 = x*x;
-      return (((((E/x+D)/x+C)/x+B)/x+A)*x2)*x2;
-    } else {
-      return (((A*x+B)*x+C)*x+D)*x+E;
-    }
-  }
-
-  complexType
-  Quartic::eval( complexType const & x ) const {
-    valueType absx = std::abs(x);
-    if ( absx > 1 ) {
-      complexType x2 = x*x;
-      complexType x4 = x2*x2;
-      complexType z  = x/absx;
-      return ((((((((E*z)/absx+D)*z)/absx+C)*z)/absx+B)*z)/absx+A)*x4;
-    } else {
-      return (((A*x+B)*x+C)*x+D)*x+E;
-    }
-  }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //
   // x^4 + A x^3 + B x^2 + C x + D
@@ -153,41 +130,6 @@ namespace PolynomialRoots {
         DS    = (((D/a)/a)/a)/a;
       break;
     }
-  }
-
-  // x^4 + a*x^3 + b*x^2 + c*x + d
-  static
-  inline
-  valueType
-  evalMonicQuartic(
-    valueType x,
-    valueType a,
-    valueType b,
-    valueType c,
-    valueType d
-  ) {
-    return (((x+a)*x+b)*x+c)*x+d;
-  }
-
-  static
-  inline
-  void
-  evalMonicQuartic(
-    valueType   x,
-    valueType   a,
-    valueType   b,
-    valueType   c,
-    valueType   d,
-    valueType & p,
-    valueType & dp
-  ) {
-    p  = x + a;
-    dp = x + p;
-    p  = p  * x + b;
-    dp = dp * x + p;
-    p  = p  * x + c;
-    dp = dp * x + p;
-    p  = p  * x + d;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -307,9 +249,10 @@ namespace PolynomialRoots {
     bool      bisection = false;
     bool      converged = false;
     valueType s(0), u(0); // to mute warning
-    while ( ! (converged||bisection) ) {
+    while ( ! (converged||bisection) && iter < 50 ) {
       ++iter;
-      evalMonicQuartic( x, a, b, c, d, p, dp );
+      valueType ddp;
+      evalMonicQuartic( x, a, b, c, d, p, dp, ddp );
       if ( p*t < 0 ) { // does Newton start oscillating ?
         if ( p < 0 ) {
           ++oscillate; // increment oscillation counter
@@ -319,12 +262,12 @@ namespace PolynomialRoots {
         }
         t = p; // save current p(x)
       }
-      dp = p/dp; // Newton correction
+      dp = (p*dp)/(dp*dp-p*ddp); // Newton correction
       x -= dp; // new Newton root
       bisection = oscillate > 2; // activate bisection
-      converged = abs(dp) <= abs(x) * machepsi; // Newton convergence indicator
+      converged = std::abs(dp) <= std::abs(x) * machepsi; // Newton convergence indicator
     }
-    if ( bisection ) {
+    if ( bisection || !converged ) {
       t = u - s; // initial bisection interval
       while ( abs(t) > abs(x) * machepsi ) { // bisection iterates
         ++iter;
@@ -410,6 +353,11 @@ namespace PolynomialRoots {
 
   void
   Quartic::findRoots() {
+    valueType const & A = ABCDE[0];
+    valueType const & B = ABCDE[1];
+    valueType const & C = ABCDE[2];
+    valueType const & D = ABCDE[3];
+    valueType const & E = ABCDE[4];
 
     iter = nreal = ncplx = 0;
 
@@ -548,19 +496,32 @@ namespace PolynomialRoots {
     if ( !qsolve.complexRoots() ) {
       valueType Qs = evalMonicQuartic( s, q3, q2, q1, q0 );
       valueType Qu = evalMonicQuartic( u, q3, q2, q1, q0 );
-      valueType tmp = q0 >= 0 ? 0 : 2;
+      valueType tmp = q0 >= 0 ? 0 : 2; // segno di A0??
       nreal = 1;
       if ( Qs < 0 && Qu < 0 ) {
         if ( Qs < Qu ) r3 = s < 0 ?  tmp :  2;
         else           r3 = u > 0 ? -tmp : -2;
       } else if ( Qs < 0 ) {
-        if ( 4*s < -q3 ) r3 = s > 0 ? tmp : -2;
-        else             r3 = s < 0 ? tmp :  2;
+        r3 = s < 0 ? tmp : 2;
+        if ( 4*s < -q3 ) r3 = -r3;
       } else if ( Qu < 0 ) {
-        if ( 4*u < -q3 ) r3 = u > 0 ? tmp : -2;
-        else             r3 = u < 0 ? tmp :  2;
+        r3 = u < 0 ? tmp : 2;
+        if ( 4*u < -q3 ) r3 = -r3;
       } else {
-        nreal = 0;
+        // check for astrological combination when s or u are root of the quartic
+        /*
+        DO NOT WORK
+        valueType epsi = 10 * ( 1 + std::abs(q3) +
+                                    std::abs(q2) +
+                                    std::abs(q1) +
+                                    std::abs(q0) ) * machepsi;
+        if      ( Qs <= epsi ) r3 = s;
+        else if ( Qu <= epsi ) r3 = u;
+        else                   nreal = 0;
+        */
+        if      ( Qs == 0 ) r3    = s;
+        else if ( Qu == 0 ) r3    = u;
+        else                nreal = 0;
       }
     } else {
       // one single real root (only 1 minimum)
@@ -693,30 +654,42 @@ namespace PolynomialRoots {
 
   void
   Quartic::info( std::ostream & s ) const {
+    valueType const & A = ABCDE[0];
+    valueType const & B = ABCDE[1];
+    valueType const & C = ABCDE[2];
+    valueType const & D = ABCDE[3];
+    valueType const & E = ABCDE[4];
+
     s << "\npoly a=" << A << " b=" << B << " c=" << C << " d=" << D << " e=" << E
       << "\nn. complex = " << ncplx
       << "\nn. real    = " << nreal;
     if ( ncplx > 0 ) {
-      s << "\nx0 = (" << r0 << "," << r1 << ")"
-        << "\nx1 = (" << r0 << "," << -r1 << ")";
+      s << "\nx0 = (" << r0 << "," <<  r1 << ')'
+        << "\nx1 = (" << r0 << "," << -r1 << ')';
     } else {
       if ( nreal > 0 ) s << "\nx0 = " << r0;
       if ( nreal > 1 ) s << "\nx1 = " << r1;
     }
     if ( ncplx > 2 ) {
-      s << "\nx2 = (" << r2 << "," << r3 << ")"
-        << "\nx3 = (" << r2 << "," << -r3 << ")";
+      s << "\nx2 = (" << r2 << "," <<  r3 << ')'
+        << "\nx3 = (" << r2 << "," << -r3 << ')';
     } else {
-      if ( nreal > 2 ) s << "\nx2 = " << r2;
-      if ( nreal > 3 ) s << "\nx3 = " << r3;
+      if ( nreal > 2 || (ncplx > 0 && nreal > 0) ) s << "\nx2 = " << r2;
+      if ( nreal > 3 || (ncplx > 0 && nreal > 1) ) s << "\nx3 = " << r3;
     }
     s << '\n';
   }
 
   bool
   Quartic::check( std::ostream & s ) const {
+    valueType const & A = ABCDE[0];
+    valueType const & B = ABCDE[1];
+    valueType const & C = ABCDE[2];
+    valueType const & D = ABCDE[3];
+    valueType const & E = ABCDE[4];
     bool ok = true;
-    valueType epsi = 10*(std::abs(A)+std::abs(B)+std::abs(C)+std::abs(D)+std::abs(E))*machepsi;
+    valueType epsi = 10 * ( std::abs(A) +
+                            std::abs(B)+std::abs(C)+std::abs(D)+std::abs(E))*machepsi;
     if ( ncplx > 0 ) {
       valueType z0 = std::abs(eval( root0() ));
       valueType z1 = std::abs(eval( root1() ));
@@ -740,12 +713,12 @@ namespace PolynomialRoots {
       s << "|p(r2)| = " << z2 << "\n|p(r3)| = " << z3 << '\n';
       ok = ok && std::abs(z2) < epsi && std::abs(z3) < epsi;
     } else {
-      if ( nreal > 2 ) {
+      if ( nreal > 2 || (ncplx > 0 && nreal > 0)  ) {
         valueType z2 = eval( real_root2() );
         s << "p(r2) = " << z2 << '\n';
         ok = ok && std::abs(z2) < epsi;
       }
-      if ( nreal > 3 ) {
+      if ( nreal > 3 || (ncplx > 0 && nreal > 1)  ) {
         valueType z3 = eval( real_root3() );
         s << "p(r3) = " << z3 << '\n';
         ok = ok && std::abs(z3) < epsi;

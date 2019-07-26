@@ -70,30 +70,12 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  valueType
-  Cubic::eval( valueType x ) const {
-    if ( std::abs(x) > 1 ) {
-      valueType x3 = x*x*x;
-      return (((D/x+C)/x+B)/x+A)*x3;
-    } else {
-      return ((A*x+B)*x+C)*x+D;
-    }
-  }
-
-  complexType
-  Cubic::eval( complexType const & x ) const {
-    valueType absx = std::abs(x);
-    if ( absx > 1 ) {
-      complexType x3 = x*x*x;
-      complexType z  = x/absx;
-      return ((((((D*z)/absx+C)*z)/absx+B)*z)/absx+A)*x3;
-    } else {
-      return ((A*x+B)*x+C)*x+D;
-    }
-  }
-
   void
   Cubic::eval( valueType x, valueType & p, valueType & dp ) const {
+    valueType const & A = ABCD[0];
+    valueType const & B = ABCD[1];
+    valueType const & C = ABCD[2];
+    valueType const & D = ABCD[3];
     if ( std::abs(x) > 1 ) {
       valueType x2 = x*x;
       valueType x3 = x2*x;
@@ -226,37 +208,6 @@ namespace PolynomialRoots {
   ||  |_| \_|\___| \_/\_/  \__\___/|_| |_|____/|_|___/\___|\___|\__|_|\___/|_| |_|
   */
 
-  // x^3 + a*x^2 + b*x + c
-  static
-  inline
-  valueType
-  evalMonicCubic(
-    valueType x,
-    valueType a,
-    valueType b,
-    valueType c
-  ) {
-    return ((x+a)*x+b)*x+c;
-  }
-
-  static
-  inline
-  void
-  evalMonicCubic(
-    valueType   x,
-    valueType   a,
-    valueType   b,
-    valueType   c,
-    valueType & p,
-    valueType & dp
-  ) {
-    p  = x + a;
-    dp = x + p;
-    p  = p  * x + b;
-    dp = dp * x + p;
-    p  = p  * x + c;
-  }
-
   // x^3 + a * x^2 + b * x + c
   static
   indexType
@@ -291,6 +242,56 @@ namespace PolynomialRoots {
       dp = p/dp; // Newton correction
       x -= dp;   // new Newton root
       bisection = oscillate > 2; // activate bisection
+      converged = std::abs(dp) <= std::abs(x) * machepsi; // Newton convergence indicator
+    }
+    if ( bisection ) {
+      t = u - s; // initial bisection interval
+      while ( abs(t) > abs(x) * machepsi ) { // bisection iterates
+        ++iter;
+        p = evalMonicCubic( x, a, b, c );
+        if ( p < 0 ) s = x;
+        else         u = x; // keep bracket on root
+        t = (u-s)/2; // new bisection interval
+        x = s + t;   // new bisection root
+      }
+    }
+    return iter;
+  }
+
+  // x^3 + a * x^2 + b * x + c
+  static
+  indexType
+  NewtonBisection2(
+    valueType   a,
+    valueType   b,
+    valueType   c,
+    valueType & x
+  ) {
+    valueType p, dp, ddp;
+    evalMonicCubic( x, a, b, c, p, dp, ddp );
+    valueType t = p; // save p(x) for sign comparison
+    x -= (p*dp)/(dp*dp-p*ddp); // 1st improved root
+
+    indexType iter      = 1;
+    indexType oscillate = 0;
+    bool      bisection = false;
+    bool      converged = false;
+    valueType s(0), u(0); // to mute warning
+    while ( ! (converged||bisection) ) {
+      ++iter;
+      evalMonicCubic( x, a, b, c, p, dp, ddp );
+      if ( p*t < 0 ) { // does Newton start oscillating ?
+        if ( p < 0 ) {
+          ++oscillate; // increment oscillation counter
+          s = x;       // save lower bisection bound
+        } else {
+          u = x; // save upper bisection bound
+        }
+        t = p; // save current p(x)
+      }
+      dp = (p*dp)/(dp*dp-p*ddp); // Newton correction
+      x -= dp;   // new Newton root
+      bisection = oscillate > 2; // activate bisection
       converged = abs(dp) <= abs(x) * machepsi; // Newton convergence indicator
     }
     if ( bisection ) {
@@ -313,6 +314,10 @@ namespace PolynomialRoots {
 
   void
   Cubic::findRoots() {
+    valueType const & A = ABCD[0];
+    valueType const & B = ABCD[1];
+    valueType const & C = ABCD[2];
+    valueType const & D = ABCD[3];
     nrts = iter = 0;
     cplx = dblx = trpx = false;
     // special cases
@@ -348,9 +353,9 @@ namespace PolynomialRoots {
     valueType bb = C/A;
     valueType cc = D/A;
     // scale Cubic Monic Polynomial
-    valueType absa = abs(aa);
-    valueType absb = sqrt(abs(bb));
-    valueType absc = cbrt(abs(cc));
+    valueType absa = std::abs(aa);
+    valueType absb = std::sqrt(std::abs(bb));
+    valueType absc = std::cbrt(std::abs(cc));
 
     indexType i_case = 0; // c MAX
     if ( absa < absb ) {
@@ -419,7 +424,7 @@ namespace PolynomialRoots {
     case 6:
       r0   = a[1]-third;
       r1   = a[0]-one27th;
-      trpx = abs(r1) <= machepsi && abs(r2) <= machepsi; // check for triple root
+      trpx = abs(r0) <= machepsi && abs(r1) <= machepsi; // check for triple root
       if ( trpx ) { r0 = r1 = r2 = -third * scale; nrts = 3; return; }
       use_shifted = abs(r0) <= 0.01 && abs(r1) <= 0.01;
       r2 = guess6(a);
@@ -459,7 +464,7 @@ namespace PolynomialRoots {
     // deflate
     // A*x^3 + B*x^2 + C*x + D = A*(x-r2)*(x^2+b1*x+b0)
     valueType b0 = -cc/r2; // -(D/A)/r2;
-    valueType b1 = aa+r2; // B/A+r2;
+    valueType b1 = aa+r2; // (B/A)+r2;
     //std::cout << "err = " << A*(b1*r2-b0)+C << '\n';
 
     // solve quadratic polynomial
@@ -478,15 +483,19 @@ namespace PolynomialRoots {
 
   void
   Cubic::info( std::ostream & s ) const {
+    valueType const & A = ABCD[0];
+    valueType const & B = ABCD[1];
+    valueType const & C = ABCD[2];
+    valueType const & D = ABCD[3];
     s << "\npoly a=" << A << " b=" << B << " c=" << C << " d=" << D
       << "\nn. roots = " << nrts
       << "\ncomplex  = " << (cplx?"YES":"NO")
       << "\ntriple   = " << (trpx?"YES":"NO")
       << "\ndouble   = " << (dblx?"YES":"NO");
     if ( cplx ) {
-      s << "\nx0 = " << r0
-        << "\nx1 = (" << r1 << "," << r2 << ")";
-      if ( nrts > 2 ) s << "\nx2 = (" << r1 << "," << -r2 << ")";
+      s << "\nx0 = (" << r0 << "," <<  r1 << ')'
+        << "\nx1 = (" << r0 << "," << -r1 << ')';
+      if ( nrts > 2 ) s << "\nx3 = " << r2;
     } else {
       if ( nrts > 0 ) s << "\nx0 = " << r0;
       if ( nrts > 1 ) s << "\nx1 = " << r1;
@@ -497,15 +506,24 @@ namespace PolynomialRoots {
 
   bool
   Cubic::check( std::ostream & s ) const {
+    valueType const & A = ABCD[0];
+    valueType const & B = ABCD[1];
+    valueType const & C = ABCD[2];
+    valueType const & D = ABCD[3];
     bool ok = true;
-    valueType epsi = 10*(std::abs(A)+std::abs(B)+std::abs(C)+std::abs(D))*machepsi;
+    valueType epsi = 10 * ( std::abs(A) +
+                            std::abs(B) +
+                            std::abs(C) +
+                            std::abs(D) ) * machepsi;
     if ( cplx ) {
       valueType z0 = std::abs(eval( root0() ));
       valueType z1 = std::abs(eval( root1() ));
       valueType z2 = std::abs(eval( root2() ));
+      valueType zr = eval( real_root0() );
       s << "|p(r0)| = " << z0
         << "\n|p(r1)| = " << z1
         << "\n|p(r2)| = " << z2
+        << "\np(real_part(r0)) = " << zr
         << '\n';
       ok = z0 < epsi && z1 < epsi && z2 < epsi;
     } else if ( nrts == 1 ) {

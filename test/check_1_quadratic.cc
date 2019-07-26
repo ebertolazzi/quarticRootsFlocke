@@ -48,8 +48,10 @@ do_test( double const p[3] ) {
 int
 main() {
   cout.precision(20);
-  for ( int k = 0; k < sizeof(qq)/sizeof(qq[0]); ++k )
+  for ( int k = 0; k < sizeof(qq)/sizeof(qq[0]); ++k ) {
+    cout << "\n\nExample N." << k << '\n';
     do_test(qq[k]);
+  }
   cout << "\n\nALL DONE!\n";
   return 0;
 }

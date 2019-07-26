@@ -27,49 +27,61 @@ namespace PolynomialRoots {
   using std::pair;
   using std::abs;
   using std::pow;
-    
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // stable computation of polinomial
-  // p0 + p1*x + p2*x^2 + ... + pn*x^n
   //
-  // (p0/x^n + p1/x^(n-1) + p2/(x^(n-2) + ... + pn)*x^n
+  // op[0] * x^n + .... + op[n-1]*x + op[n]
+  //
+  // (op[0] + op[1]/x.... + op[n]/x^n)*x^n
   //
   valueType
   evalPoly(
     valueType const op[],
     indexType       Degree,
-    valueType       x,
-    bool            reverse
+    valueType       x
   ) {
-    valueType res(0);
-    valueType xabs = std::abs(x);
-    if ( xabs > 1 ) { x = valueType(1)/x; reverse = !reverse; }
+    bool reverse = std::abs(x) > 1;
     if ( reverse ) {
-      for ( indexType i = 0; i <= Degree; ++i ) res = res*x + op[i];
+      valueType res(op[Degree]);
+      valueType xn(1);
+      for ( indexType i = 1; i <= Degree; ++i ) {
+        res = res/x + op[Degree-i];
+        xn *= x;
+      }
+      res *= xn;
+      return res;
     } else {
-      for ( indexType i = 0; i <= Degree; ++i ) res = res*x + op[Degree-i];
+      valueType res(op[0]);
+      for ( indexType i = 1; i <= Degree; ++i ) res = res*x + op[i];
+      return res;
     }
-    return res*pow(x,Degree);
   }
     
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
+  //
+  // op[0] * x^n + .... + op[n-1]*x + op[n]
   std::complex<valueType>
   evalPolyC(
-    valueType const         op[],
-    indexType               Degree,
-    std::complex<valueType> x,
-    bool                    reverse
+    valueType const                 op[],
+    indexType                       Degree,
+    std::complex<valueType> const & x
   ) {
-    std::complex<valueType> res(0,0);
-    valueType xabs = std::norm(x);
-    if ( xabs > 1 ) { x = valueType(1)/x; reverse = !reverse; }
+    bool reverse = std::abs(x) > 1;
     if ( reverse ) {
-      for ( indexType i = 0; i <= Degree; ++i ) res = res*x + op[i];
+      std::complex<valueType> res(op[Degree]);
+      std::complex<valueType> xn(1,0);
+      for ( indexType i = 1; i <= Degree; ++i ) {
+        res = res/x + op[Degree-i];
+        xn *= x;
+      }
+      res *= xn;
+      return res;
     } else {
-      for ( indexType i = 0; i <= Degree; ++i ) res = res*x + op[Degree-i];
+      std::complex<valueType> res(op[0]);
+      for ( indexType i = 1; i <= Degree; ++i ) res = res*x + op[i];
+      return res;
     }
-    return res*pow(x,Degree);
   }
     
   //============================================================================
@@ -96,7 +108,7 @@ namespace PolynomialRoots {
     indexType i = n;
     while ( --i >= 0 ) {
       ps[i] = p[i]/an;
-      valueType scale1 = pow( abs(ps[i]), 1.0/(n-i) );
+      valueType scale1 = std::pow( abs(ps[i]), 1.0/(n-i) );
       if ( scale1 > scale ) { scale = scale1; i_max = i; }
     }
     // scale coeffs
@@ -164,24 +176,25 @@ namespace PolynomialRoots {
   CompHorner(
     valueType const p[],
     indexType       Degree,
-    valueType       x,
-    bool            reverse
+    valueType       x
   ) {
-        
     valueType xabs = std::abs(x);
-    if ( xabs > 1 ) { x = valueType(1)/x; reverse = !reverse; }
-    indexType ii0 = reverse ? 0 : Degree;
+    bool reverse = xabs > 1;
+    //bool reverse = false;
+    if ( reverse ) x = valueType(1)/x;
+    indexType ii0 = reverse ? Degree : 0;
     valueType res(p[ii0]);
     valueType c = 0;
     for ( indexType i = 1; i <= Degree; ++i ) {
-      indexType ii = reverse ? i : Degree-i;
+      indexType ii = reverse ? Degree-i : i;
       valueType tmp, pi, sigma;
-      TwoProduct( res, x, tmp, pi );
-      TwoSum( tmp, p[ii], res, sigma );
-      c = c * x + (pi+sigma);
+      //TwoProduct( res, x, tmp, pi );
+      //TwoSum( tmp, p[ii], res, sigma );
+      res = res * x + p[ii];
+      //c = c * x + (pi+sigma);
     }
-    res += c;
-    if ( xabs > 1 ) res *= pow(x,Degree);
+    //res += c;
+    if ( reverse ) res *= std::pow(x,Degree);
     return res;
   }
     
