@@ -46,6 +46,10 @@ namespace PolynomialRoots {
   using std::pow;
   using std::frexp;
 
+  #ifndef M_PI
+  #define M_PI 3.14159265358979323846264338328
+  #endif
+
   //static valueType const maxValue   = std::numeric_limits<valueType>::max();
   //static valueType const minValue   = std::numeric_limits<valueType>::min();
   static valueType const epsilon    = std::numeric_limits<valueType>::epsilon();
