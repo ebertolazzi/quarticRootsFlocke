@@ -25,16 +25,16 @@
 #include <complex>
 #include <iostream>
 
-/*
-..
-.. N. FLOCKE
-.. Algorithm 954: An Accurate and Efficient Cubic and Quartic Equation Solver
-.. for Physical Applications
-.. ACM TOMS, Vol. 41, No. 4, 2015.
-.. DOI: http://dx.doi.org/10.1145/2699468
-..
-*/
-
+/*!
+ *
+ *  N. FLOCKE
+ *  Algorithm 954: An Accurate and Efficient Cubic and Quartic Equation Solver
+ *  for Physical Applications
+ *  ACM TOMS, Vol. 41, No. 4, 2015.
+ *  DOI: http://dx.doi.org/10.1145/2699468
+ *
+ */
+//! implementation of Flocke algorithm for roots of 3rd and 4th degree polynomials
 namespace PolynomialRoots {
 
   typedef double valueType;
@@ -70,6 +70,7 @@ namespace PolynomialRoots {
   { return !( FP_INFINITE == std::fpclassify(x) ||
               FP_NAN      == std::fpclassify(x) ); }
 
+  //! evaluate real polynomial
   valueType
   evalPoly(
     valueType const op[],
@@ -77,6 +78,7 @@ namespace PolynomialRoots {
     valueType       x
   );
 
+  //! evaluate real polynomial with complex value
   std::complex<valueType>
   evalPolyC(
     valueType const                 op[],
@@ -84,7 +86,7 @@ namespace PolynomialRoots {
     std::complex<valueType> const & x
   );
 
-  // find roots of a generic polinomial using Jenkins-Traub method
+  //! find roots of a generic polinomial using Jenkins-Traub method
   int
   roots(
     valueType const op[],
@@ -103,6 +105,7 @@ namespace PolynomialRoots {
    |
    |  A * x^2 + B * x + C
   \*/
+  //! Quadratic polynomial class
   class Quadratic {
     valueType ABC[3];
     valueType r0, r1;
@@ -124,6 +127,14 @@ namespace PolynomialRoots {
       findRoots();
     }
 
+    //! compute the roots of quadratic polynomial \f$ a x^2 + b x + c \f$
+    /*!
+     *
+     * \param[in] _a coefficient of \f$ x^2 \f$
+     * \param[in] _b coefficient of \f$ x   \f$
+     * \param[in] _c coefficient of \f$ x^0   \f$
+     *
+     */
     void
     setup( valueType _a, valueType _b, valueType _c ) {
       valueType & A = ABC[0];
@@ -133,16 +144,33 @@ namespace PolynomialRoots {
       findRoots();
     }
 
-    indexType numRoots()     const { return nrts; }
-    bool      complexRoots() const { return cplx; }
-    bool      doubleRoot()   const { return dblx; }
+    indexType numRoots()     const { return nrts; } //!< number of found roots
+    bool      complexRoots() const { return cplx; } //!< are roots complex?
+    bool      doubleRoot()   const { return dblx; } //!< are roots a double root?
 
+    //! get the real roots
+    /*!
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of real roots, 0, 1 or 2
+     */
     indexType getRealRoots( valueType r[] ) const;
+
+    //! get positive real roots
+    /*!
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of positive real roots, 0, 1 or 2
+     */
     indexType getPositiveRoots( valueType r[] ) const;
+
+    //! get negative real roots
+    /*!
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of negative real roots, 0, 1 or 2
+     */
     indexType getNegativeRoots( valueType r[] ) const;
 
-    valueType real_root0() const { return r0; }
-    valueType real_root1() const { return r1; }
+    valueType real_root0() const { return r0; } //!< first real root
+    valueType real_root1() const { return r1; } //!< second real root
 
     complexType
     root0() const
@@ -176,19 +204,37 @@ namespace PolynomialRoots {
       else        r = complexType(r1,0);
     }
 
+    //! evalute the quadratic polynomial
+    /*!
+     * \param x   value where compute \f$ p(x) \f$
+     * \return the value \f$ p(x) \f$
+     */
     valueType
     eval( valueType x ) const
     { return evalPoly( ABC, 2, x ); }
 
+    //! evalute the quadratic polynomial
+    /*!
+     * \param x   value where compute \f$ p(x) \f$, x complex
+     * \return the value \f$ p(x) \f$
+     */
     complexType
     eval( complexType const & x ) const
     { return evalPolyC( ABC, 2, x ); }
 
+    //! evalute the polynomial with its derivative
+    /*!
+     * \param x   value where compute \f$ p(x) \f$
+     * \param p   value \f$ p(x) \f$
+     * \param dp  value \f$ p'(x) \f$
+     */
     void eval( valueType x, valueType & p, valueType & dp ) const;
 
+    //! print info of the roots of the polynomial
     void
     info( std::ostream & s ) const;
 
+    //! check tolerenace and quality of the computed roots
     bool
     check( std::ostream & s ) const;
 
@@ -204,7 +250,7 @@ namespace PolynomialRoots {
    |
    |  A * x^3 + B * x^2 + C * x + D
   \*/
-
+  //! Cubic polynomial class
   class Cubic {
     valueType ABCD[4];
     valueType r0, r1, r2;
@@ -228,6 +274,15 @@ namespace PolynomialRoots {
       findRoots();
     }
 
+    //! compute the roots of cubic polynomial \f$ a x^3 + b x^2 + c x + d \f$
+    /*!
+     *
+     * \param[in] _a coefficient of \f$ x^3 \f$
+     * \param[in] _b coefficient of \f$ x^2 \f$
+     * \param[in] _c coefficient of \f$ x   \f$
+     * \param[in] _d coefficient of \f$ x^0 \f$
+     *
+     */
     void
     setup( valueType _a, valueType _b, valueType _c, valueType _d ) {
       valueType & A = ABCD[0];
@@ -238,18 +293,35 @@ namespace PolynomialRoots {
       findRoots();
     }
 
-    indexType numRoots()     const { return nrts; }
-    bool      complexRoots() const { return cplx; }
-    bool      doubleRoot()   const { return dblx; }
-    bool      tripleRoot()   const { return trpx; }
+    indexType numRoots()     const { return nrts; } //!< number of found roots
+    bool      complexRoots() const { return cplx; } //!< has complex roots?
+    bool      doubleRoot()   const { return dblx; } //!< has a double root?
+    bool      tripleRoot()   const { return trpx; } //!< has a triple root?
 
+    //! get the real roots
+    /*!
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of real roots, 0, 1, 2 or 3
+     */
     indexType getRealRoots( valueType r[] ) const;
+
+    //! get positive real roots
+    /*!
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of positive real roots, 0, 1, 2 or 3
+     */
     indexType getPositiveRoots( valueType r[] ) const;
+
+    //! get negative real roots
+    /*!
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of negative real roots, 0, 1, 2 or 3
+     */
     indexType getNegativeRoots( valueType r[] ) const;
 
-    valueType real_root0() const { return r0; }
-    valueType real_root1() const { return r1; }
-    valueType real_root2() const { return r2; }
+    valueType real_root0() const { return r0; } //!< first real real
+    valueType real_root1() const { return r1; } //!< second real real
+    valueType real_root2() const { return r2; } //!< third real real
 
     complexType
     root0() const
@@ -295,19 +367,37 @@ namespace PolynomialRoots {
     getRoot2( complexType & r ) const
     { r = complexType(r2,0); }
 
+    //! evalute the cubic polynomial
+    /*!
+     * \param x   value where compute \f$ p(x) \f$
+     * \return the value \f$ p(x) \f$
+     */
     valueType
     eval( valueType x ) const
     { return evalPoly( ABCD, 3, x ); }
 
+    //! evalute the cubic polynomial
+    /*!
+     * \param x   value where compute \f$ p(x) \f$, x complex
+     * \return the value \f$ p(x) \f$
+     */
     complexType
     eval( complexType const & x ) const
     { return evalPolyC( ABCD, 3, x ); }
 
+    //! evalute the polynomial with its derivative
+    /*!
+     * \param x   value where compute \f$ p(x) \f$
+     * \param p   value \f$ p(x) \f$
+     * \param dp  value \f$ p'(x) \f$
+     */
     void eval( valueType x, valueType & p, valueType & dp ) const;
 
+    //! print info of the roots of the polynomial
     void
     info( std::ostream & s ) const;
 
+    //! check tolerenace and quality of the computed roots
     bool
     check( std::ostream & s ) const;
 
@@ -323,7 +413,7 @@ namespace PolynomialRoots {
    |
    |  A * x^3 + B * x^2 + C * x + D
   \*/
-
+  //! Quartic polynomial class
   class Quartic {
     valueType ABCDE[5];
     valueType r0, r1, r2, r3;
@@ -356,6 +446,16 @@ namespace PolynomialRoots {
       findRoots();
     }
 
+    //! compute the roots of quartic polynomial \f$ a x^4 + b x^3 + c x^2 + d x + e \f$
+    /*!
+     *
+     * \param[in] _a coefficient of \f$ x^4 \f$
+     * \param[in] _b coefficient of \f$ x^3 \f$
+     * \param[in] _c coefficient of \f$ x^2  \f$
+     * \param[in] _d coefficient of \f$ x   \f$
+     * \param[in] _e coefficient of \f$ x^0 \f$
+     *
+     */
     void
     setup(
       valueType _a,
@@ -373,17 +473,35 @@ namespace PolynomialRoots {
       findRoots();
     }
 
-    indexType numRealRoots()    const { return nreal; }
-    indexType numComplexRoots() const { return ncplx; }
+    indexType numRoots()        const { return nreal+ncplx; } //!< number of found roots
+    indexType numRealRoots()    const { return nreal; } //!< number of real roots
+    indexType numComplexRoots() const { return ncplx; } //!< number of complex roots
 
+    //! get the real roots
+    /*!
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of real roots, 0, 1, 2, 3 or 4
+     */
     indexType getRealRoots( valueType r[] ) const;
+
+    //! get positive real roots
+    /*!
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of positive real roots, 0, 1, 2, 3 or 4
+     */
     indexType getPositiveRoots( valueType r[] ) const;
+
+    //! get negative real roots
+    /*!
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of negative real roots, 0, 1, 2, 3 or 4
+     */
     indexType getNegativeRoots( valueType r[] ) const;
 
-    valueType real_root0() const { return r0; }
-    valueType real_root1() const { return r1; }
-    valueType real_root2() const { return r2; }
-    valueType real_root3() const { return r3; }
+    valueType real_root0() const { return r0; } //!< first real real
+    valueType real_root1() const { return r1; } //!< second real real
+    valueType real_root2() const { return r2; } //!< third real real
+    valueType real_root3() const { return r3; } //!< fourth real real
 
     complexType
     root0() const
@@ -449,17 +567,29 @@ namespace PolynomialRoots {
       else           r = complexType(r3,0);
     }
 
+    //! evalute the quartic polynomial
+    /*!
+     * \param x   value where compute \f$ p(x) \f$, x complex
+     * \return the value \f$ p(x) \f$
+     */
     valueType
     eval( valueType x ) const
     { return evalPoly( ABCDE, 4, x ); }
 
+    //! evalute the quartic polynomial
+    /*!
+     * \param x   value where compute \f$ p(x) \f$, x complex
+     * \return the value \f$ p(x) \f$
+     */
     complexType
     eval( complexType const & x ) const
     { return evalPolyC( ABCDE, 4, x ); }
 
+    //! print info of the roots of the polynomial
     void
     info( std::ostream & s ) const;
 
+    //! check tolerenace and quality of the computed roots
     bool
     check( std::ostream & s ) const;
 

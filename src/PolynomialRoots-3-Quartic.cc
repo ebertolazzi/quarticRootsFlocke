@@ -366,9 +366,9 @@ namespace PolynomialRoots {
       Cubic csolve( B, C, D, E );
       nreal = csolve.numRoots();
       switch ( nreal ) {
-       case 3: r2 = csolve.real_root2();
-       case 2: r1 = csolve.real_root1();
-       case 1: r0 = csolve.real_root0();
+        case 3: r2 = csolve.real_root2();
+        case 2: r1 = csolve.real_root1();
+        case 1: r0 = csolve.real_root0();
       }
       if ( csolve.complexRoots() ) { ncplx = 2; nreal -= 2; }
       return;
@@ -378,9 +378,9 @@ namespace PolynomialRoots {
       nreal = csolve.numRoots();
       r0 = r1 = r2 = r3 = 0;
       switch ( nreal ) {
-       case 3: r2 = csolve.real_root2();
-       case 2: r1 = csolve.real_root1();
-       case 1: r0 = csolve.real_root0();
+        case 3: r2 = csolve.real_root2();
+        case 2: r1 = csolve.real_root1();
+        case 1: r0 = csolve.real_root0();
       }
       ++nreal;
       if ( csolve.complexRoots() ) { ncplx = 2; nreal -= 2; }
