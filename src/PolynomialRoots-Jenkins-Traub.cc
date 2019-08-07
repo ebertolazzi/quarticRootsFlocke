@@ -675,10 +675,10 @@ namespace PolynomialRoots {
 
     #ifdef _MSC_VER
     valueType * ptr = (valueType*)alloca( 4*(Degree+1)*sizeof(valueType) );
-    valueType K    = ptr; ptr += Degree+1;
-    valueType p    = ptr; ptr += Degree+1;
-    valueType qp   = ptr; ptr += Degree+1;
-    valueType temp = ptr; ptr += Degree+1;
+    valueType * K    = ptr; ptr += Degree+1;
+    valueType * p    = ptr; ptr += Degree+1;
+    valueType * qp   = ptr; ptr += Degree+1;
+    valueType * temp = ptr; ptr += Degree+1;
     #else
     valueType K[Degree+1];
     valueType p[Degree+1];
