@@ -1,3 +1,5 @@
+quarticRootsFlocke [![Build Status](https://travis-ci.org/ebertolazzi/quarticRootsFlocke.svg?branch=master)](https://travis-ci.org/ebertolazzi/quarticRootsFlocke)
+
 Polynomial Roots Solver
 =======================
 
