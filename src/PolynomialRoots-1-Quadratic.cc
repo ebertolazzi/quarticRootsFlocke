@@ -91,11 +91,11 @@ namespace PolynomialRoots {
     nrts = 0;
     cplx = dblx = false;
 
-    if ( A == 0 ) { // less than two roots b*z + c = 0
-      if ( B != 0 ) { nrts = 1; r0 = -C/B; }
-    } else if ( C == 0 ) { // a*z^2 + b*z  = 0
+    if ( isZero(A) ) { // less than two roots b*z + c = 0
+      if ( !isZero(B) ) { nrts = 1; r0 = -C/B; }
+    } else if ( isZero(C) ) { // a*z^2 + b*z  = 0
       nrts = 2;
-      dblx = B == 0;
+      dblx = isZero(B);
       if ( !dblx ) {
         r0 = -B/A;
         if ( r0 < 0 ) std::swap(r0,r1);
@@ -121,14 +121,14 @@ namespace PolynomialRoots {
         r1 = std::abs(d/A); // immaginary part
       } else {
         // real zeros
-        dblx = d == 0;
+        dblx = isZero(d);
         if ( dblx ) {
           r0 = r1 = -hb/A;
         } else {
           if ( hb >= 0 ) d = -d;
           r0 = (d-hb)/A;
           //r1 = (-d-hb)/a;
-          if ( r0 != 0 ) r1 = (C/r0)/A;
+          if ( !isZero(r0) ) r1 = (C/r0)/A;
           if ( r0 > r1 ) std::swap(r0,r1); // order roots
         }
       }

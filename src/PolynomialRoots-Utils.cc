@@ -146,7 +146,7 @@ namespace PolynomialRoots {
         { v_cross = v_cross1; i_cross = i; }
     }
     b[n-1] = 1;
-    if ( a[n] == 1 ) {
+    if ( isZero(a[n]-1) ) {
       if ( i_cross > 0 ) {
         b[0] = -a[0] / r;
         for ( indexType j = 1; j < i_cross; ++j )
@@ -172,6 +172,8 @@ namespace PolynomialRoots {
   //
   // (p0/x^n + p1/x^(n-1) + p2/(x^(n-2) + ... + pn)*x^n
   //
+  #if 0
+  // UNUSED
   valueType
   CompHorner(
     valueType const p[],
@@ -197,6 +199,7 @@ namespace PolynomialRoots {
     if ( reverse ) res *= std::pow(x,Degree);
     return res;
   }
+  #endif
     
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //

@@ -258,56 +258,6 @@ namespace PolynomialRoots {
     return iter;
   }
 
-  // x^3 + a * x^2 + b * x + c
-  static
-  indexType
-  NewtonBisection2(
-    valueType   a,
-    valueType   b,
-    valueType   c,
-    valueType & x
-  ) {
-    valueType p, dp, ddp;
-    evalMonicCubic( x, a, b, c, p, dp, ddp );
-    valueType t = p; // save p(x) for sign comparison
-    x -= (p*dp)/(dp*dp-p*ddp); // 1st improved root
-
-    indexType iter      = 1;
-    indexType oscillate = 0;
-    bool      bisection = false;
-    bool      converged = false;
-    valueType s(0), u(0); // to mute warning
-    while ( ! (converged||bisection) ) {
-      ++iter;
-      evalMonicCubic( x, a, b, c, p, dp, ddp );
-      if ( p*t < 0 ) { // does Newton start oscillating ?
-        if ( p < 0 ) {
-          ++oscillate; // increment oscillation counter
-          s = x;       // save lower bisection bound
-        } else {
-          u = x; // save upper bisection bound
-        }
-        t = p; // save current p(x)
-      }
-      dp = (p*dp)/(dp*dp-p*ddp); // Newton correction
-      x -= dp;   // new Newton root
-      bisection = oscillate > 2; // activate bisection
-      converged = abs(dp) <= abs(x) * machepsi; // Newton convergence indicator
-    }
-    if ( bisection ) {
-      t = u - s; // initial bisection interval
-      while ( abs(t) > abs(x) * machepsi ) { // bisection iterates
-        ++iter;
-        p = evalMonicCubic( x, a, b, c );
-        if ( p < 0 ) s = x;
-        else         u = x; // keep bracket on root
-        t = (u-s)/2; // new bisection interval
-        x = s + t;   // new bisection root
-      }
-    }
-    return iter;
-  }
-
   /*\
    *  Calculate the zeros of the cubic a*z^3 + b*z^2 + c*z + d.
   \*/
@@ -321,7 +271,7 @@ namespace PolynomialRoots {
     nrts = iter = 0;
     cplx = dblx = trpx = false;
     // special cases
-    if ( A == 0 ) {
+    if ( isZero(A) ) {
       Quadratic qsolve( B, C, D );
       nrts = qsolve.numRoots();
       cplx = qsolve.complexRoots();
@@ -330,7 +280,7 @@ namespace PolynomialRoots {
       r1   = qsolve.real_root1();
       return;
     }
-    if ( D == 0 ) {
+    if ( isZero(D) ) {
       Quadratic qsolve( A, B, C );
       nrts = qsolve.numRoots()+1;
       cplx = qsolve.complexRoots();

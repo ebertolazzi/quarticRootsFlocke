@@ -46,14 +46,14 @@ namespace PolynomialRoots {
   using std::pow;
   using std::frexp;
 
-  static valueType const maxValue   = std::numeric_limits<valueType>::max();
-  static valueType const minValue   = std::numeric_limits<valueType>::min();
+  //static valueType const maxValue   = std::numeric_limits<valueType>::max();
+  //static valueType const minValue   = std::numeric_limits<valueType>::min();
   static valueType const epsilon    = std::numeric_limits<valueType>::epsilon();
   static valueType const epsilon10  = 10*epsilon;
   static valueType const epsilon100 = 100*epsilon;
 
   static valueType const RADFAC = M_PI / 180; // Degrees - to - radians conversion factor = pi / 180
-  static valueType const lb2    = log(2.0); // Dummy variable to avoid re - calculating this value in loop below
+  //static valueType const lb2    = log(2.0); // Dummy variable to avoid re - calculating this value in loop below
   static valueType const cosr   = cos(94.0 * RADFAC); //= -0.069756474
   static valueType const sinr   = sin(94.0 * RADFAC); //= 0.99756405
 
@@ -62,13 +62,15 @@ namespace PolynomialRoots {
   // placing the quotient in q and the remainder in a, b
   static
   void
-  QuadraticSyntheticDivision( indexType       NN,
-                              valueType       u,
-                              valueType       v,
-                              valueType const p[],
-                              valueType       q[],
-                              valueType     & a,
-                              valueType     & b ) {
+  QuadraticSyntheticDivision(
+    indexType       NN,
+    valueType       u,
+    valueType       v,
+    valueType const p[],
+    valueType       q[],
+    valueType     & a,
+    valueType     & b
+  ) {
     q[0] = b = p[0];
     q[1] = a = p[1] - (b*u);
     for ( indexType i = 2; i < NN; ++i )
@@ -82,22 +84,24 @@ namespace PolynomialRoots {
   // are normalized to avoid overflow.
   static
   indexType
-  calcSC( indexType       N,
-          valueType       a,
-          valueType       b,
-          valueType     & a1,
-          valueType     & a3,
-          valueType     & a7,
-          valueType     & c,
-          valueType     & d,
-          valueType     & e,
-          valueType     & f,
-          valueType     & g,
-          valueType     & h,
-          valueType const K[],
-          valueType       u,
-          valueType       v,
-          valueType       qk[] ) {
+  calcSC(
+    indexType       N,
+    valueType       a,
+    valueType       b,
+    valueType     & a1,
+    valueType     & a3,
+    valueType     & a7,
+    valueType     & c,
+    valueType     & d,
+    valueType     & e,
+    valueType     & f,
+    valueType     & g,
+    valueType     & h,
+    valueType const K[],
+    valueType       u,
+    valueType       v,
+    valueType       qk[]
+  ) {
 
     indexType dumFlag = 3; // TYPE = 3 indicates the quadratic is almost a factor of K
 
@@ -132,16 +136,18 @@ namespace PolynomialRoots {
   // Computes the next K polynomials using the scalars computed in calcSC_ak1
   static
   void
-  nextK( indexType       N,
-         indexType       tFlag,
-         valueType       a,
-         valueType       b,
-         valueType       a1,
-         valueType     & a3,
-         valueType     & a7,
-         valueType       K[],
-         valueType const qk[],
-         valueType const qp[] ) {
+  nextK(
+    indexType       N,
+    indexType       tFlag,
+    valueType       a,
+    valueType       b,
+    valueType       a1,
+    valueType     & a3,
+    valueType     & a7,
+    valueType       K[],
+    valueType const qk[],
+    valueType const qp[]
+  ) {
     if ( tFlag == 3 ) {
       // Use unscaled form of the recurrence
       K[1] = K[0] = 0;
@@ -171,24 +177,26 @@ namespace PolynomialRoots {
   // using the scalars computed in calcSC
   static
   void
-  newest( indexType       tFlag,
-          valueType     & uu,
-          valueType     & vv,
-          valueType       a,
-          valueType       a1,
-          valueType       a3,
-          valueType       a7,
-          valueType       b,
-          valueType       c,
-          valueType       d,
-          valueType       f,
-          valueType       g,
-          valueType       h,
-          valueType       u,
-          valueType       v,
-          valueType const K[],
-          indexType       N,
-          valueType const p[] ) {
+  newest(
+    indexType       tFlag,
+    valueType     & uu,
+    valueType     & vv,
+    valueType       a,
+    valueType       a1,
+    valueType       a3,
+    valueType       a7,
+    valueType       b,
+    valueType       c,
+    valueType       d,
+    valueType       f,
+    valueType       g,
+    valueType       h,
+    valueType       u,
+    valueType       v,
+    valueType const K[],
+    indexType       N,
+    valueType const p[]
+  ) {
 
     vv = uu = 0; // The quadratic is zeroed
     if ( tFlag != 3 ) {
@@ -222,17 +230,19 @@ namespace PolynomialRoots {
   // iFlag - flag to indicate a pair of zeros near real axis
   static
   void
-  RealIT( indexType     & iFlag,
-          indexType     & NZ,
-          valueType     & sss,
-          indexType       N,
-          valueType const p[],
-          indexType       NN,
-          valueType       qp[],
-          valueType     & szr,
-          valueType     & szi,
-          valueType       K[],
-          valueType       qk[] ) {
+  RealIT(
+    indexType     & iFlag,
+    indexType     & NZ,
+    valueType     & sss,
+    indexType       N,
+    valueType const p[],
+    indexType       NN,
+    valueType       qp[],
+    valueType     & szr,
+    valueType     & szi,
+    valueType       K[],
+    valueType       qk[]
+  ) {
     iFlag = NZ = 0;
     valueType t=0, omp=0, s = sss;
     for (indexType j=0;;) {
@@ -270,9 +280,9 @@ namespace PolynomialRoots {
 
       if ( abs(kv) > abs(K[N-1]) * epsilon10 ) {
         // Use the scaled form of the recurrence if the value of K at s is non - zero
-        valueType t = -(pv / kv);
+        valueType tt = -(pv / kv);
         K[0] = qp[0];
-        for ( indexType i = 1; i < N; ++i ) K[i] = t * qk[i-1] + qp[i];
+        for ( indexType i = 1; i < N; ++i ) K[i] = tt * qk[i-1] + qp[i];
       } else { // Use unscaled form
         K[0] = 0.0;
         for ( indexType i = 1; i < N; ++i ) K[i] = qk[i-1];
@@ -289,47 +299,46 @@ namespace PolynomialRoots {
   // factor converges only if the zeros are equimodular or nearly so.
   static
   void
-  QuadIT( indexType       N,
-          indexType     & NZ,
-          valueType       uu,
-          valueType       vv,
-          valueType     & szr,
-          valueType     & szi,
-          valueType     & lzr,
-          valueType     & lzi,
-          valueType       qp[],
-          indexType       NN,
-          valueType     & a,
-          valueType     & b,
-          valueType const p[],
-          valueType       qk[],
-          valueType     & a1,
-          valueType     & a3,
-          valueType     & a7,
-          valueType     & c,
-          valueType     & d,
-          valueType     & e,
-          valueType     & f,
-          valueType     & g,
-          valueType     & h,
-          valueType       K[] ) {
+  QuadIT(
+    indexType       N,
+    indexType     & NZ,
+    valueType       uu,
+    valueType       vv,
+    valueType     & szr,
+    valueType     & szi,
+    valueType     & lzr,
+    valueType     & lzi,
+    valueType       qp[],
+    indexType       NN,
+    valueType     & a,
+    valueType     & b,
+    valueType const p[],
+    valueType       qk[],
+    valueType     & a1,
+    valueType     & a3,
+    valueType     & a7,
+    valueType     & c,
+    valueType     & d,
+    valueType     & e,
+    valueType     & f,
+    valueType     & g,
+    valueType     & h,
+    valueType       K[]
+  ) {
 
     NZ = 0; // Number of zeros found
     indexType	j = 0, tFlag;
     valueType u = uu; // uu and vv are coefficients of the starting quadratic
     valueType v = vv;
-    valueType relstp, omp, ui, vi;
+    valueType relstp = 0; // initialize remove warning
+    valueType omp    = 0; // initialize remove warning
+    valueType ui, vi;
     bool triedFlag = false;
     do {
-      indexType nr, nc;
-      solveQuadratic( 1.0, u, v, szr, lzr, nr, nc );
-      if ( nr == 2 ) {
-        szi = lzi = 0;
-      } else {
-        szi =  lzr;
-        lzi = -lzr;
-        lzr =  szr;
-      }
+      Quadratic solve( 1.0, u, v );
+      solve.getRoot0(szr,szi);
+      solve.getRoot1(lzr,lzi);
+
       // Return if roots of the quadratic are real and not close
       // to multiple or nearly equal and of opposite sign.
       if ( abs(abs(szr) - abs(lzr)) > 0.01 * abs(lzr) ) break;
@@ -372,12 +381,12 @@ namespace PolynomialRoots {
       newest(tFlag, ui, vi, a, a1, a3, a7, b, c, d, f, g, h, u, v, K, N, p);
 
       // If vi is zero, the iteration is not converging
-      if ( vi != 0 ) {
+      if ( !isZero(vi) ) {
         relstp = abs((vi-v)/vi);
         u = ui;
         v = vi;
       }
-    } while( vi != 0 );
+    } while( !isZero(vi) );
   }
 
   //============================================================================
@@ -391,19 +400,21 @@ namespace PolynomialRoots {
   */
   static
   indexType
-  FixedShift( indexType   L2,
-              valueType   sr,
-              valueType   v,
-              valueType   K[],
-              indexType   N,
-              valueType   p[],
-              indexType   NN,
-              valueType   qp[],
-              valueType   u,
-              valueType & lzi,
-              valueType & lzr,
-              valueType & szi,
-              valueType & szr ) {
+  FixedShift(
+    indexType   L2,
+    valueType   sr,
+    valueType   v,
+    valueType   K[],
+    indexType   N,
+    valueType   p[],
+    indexType   NN,
+    valueType   qp[],
+    valueType   u,
+    valueType & lzi,
+    valueType & lzr,
+    valueType & szi,
+    valueType & szr
+  ) {
 
     #ifdef _MSC_VER
     valueType * qk  = (valueType*)alloca( 2*(N+1)*sizeof(valueType) );
@@ -413,7 +424,7 @@ namespace PolynomialRoots {
 	  #endif
 
     indexType iFlag = 1;
-    indexType NZ = 0;
+    indexType NZ    = 0;
     valueType betav = 0.25;
     valueType betas = 0.25;
     valueType oss   = sr;
@@ -425,7 +436,8 @@ namespace PolynomialRoots {
     valueType a1, a3, a7, c, d, e, f, g, h;
     indexType tFlag =	calcSC(N, a, b, a1, a3, a7, c, d, e, f, g, h, K, u, v, qk);
 
-    valueType otv, ots;
+    valueType otv = 0; // initialize remove warning
+    valueType ots = 0; // initialize remove warning
     for ( indexType j = 0; j < L2; ++j ) {
       indexType fflag = 1;
       // Calculate next K polynomial and estimate v
@@ -522,11 +534,13 @@ namespace PolynomialRoots {
   static
   inline
   void
-  evalPoly( valueType       x,
-            valueType const p[],
-            indexType       Degree,
-            valueType     & f,
-            valueType     & df ) {
+  evalPoly(
+    valueType       x,
+    valueType const p[],
+    indexType       Degree,
+    valueType     & f,
+    valueType     & df
+  ) {
     df = f = p[0];
     for ( indexType i = 1; i < Degree; ++i ) {
       f  = x * f + p[i];
@@ -561,7 +575,7 @@ namespace PolynomialRoots {
     */
     int max_exponent = std::numeric_limits<int>::min();
     for ( int i = 0; i <= N; ++i ) {
-      if ( p[i] != 0 ) {
+      if ( !isZero(p[i]) ) {
         int exponent;
         frexp( p[i], &exponent );
         if ( exponent > max_exponent ) max_exponent = exponent;
@@ -590,7 +604,7 @@ namespace PolynomialRoots {
 
     // Compute upper estimate of bound
     valueType x = exp((log(-pt[N]) - log(pt[0]))/N);
-    if ( pt[N-1] != 0 ) { // If Newton step at the origin is better, use it
+    if ( !isZero(pt[N-1]) ) { // If Newton step at the origin is better, use it
       valueType xm = -pt[N]/pt[N-1];
       if ( xm < x ) x = xm;
     }
@@ -614,52 +628,45 @@ namespace PolynomialRoots {
   static
   inline
   void
-  roots3( valueType const p[4],
-          indexType       Degree,
-          valueType       zeror[],
-          valueType       zeroi[] ) {
+  roots3(
+    valueType const p[4],
+    indexType       Degree,
+    valueType       zeror[],
+    valueType       zeroi[]
+  ) {
     if ( Degree == 1 ) {
       zeror[0] = -(p[1]/p[0]);
       zeroi[0] = 0;
     } else if ( Degree == 2 ) {
-      indexType nr, nc;
-      valueType r1, r2;
-      solveQuadratic( p[0], p[1], p[2], r1, r2, nr, nc );
-      if ( nr == 2 ) {
-        zeror[0] = r1; zeroi[0] = 0;
-        zeror[1] = r2; zeroi[1] = 0;
-      } else {
-        zeror[0] = r1; zeroi[0] =  r2;
-        zeror[1] = r1; zeroi[1] = -r2;
+      Quadratic solve( p[0], p[1], p[2] );
+      switch ( solve.numRoots() ) {
+      case 2: solve.getRoot1( zeror[1], zeroi[1] );
+      case 1: solve.getRoot0( zeror[0], zeroi[0] );
       }
     } else if ( Degree == 3 ) {
-      indexType nr, nc;
-      valueType r1, r2, r3;
-      solveCubic( p[0], p[1], p[2], p[3], r1, r2, r3, nr, nc );
-      if ( nr == 3 ) {
-        zeror[0] = r1; zeroi[0] = 0;
-        zeror[1] = r2; zeroi[1] = 0;
-        zeror[2] = r3; zeroi[2] = 0;
-      } else {
-        zeror[0] = r1; zeroi[0] =  0;
-        zeror[1] = r2; zeroi[1] =  r3;
-        zeror[2] = r2; zeroi[2] = -r3;
+      Cubic solve( p[0], p[1], p[2], p[3] );
+      switch ( solve.numRoots() ) {
+      case 3: solve.getRoot1( zeror[2], zeroi[2] );
+      case 2: solve.getRoot1( zeror[1], zeroi[1] );
+      case 1: solve.getRoot0( zeror[0], zeroi[0] );
       }
     }
   }
 
   //============================================================================
   int
-  roots( valueType const op[],
-         indexType       Degree,
-         valueType       zeror[],
-         valueType       zeroi[] ) {
+  roots(
+    valueType const op[],
+    indexType       Degree,
+    valueType       zeror[],
+    valueType       zeroi[]
+  ) {
 
     if ( Degree < 1 ) return -1;
 
     // Do a quick check to see if leading coefficient is 0
     // The leading coefficient is zero. No further action taken. Program terminated
-    if ( op[0] == 0 ) return -2;
+    if ( isZero(op[0]) ) return -2;
 
     valueType K[Degree+1];
     valueType p[Degree+1];
@@ -671,7 +678,7 @@ namespace PolynomialRoots {
     valueType yy = -xx;
 
     // Remove zeros at the origin, if any
-    for ( indexType j = 0; op[N] == 0; ++j, --N ) zeror[j] = zeroi[j] = 0.0;
+    for ( indexType j = 0; isZero(op[N]); ++j, --N ) zeror[j] = zeroi[j] = 0.0;
     std::copy( op, op+N+1, p ); // Make a copy of the coefficients
 
     while ( N > 0 ) {
@@ -692,12 +699,12 @@ namespace PolynomialRoots {
       indexType NM1 = N-1;
       valueType aa = p[N];
       valueType bb = p[NM1];
-      bool zerok = K[NM1] == 0;
+      bool zerok = isZero(K[NM1]);
       for ( indexType iter = 0; iter < 5; ++iter ) {
         if ( zerok ) { // Use unscaled form of recurrence
           for ( indexType i = 0; i < NM1; ++i ) K[NM1-i] = K[NM1-i-1];
           K[0] = 0;
-          zerok = K[NM1] == 0;
+          zerok = isZero(K[NM1]);
         } else { // Used scaled form of recurrence if value of K at 0 is nonzero
           valueType t = -aa / K[NM1];
           for ( indexType i = 0; i < NM1; ++i ) {

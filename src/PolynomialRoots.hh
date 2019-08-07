@@ -21,6 +21,7 @@
 #define POLYNOMIAL_ROOTS_HH
 
 #include <cmath>
+#include <cfloat>
 #include <complex>
 #include <iostream>
 
@@ -40,6 +41,35 @@ namespace PolynomialRoots {
   typedef int    indexType;
   typedef std::complex<valueType> complexType;
 
+  //! check if cloating point number `x` is zero
+  static
+  inline
+  bool
+  isZero( valueType x )
+  { return FP_ZERO == std::fpclassify(x); }
+
+  //! check if cloating point number `x` is finite
+  static
+  inline
+  bool
+  isInfinite( valueType x )
+  { return FP_INFINITE == std::fpclassify(x); }
+
+  //! check if cloating point number `x` is Not A Number
+  static
+  inline
+  bool
+  isNaN( valueType x )
+  { return FP_NAN == std::fpclassify(x); }
+
+  //! check if cloating point number `x` is regural (i.e. finite and not NaN)
+  static
+  inline
+  bool
+  isRegular( valueType x )
+  { return !( FP_INFINITE == std::fpclassify(x) ||
+              FP_NAN      == std::fpclassify(x) ); }
+
   valueType
   evalPoly(
     valueType const op[],
@@ -52,13 +82,6 @@ namespace PolynomialRoots {
     valueType const                 op[],
     indexType                       Degree,
     std::complex<valueType> const & x
-  );
-
-  valueType
-  CompHorner(
-    valueType const p[],
-    indexType       Degree,
-    valueType       x
   );
 
   // find roots of a generic polinomial using Jenkins-Traub method

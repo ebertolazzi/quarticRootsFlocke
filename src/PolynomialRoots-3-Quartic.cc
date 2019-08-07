@@ -362,7 +362,7 @@ namespace PolynomialRoots {
     iter = nreal = ncplx = 0;
 
     // special cases
-    if ( A == 0 ) {
+    if ( isZero(A) ) {
       Cubic csolve( B, C, D, E );
       nreal = csolve.numRoots();
       switch ( nreal ) {
@@ -373,7 +373,7 @@ namespace PolynomialRoots {
       if ( csolve.complexRoots() ) { ncplx = 2; nreal -= 2; }
       return;
     }
-    if ( E == 0 ) {
+    if ( isZero(E) ) {
       Cubic csolve( A, B, C, D );
       nreal = csolve.numRoots();
       r0 = r1 = r2 = r3 = 0;
@@ -391,7 +391,7 @@ namespace PolynomialRoots {
       }
       return;
     }
-    if ( B == 0 && D == 0 ) { // biquadratic case
+    if ( isZero(B) && isZero(D) ) { // biquadratic case
       // A x^4 + C x^2 + E
       Quadratic qsolve( A, C, E ) ;
       valueType x = qsolve.real_root0() ;
@@ -519,9 +519,9 @@ namespace PolynomialRoots {
         else if ( Qu <= epsi ) r3 = u;
         else                   nreal = 0;
         */
-        if      ( Qs == 0 ) r3    = s;
-        else if ( Qu == 0 ) r3    = u;
-        else                nreal = 0;
+        if      ( isZero(Qs) ) r3    = s;
+        else if ( isZero(Qu) ) r3    = u;
+        else                   nreal = 0;
       }
     } else {
       // one single real root (only 1 minimum)
@@ -582,7 +582,7 @@ namespace PolynomialRoots {
       u = s * t + q1; // value of Q'(-q3/4) at stationary point -q3/4
       bool notZero = (abs(u) >= machepsi); // H(-a3/4) is considered > 0 at stationary point
       bool minimum;
-      if ( q3 != 0 ) {
+      if ( !isZero(q3) ) {
         s = q1 / q3;
         minimum = q0 > s * s; // H''(-q3/4) > 0 -> minimum
       } else {
@@ -615,15 +615,15 @@ namespace PolynomialRoots {
 
         c = a * a;              // store a^2 for later
         d = b * b;              // store b^2 for later
-        valueType s = c + y;    // magnitude^2 of (a + iy) root
-        valueType t = d + z;    // magnitude^2 of (b + iz) root
+        valueType ss = c + y;   // magnitude^2 of (a + iy) root
+        valueType tt = d + z;   // magnitude^2 of (b + iz) root
 
-        if ( s > t ) {           // minimize imaginary error
-          c = sqrt(y);          // 1st imaginary component -> c
-          d = sqrt(A0 / s - d); // 2nd imaginary component -> d
+        if ( ss > tt ) {         // minimize imaginary error
+          c = sqrt(y);           // 1st imaginary component -> c
+          d = sqrt(A0 / ss - d); // 2nd imaginary component -> d
         } else {
-          c = sqrt(A0 / t - c); // 1st imaginary component -> c
-          d = sqrt(z);          // 2nd imaginary component -> d
+          c = sqrt(A0 / tt - c); // 1st imaginary component -> c
+          d = sqrt(z);           // 2nd imaginary component -> d
         }
 
       } else { // no bisection -> real components equal

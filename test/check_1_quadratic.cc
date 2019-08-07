@@ -12,7 +12,7 @@ using namespace PolynomialRoots;
 
 // Set the polynomial coefficients corresponding and the exact roots.
 
-double qq[][3] = {
+static double qq[][3] = {
   {  50,  50,   0 },
   {  50,  50,   1 },
   {  50,  50,  50 },
