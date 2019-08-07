@@ -16,12 +16,7 @@
 		D97EBE5722FB19B2007D498C /* PolynomialRoots-3-Quartic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D97EBE4B22FB19B2007D498C /* PolynomialRoots-3-Quartic.cc */; };
 		D97EBE5822FB19B2007D498C /* PolynomialRoots.hh in Headers */ = {isa = PBXBuildFile; fileRef = D97EBE4C22FB19B2007D498C /* PolynomialRoots.hh */; };
 		D97EBE5922FB19B2007D498C /* PolynomialRoots-1-Quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D97EBE4D22FB19B2007D498C /* PolynomialRoots-1-Quadratic.cc */; };
-		D97EBE5A22FB19B2007D498C /* PolynomialRoots-Utils.o in Frameworks */ = {isa = PBXBuildFile; fileRef = D97EBE4E22FB19B2007D498C /* PolynomialRoots-Utils.o */; };
-		D97EBE5B22FB19B2007D498C /* PolynomialRoots-2-Cubic.o in Frameworks */ = {isa = PBXBuildFile; fileRef = D97EBE4F22FB19B2007D498C /* PolynomialRoots-2-Cubic.o */; };
-		D97EBE5C22FB19B2007D498C /* PolynomialRoots-Jenkins-Traub.o in Frameworks */ = {isa = PBXBuildFile; fileRef = D97EBE5022FB19B2007D498C /* PolynomialRoots-Jenkins-Traub.o */; };
-		D97EBE5D22FB19B2007D498C /* PolynomialRoots-3-Quartic.o in Frameworks */ = {isa = PBXBuildFile; fileRef = D97EBE5122FB19B2007D498C /* PolynomialRoots-3-Quartic.o */; };
 		D97EBE5E22FB19B2007D498C /* PolynomialRoots-Jenkins-Traub.cc in Sources */ = {isa = PBXBuildFile; fileRef = D97EBE5222FB19B2007D498C /* PolynomialRoots-Jenkins-Traub.cc */; };
-		D97EBE5F22FB19B2007D498C /* PolynomialRoots-1-Quadratic.o in Frameworks */ = {isa = PBXBuildFile; fileRef = D97EBE5322FB19B2007D498C /* PolynomialRoots-1-Quadratic.o */; };
 		D98AAA5C1F9B636E00E28E36 /* libquartic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D973F4361C503E1D001156FE /* libquartic.a */; };
 		D98AAA631F9B639500E28E36 /* check_2_cubic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D98AAA621F9B639500E28E36 /* check_2_cubic.cc */; };
 		D9EA83FC1F9AA69300F89883 /* check_1_quadratic.cc in Sources */ = {isa = PBXBuildFile; fileRef = D9EA83FA1F9AA68800F89883 /* check_1_quadratic.cc */; };
@@ -101,12 +96,7 @@
 		D97EBE4B22FB19B2007D498C /* PolynomialRoots-3-Quartic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-3-Quartic.cc"; sourceTree = "<group>"; };
 		D97EBE4C22FB19B2007D498C /* PolynomialRoots.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PolynomialRoots.hh; sourceTree = "<group>"; };
 		D97EBE4D22FB19B2007D498C /* PolynomialRoots-1-Quadratic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-1-Quadratic.cc"; sourceTree = "<group>"; };
-		D97EBE4E22FB19B2007D498C /* PolynomialRoots-Utils.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "PolynomialRoots-Utils.o"; sourceTree = "<group>"; };
-		D97EBE4F22FB19B2007D498C /* PolynomialRoots-2-Cubic.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "PolynomialRoots-2-Cubic.o"; sourceTree = "<group>"; };
-		D97EBE5022FB19B2007D498C /* PolynomialRoots-Jenkins-Traub.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "PolynomialRoots-Jenkins-Traub.o"; sourceTree = "<group>"; };
-		D97EBE5122FB19B2007D498C /* PolynomialRoots-3-Quartic.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "PolynomialRoots-3-Quartic.o"; sourceTree = "<group>"; };
 		D97EBE5222FB19B2007D498C /* PolynomialRoots-Jenkins-Traub.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "PolynomialRoots-Jenkins-Traub.cc"; sourceTree = "<group>"; };
-		D97EBE5322FB19B2007D498C /* PolynomialRoots-1-Quadratic.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "PolynomialRoots-1-Quadratic.o"; sourceTree = "<group>"; };
 		D98AAA611F9B636E00E28E36 /* check_2_cubic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = check_2_cubic; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98AAA621F9B639500E28E36 /* check_2_cubic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = check_2_cubic.cc; sourceTree = "<group>"; };
 		D9EA83F51F9AA61600F89883 /* check_1_quadratic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = check_1_quadratic; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,11 +109,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D97EBE5F22FB19B2007D498C /* PolynomialRoots-1-Quadratic.o in Frameworks */,
-				D97EBE5A22FB19B2007D498C /* PolynomialRoots-Utils.o in Frameworks */,
-				D97EBE5D22FB19B2007D498C /* PolynomialRoots-3-Quartic.o in Frameworks */,
-				D97EBE5C22FB19B2007D498C /* PolynomialRoots-Jenkins-Traub.o in Frameworks */,
-				D97EBE5B22FB19B2007D498C /* PolynomialRoots-2-Cubic.o in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,18 +163,13 @@
 		D97EBE4722FB19B2007D498C /* src */ = {
 			isa = PBXGroup;
 			children = (
+				D97EBE4D22FB19B2007D498C /* PolynomialRoots-1-Quadratic.cc */,
 				D97EBE4822FB19B2007D498C /* PolynomialRoots-2-Cubic.cc */,
+				D97EBE4B22FB19B2007D498C /* PolynomialRoots-3-Quartic.cc */,
 				D97EBE4922FB19B2007D498C /* PolynomialRoots-Utils.hh */,
 				D97EBE4A22FB19B2007D498C /* PolynomialRoots-Utils.cc */,
-				D97EBE4B22FB19B2007D498C /* PolynomialRoots-3-Quartic.cc */,
 				D97EBE4C22FB19B2007D498C /* PolynomialRoots.hh */,
-				D97EBE4D22FB19B2007D498C /* PolynomialRoots-1-Quadratic.cc */,
-				D97EBE4E22FB19B2007D498C /* PolynomialRoots-Utils.o */,
-				D97EBE4F22FB19B2007D498C /* PolynomialRoots-2-Cubic.o */,
-				D97EBE5022FB19B2007D498C /* PolynomialRoots-Jenkins-Traub.o */,
-				D97EBE5122FB19B2007D498C /* PolynomialRoots-3-Quartic.o */,
 				D97EBE5222FB19B2007D498C /* PolynomialRoots-Jenkins-Traub.cc */,
-				D97EBE5322FB19B2007D498C /* PolynomialRoots-1-Quadratic.o */,
 			);
 			path = src;
 			sourceTree = "<group>";

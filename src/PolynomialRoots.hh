@@ -36,12 +36,9 @@ Port to C++ of Jenkins-Traub real
 polynomial root finder and the algorithm
 of Norbert Flocke for polynoms up to degree 4.
 
-Reference
----------
+[Doxygen documentation: http://ebertolazzi.github.io/quarticRootsFlocke/](http://ebertolazzi.github.io/quarticRootsFlocke/)
 
-Algorithm 954: An Accurate and Efficient Cubic and Quartic
-Equation Solver for Physical Applications, ACM TOMS,
-vol 41, n.4, 2015
+[Repository: https://github.com/ebertolazzi/quarticRootsFlocke](https://github.com/ebertolazzi/quarticRootsFlocke)
 
 Usage
 -----
@@ -77,6 +74,18 @@ To solve quadratic, cubic or quartic use specialized classes
 
 look at the class definition to see how to access the computed roots.
 
+References
+----------
+
+- Algorithm 954: An Accurate and Efficient Cubic and Quartic
+  Equation Solver for Physical Applications, ACM TOMS,
+  vol 41, n.4, 2015
+
+- A Three-Stage Algorithm for Real Polynomials Using Quadratic Iteration
+  M. A.   Jenkins and J. F. Traub
+  SIAM Journal on Numerical Analysis,
+  Vol. 7, No. 4 (Dec., 1970), pp. 545-566
+
 Author
 ------
 
@@ -86,6 +95,7 @@ Universita` degli Studi di Trento<br>
 email: enrico.bertolazzi@unitn.it
 
 */
+
 //! implementation of Flocke algorithm for roots of 3rd and 4th degree polynomials
 namespace PolynomialRoots {
 
