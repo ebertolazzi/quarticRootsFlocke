@@ -32,6 +32,19 @@
 
 #include "PolynomialRoots.hh"
 
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wglobal-constructors"
+#pragma GCC diagnostic ignored "-Wvla-extension"
+#pragma GCC diagnostic ignored "-Wvla"
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wglobal-constructors"
+#pragma clang diagnostic ignored "-Wvla-extension"
+#pragma clang diagnostic ignored "-Wvla"
+#pragma clang diagnostic ignored "-Wunused-function"
+#endif
+
 #include <iostream>
 #include <fstream>
 #include <cctype>
