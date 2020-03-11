@@ -262,7 +262,9 @@ namespace PolynomialRoots {
         }
         t = p; // save current p(x)
       }
-      dp = (p*dp)/(dp*dp-p*ddp); // Newton correction
+      //dp = (p*dp)/(dp*dp-p*ddp); // double zero correction
+      dp = (p*dp)/(dp*dp-0.5*p*ddp); // Halley correction
+      //dp = p/dp; // Newton correction
       x -= dp; // new Newton root
       bisection = oscillate > 2; // activate bisection
       converged = std::abs(dp) <= std::abs(x) * machepsi; // Newton convergence indicator

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D973F4261C50202A001156FE"
-               BuildableName = "test4"
-               BlueprintName = "test4"
+               BlueprintIdentifier = "D973F4491C504453001156FE"
+               BuildableName = "check_3_quartic"
+               BlueprintName = "check_3_quartic"
                ReferencedContainer = "container:PolynomialRoots.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,15 +27,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D973F4261C50202A001156FE"
-            BuildableName = "test4"
-            BlueprintName = "test4"
-            ReferencedContainer = "container:PolynomialRoots.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
       </Testables>
    </TestAction>
@@ -43,6 +34,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      enableAddressSanitizer = "YES"
+      enableUBSanitizer = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -53,12 +46,24 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D973F4261C50202A001156FE"
-            BuildableName = "test4"
-            BlueprintName = "test4"
+            BlueprintIdentifier = "D973F4491C504453001156FE"
+            BuildableName = "check_3_quartic"
+            BlueprintName = "check_3_quartic"
             ReferencedContainer = "container:PolynomialRoots.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <AdditionalOptions>
+         <AdditionalOption
+            key = "NSZombieEnabled"
+            value = "YES"
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "MallocScribble"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -70,9 +75,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D973F4261C50202A001156FE"
-            BuildableName = "test4"
-            BlueprintName = "test4"
+            BlueprintIdentifier = "D973F4491C504453001156FE"
+            BuildableName = "check_3_quartic"
+            BlueprintName = "check_3_quartic"
             ReferencedContainer = "container:PolynomialRoots.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

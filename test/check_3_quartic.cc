@@ -13,6 +13,10 @@ using namespace PolynomialRoots;
 // Set the polynomial coefficients corresponding and the exact roots.
 // Set the exact quartic roots.
 
+static double rootQuarticReal0[] = { -1.017229096421223459824821857711825869530e15, 0.5313292845913352486945402695550732313951e-1, -0.2656646422956676243472701347775328370522e-1, -0.2656646422956676243472701347775328370522e-1 };
+static double rootQuarticImag0[] = { 0, 0, 0.4601446582307080400727162429104527153041e-1, -0.4601446582307080400727162429104527153041e-1 };
+static double quartic0[]         = { -5.898376305898030e-09, -6.000000000001007e+06, 3.664603343001005e-27, 0, 9.000000000003021e+02 };
+
 static double rootQuarticReal1[] = { 1, 1e3, 1e6, 1e+9 };
 static double rootQuarticImag1[] = { 0, 0, 0, 0 };
 static double quartic1[]         = { 1, -1001001001.0, 1001002001001000.0, -1001001001000000000.0, 1000000000000000000.0 };
@@ -130,8 +134,7 @@ main() {
   cout.precision(14);
   //DO_TEST(9);
   //cout << "\n\nALL DONE!\n";
-  //return 0;
-
+  DO_TEST(0);
   DO_TEST(1);
   DO_TEST(2);
   DO_TEST(3);
@@ -154,3 +157,4 @@ main() {
   return 0;
 }
 
+// 3, 8, 17
