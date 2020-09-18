@@ -1,5 +1,9 @@
 DerivedData
-build
 *.o
 lib
 bin
+build
+others
+doc
+docs
+

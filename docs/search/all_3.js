@@ -1,6 +1,0 @@
-var searchData=
-[
-  ['getnegativeroots',['getNegativeRoots',['../d5/ded/class_polynomial_roots_1_1_quadratic.html#a58ddfc6317dad86057d6161f1c498317',1,'PolynomialRoots::Quadratic::getNegativeRoots()'],['../d9/df7/class_polynomial_roots_1_1_cubic.html#a7bef4c9418a7308b4f6b7a0a8cf37fbf',1,'PolynomialRoots::Cubic::getNegativeRoots()'],['../d8/dec/class_polynomial_roots_1_1_quartic.html#a7af065a783229bb7537550741c177682',1,'PolynomialRoots::Quartic::getNegativeRoots()']]],
-  ['getpositiveroots',['getPositiveRoots',['../d5/ded/class_polynomial_roots_1_1_quadratic.html#ad53b8fdc5f6b4d517e450f115348053d',1,'PolynomialRoots::Quadratic::getPositiveRoots()'],['../d9/df7/class_polynomial_roots_1_1_cubic.html#ae064f673f4a9adb39374067972234b72',1,'PolynomialRoots::Cubic::getPositiveRoots()'],['../d8/dec/class_polynomial_roots_1_1_quartic.html#af3cac92e66942add50f50efd54946ea0',1,'PolynomialRoots::Quartic::getPositiveRoots()']]],
-  ['getrealroots',['getRealRoots',['../d5/ded/class_polynomial_roots_1_1_quadratic.html#a0870508a9856a9562500a4b9eb771e63',1,'PolynomialRoots::Quadratic::getRealRoots()'],['../d9/df7/class_polynomial_roots_1_1_cubic.html#ac5972d5a2e1b345f303b88cbd5b078fe',1,'PolynomialRoots::Cubic::getRealRoots()'],['../d8/dec/class_polynomial_roots_1_1_quartic.html#ab891e8e38e581c5532059e2c1cd89269',1,'PolynomialRoots::Quartic::getRealRoots()']]]
-];
