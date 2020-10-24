@@ -65,9 +65,9 @@ travis: bin
 
 bin: lib
 	@$(MKDIR) bin
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/check_1_quadratic test/check_1_quadratic.cc $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/check_2_cubic     test/check_2_cubic.cc     $(LIBS)
-	$(CXX) $(INC) $(CXXFLAGS) -o bin/check_3_quartic   test/check_3_quartic.cc   $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/check_1_quadratic src_tests/check_1_quadratic.cc $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/check_2_cubic     src_tests/check_2_cubic.cc     $(LIBS)
+	$(CXX) $(INC) $(CXXFLAGS) -o bin/check_3_quartic   src_tests/check_3_quartic.cc   $(LIBS)
 
 lib: lib/$(LIB_QUARTIC)$(STATIC_EXT) lib/$(LIB_QUARTIC)$(DYNAMIC_EXT)
 
@@ -78,27 +78,27 @@ include_local:
 	@cp -f src/*.hh lib/include
 
 src/%.o: src/%.cc $(DEPS)
-	$(CXX) $(INC) $(CXXFLAGS) $(DEFS) -c $< -o $@ 
+	$(CXX) $(INC) $(CXXFLAGS) $(DEFS) -c $< -o $@
 
 src/%.o: src/%.c $(DEPS)
 	$(CC) $(INC) $(CFLAGS) $(DEFS) -c -o $@ $<
 
 lib/libQuartic.a: $(OBJS) include_local
 	@$(MKDIR) lib
-	$(AR) lib/libQuartic.a $(OBJS) 
+	$(AR) lib/libQuartic.a $(OBJS)
 
 lib/libQuartic.dylib: $(OBJS) include_local
 	@$(MKDIR) lib
-	$(CXX) -shared -o lib/libQuartic.dylib $(OBJS) 
+	$(CXX) -shared -o lib/libQuartic.dylib $(OBJS)
 
 lib/libQuartic.so: $(OBJS) include_local
 	@$(MKDIR) lib
-	$(CXX) -shared -o lib/libQuartic.so $(OBJS) 
+	$(CXX) -shared -o lib/libQuartic.so $(OBJS)
 
 install: lib
 	@$(MKDIR) $(PREFIX)/lib
 	@$(MKDIR) $(PREFIX)/include
-	cp src/*.hh                $(PREFIX)/include
+	cp src/*.hh               $(PREFIX)/include
 	cp lib/$(LIB_QUARTIC).*   $(PREFIX)/lib
 	@$(LDCONFIG) $(PREFIX)/lib
 

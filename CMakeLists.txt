@@ -9,33 +9,41 @@
 #                                                                          #
 ############################################################################
 
-cmake_minimum_required(VERSION 3.5)
+CMAKE_MINIMUM_REQUIRED( VERSION 2.8 )
+SET( CMAKE_VERBOSE_MAKEFILE OFF )
+SET( CMAKE_INSTALL_MESSAGE NEVER )
 
-SET( TARGET Quartic )
+PROJECT( Quartic CXX C )
+ENABLE_TESTING()
+
+IF ( CMAKE_BUILD_TYPE STREQUAL "Debug" )
+  SET( DEBUG_SUFFIX "_debug" )
+ELSE()
+  SET( DEBUG_SUFFIX )
+ENDIF()
+
+IF(APPLE)
+  SET( TARGETS Quartic_osx_static${DEBUG_SUFFIX} )
+ELSEIF( UNIX )
+  SET( TARGETS Quartic_linux_static${DEBUG_SUFFIX} )
+ELSE()
+  SET( CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON )
+  SET( TARGETS Quartic_win_${BITS}_static${DEBUG_SUFFIX} )
+ENDIF()
+
+IF ( BUILD_SHARED )
+  IF(APPLE)
+    SET( TARGET Quartic_osx${DEBUG_SUFFIX} )
+  ELSEIF( UNIX )
+    SET( TARGET Quartic_linux${DEBUG_SUFFIX} )
+  ELSE()
+    SET( TARGET Quartic_win_${BITS}${DEBUG_SUFFIX} )
+  ENDIF()
+ENDIF()
 
 PROJECT( ${TARGET} CXX C )
 
-FILE( GLOB S ./CMakeLists-cflags.txt )
-IF( EXISTS ${S} )
-  INCLUDE( ${S} )
-ELSE()
-  SET( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
-  SET( CMAKE_VERBOSE_MAKEFILE            TRUE )
-  IF( CMAKE_CXX_COMPILER_ID MATCHES "GNU" )
-    SET( CMAKE_CXX_FLAGS "-std=c++11 " )
-    SET( CMAKE_CXX_FLAGS_RELEASE "-fPIC -Wall -Wno-weak-vtables -Wno-implicit-fallthrough -Wno-documentation-unknown-command -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-reserved-id-macro -Wno-documentation -funroll-loops -O3 -g0 " )
-    SET( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -Wall -Wno-weak-vtables -Wno-implicit-fallthrough -Wno-documentation-unknown-command -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-reserved-id-macro -Wno-documentation -O0 -g3 -DMECHATRONIX_DEBUG " )
-  ELSEIF( CMAKE_CXX_COMPILER_ID MATCHES "Clang" )
-    SET( CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ " )
-    SET( CMAKE_CXX_FLAGS_RELEASE "-fPIC -Weverything -Wno-weak-vtables -Wno-implicit-fallthrough -Wno-documentation-unknown-command -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-reserved-id-macro -Wno-documentation -funroll-loops -O3 -g0 -fPIC -Weverything -Wno-weak-vtables -Wno-implicit-fallthrough -Wno-documentation-unknown-command -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-reserved-id-macro -Wno-documentation " )
-    SET( CMAKE_CXX_FLAGS_DEBUG   "-fPIC -Weverything -Wno-weak-vtables -Wno-implicit-fallthrough -Wno-documentation-unknown-command -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-reserved-id-macro -Wno-documentation -O0 -gfull -DMECHATRONIX_DEBUG -fPIC -Weverything -Wno-weak-vtables -Wno-implicit-fallthrough -Wno-documentation-unknown-command -Wno-float-equal -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-reserved-id-macro -Wno-documentation " )
-  ELSEIF( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
-    SET( CMAKE_CXX_FLAGS_RELEASE "/nologo /GS /W3 /WX- /Gm- /Gd /fp:precise /EHsc /FS /D_WINDOWS /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /O2 /MD " )
-    SET( CMAKE_CXX_FLAGS_DEBUG   "/nologo /GS /W3 /WX- /Gm- /Gd /fp:precise /EHsc /FS /D_WINDOWS /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC /Od /Ob0 /MDd /Zi /RTC1 /D_DEBUG " )
-  ELSE()
-    MESSAGE( FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}")
-  ENDIF()
-ENDIF()
+INCLUDE( ./CMakeLists-cflags.txt )
 
 MESSAGE( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}")
 
@@ -57,12 +65,13 @@ ENDFOREACH (F ${S})
 
 INCLUDE_DIRECTORIES( src )
 
-ADD_LIBRARY( ${TARGET} STATIC ${SOURCES} ${HEADERS} )
+ADD_LIBRARY( ${TARGETS} STATIC ${SOURCES} ${HEADERS} )
+IF ( BUILD_SHARED )
+  ADD_LIBRARY( ${TARGET} SHARED ${SOURCES} ${HEADERS} )
+ENDIF()
 
 IF( BUILD_EXECUTABLE )
-
   SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
-
   SET( EXECUTABLE check_1_quadratic  check_2_cubic check_3_quartic )
   FOREACH ( EXE ${EXECUTABLE} )
     ADD_EXECUTABLE( ${EXE} test/${EXE}.cc ${HEADERS} )
@@ -70,10 +79,23 @@ IF( BUILD_EXECUTABLE )
   ENDFOREACH ( EXE ${EXECUTABLE} )
 ENDIF()
 
-INSTALL( TARGETS ${TARGET}
-         RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-         LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/dll
-         ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX} )
+SET( CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/lib" )
+
+IF ( BUILD_SHARED )
+  INSTALL(
+    TARGETS ${TARGET} ${TARGETS}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/dll
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+  )
+ELSE()
+  INSTALL(
+    TARGETS ${TARGETS}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/dll
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+  )
+ENDIF()
 
 INSTALL( FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include )
 
