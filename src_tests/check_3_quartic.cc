@@ -104,6 +104,17 @@ static double quartic18[]         = {
   102.0221256717945692571447580121457576751708984375
 };
 
+// Emanuele Siego example
+static double rootQuarticReal19[] = { 0.14271266144792,   0.14271266144792,  0.36842201250793, 0.36842202205209 };
+static double rootQuarticImag19[] = { 0.060284865351686, -0.060284865351686, 0, 0 };
+static double quartic19[] = {
+  5.0 * ( -1462.2326183798939 ),
+  4.0 * ( 1868.4944990527565 ),
+  3.0 * ( -901.83171888631921 ),
+  2.0 * ( 206.27445843560130 ),
+  1.0 * ( -23.818259047289210 )
+};
+
 #define DO_TEST( N ) \
   cout << "\n\nText N." << N << '\n'; \
   do_test( quartic##N, rootQuarticReal##N, rootQuarticImag##N )
@@ -132,8 +143,6 @@ do_test(
 int
 main() {
   cout.precision(14);
-  //DO_TEST(9);
-  //cout << "\n\nALL DONE!\n";
   DO_TEST(0);
   DO_TEST(1);
   DO_TEST(2);
@@ -153,6 +162,7 @@ main() {
   DO_TEST(16);
   DO_TEST(17);
   DO_TEST(18);
+  DO_TEST(19);
   cout << "\n\nALL DONE!\n";
   return 0;
 }

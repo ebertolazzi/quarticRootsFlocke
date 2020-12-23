@@ -11,7 +11,7 @@ AR          = ar rcs
 LDCONFIG    = sudo ldconfig
 
 WARN=-Wall -Wno-sign-compare
-#-Weverything -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command 
+#-Weverything -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command
 
 # default values
 
@@ -33,7 +33,7 @@ endif
 
 # check if the OS string contains 'Darwin'
 ifneq (,$(findstring Darwin, $(OS)))
-  WARN        = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command 
+  WARN        = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command -Wno-poison-system-directories
   LIBS        = -L./lib -lQuartic
   CXXFLAGS    = $(WARN) -O3 -fPIC
   AR          = libtool -static -o

@@ -242,11 +242,11 @@ namespace PolynomialRoots {
       dp = p/dp; // Newton correction
       x -= dp;   // new Newton root
       bisection = oscillate > 2; // activate bisection
-      converged = std::abs(dp) <= std::abs(x) * machepsi; // Newton convergence indicator
+      converged = std::abs(dp) <= (1+std::abs(x)) * machepsi; // Newton convergence indicator
     }
     if ( bisection ) {
       t = u - s; // initial bisection interval
-      while ( abs(t) > abs(x) * machepsi ) { // bisection iterates
+      while ( abs(t) > (1+abs(x)) * machepsi ) { // bisection iterates
         ++iter;
         p = evalMonicCubic( x, a, b, c );
         if ( p < 0 ) s = x;

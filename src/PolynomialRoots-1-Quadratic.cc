@@ -25,7 +25,7 @@
 
 namespace PolynomialRoots {
 
-  using std::abs;
+  using  std::abs;
   static valueType const machepsi = std::numeric_limits<valueType>::epsilon();
 
   indexType
