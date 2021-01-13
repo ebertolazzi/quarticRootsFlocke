@@ -54,7 +54,7 @@ static double rootCubicReal9[] = { -1.0e+14, 1, 1 };
 static double rootCubicImag9[] = { 0, 1, -1 };
 static double cubic9[]         = { 1, 9.9999999999998e13, -1.99999999999998e14, 2e+14 };
 
-static double r = sqrt(2.0);
+static double r = std::sqrt(2.0);
 static double rootCubicReal10[] = { r, r, r };
 static double rootCubicImag10[] = { 0, 0, 0 };
 static double cubic10[]         = { 1, -3*r, 6, -2*r };

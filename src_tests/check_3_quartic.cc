@@ -80,7 +80,7 @@ static double quartic14[]         = {
   -22.526485131747265
 };
 
-static double r = sqrt(2.0);
+static double r = std::sqrt(2.0);
 static double rootQuarticReal15[] = { 0, r, r, r };
 static double rootQuarticImag15[] = { 0, 0, 0, 0 };
 static double quartic15[]         = { 1, -3*r, 6, -2*r, 0 };
