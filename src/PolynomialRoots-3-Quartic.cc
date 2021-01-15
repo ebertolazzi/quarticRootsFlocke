@@ -495,6 +495,7 @@ namespace PolynomialRoots {
     valueType t = qsolve.real_root1();
     valueType s = qsolve.real_root2();
 
+    bool must_refine_r3 = true;
     if ( !qsolve.complexRoots() ) {
       valueType Qs = evalMonicQuartic( s, q3, q2, q1, q0 );
       valueType Qu = evalMonicQuartic( u, q3, q2, q1, q0 );
@@ -521,9 +522,13 @@ namespace PolynomialRoots {
         else if ( Qu <= epsi ) r3 = u;
         else                   nreal = 0;
         */
-        if      ( isZero(Qs) ) r3    = s;
-        else if ( isZero(Qu) ) r3    = u;
-        else                   nreal = 0;
+        if ( isZero(Qs) ) {
+          must_refine_r3 = false; r3 = s;
+        } else if ( isZero(Qu) ) {
+          must_refine_r3 = false; r3 = u;
+        } else {
+          nreal = 0;
+        }
       }
     } else {
       // one single real root (only 1 minimum)
@@ -548,7 +553,8 @@ namespace PolynomialRoots {
     ..  oscillation brackets.
     */
     if ( nreal > 0 ) {
-      iter += zeroQuarticByNewtonBisection( q3, q2, q1, q0, r3 );
+      if ( must_refine_r3 )
+        iter += zeroQuarticByNewtonBisection( q3, q2, q1, q0, r3 );
       r3 *= scale;
 
       /*
