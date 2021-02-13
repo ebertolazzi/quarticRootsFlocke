@@ -661,7 +661,7 @@ namespace PolynomialRoots {
     } else if ( Degree == 3 ) {
       Cubic solve( p[0], p[1], p[2], p[3] );
       switch ( solve.numRoots() ) {
-        case 3: solve.getRoot1( zeror[2], zeroi[2] );
+        case 3: solve.getRoot2( zeror[2], zeroi[2] );
         case 2: solve.getRoot1( zeror[1], zeroi[1] );
         case 1: solve.getRoot0( zeror[0], zeroi[0] );
       }
