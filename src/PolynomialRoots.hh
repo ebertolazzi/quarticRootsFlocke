@@ -231,6 +231,23 @@ namespace PolynomialRoots {
      */
     indexType getNegativeRoots( valueType r[] ) const;
 
+    //! get real roots in a range
+    /*!
+     * \param[in]  a left side of the range
+     * \param[in]  b right side of the range
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of real roots in the range [a,b]
+     */
+    indexType getRootsInRange( valueType a, valueType b, valueType r[] ) const;
+
+    /*!
+     * \param[in]  a left side of the range
+     * \param[in]  b right side of the range
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of real roots in the open range (a,b)
+     */
+    indexType getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const;
+
     valueType real_root0() const { return r0; } //!< first real root
     valueType real_root1() const { return r1; } //!< second real root
 
@@ -380,6 +397,23 @@ namespace PolynomialRoots {
      * \return the total number of negative real roots, 0, 1, 2 or 3
      */
     indexType getNegativeRoots( valueType r[] ) const;
+
+    //! get real roots in a range
+    /*!
+     * \param[in]  a left side of the range
+     * \param[in]  b right side of the range
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of real roots in the range [a,b]
+     */
+    indexType getRootsInRange( valueType a, valueType b, valueType r[] ) const;
+
+    /*!
+     * \param[in]  a left side of the range
+     * \param[in]  b right side of the range
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of real roots in the open range (a,b)
+     */
+    indexType getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const;
 
     valueType real_root0() const { return r0; } //!< first real real
     valueType real_root1() const { return r1; } //!< second real real
@@ -559,6 +593,23 @@ namespace PolynomialRoots {
      * \return the total number of negative real roots, 0, 1, 2, 3 or 4
      */
     indexType getNegativeRoots( valueType r[] ) const;
+
+    //! get real roots in a range
+    /*!
+     * \param[in]  a left side of the range
+     * \param[in]  b right side of the range
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of real roots in the range [a,b]
+     */
+    indexType getRootsInRange( valueType a, valueType b, valueType r[] ) const;
+
+    /*!
+     * \param[in]  a left side of the range
+     * \param[in]  b right side of the range
+     * \param[out] r vector that will be filled with the real roots
+     * \return the total number of real roots in the open range (a,b)
+     */
+    indexType getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const;
 
     valueType real_root0() const { return r0; } //!< first real real
     valueType real_root1() const { return r1; } //!< second real real

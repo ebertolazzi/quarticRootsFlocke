@@ -58,6 +58,26 @@ namespace PolynomialRoots {
     return nr;
   }
 
+  indexType
+  Quartic::getRootsInRange( valueType a, valueType b, valueType r[] ) const {
+    indexType nr = 0;
+    if ( !cplx0() && r0 >= a && r0 <= b ) r[nr++] = r0;
+    if ( !cplx1() && r1 >= a && r1 <= b ) r[nr++] = r1;
+    if ( !cplx2() && r2 >= a && r2 <= b ) r[nr++] = r2;
+    if ( !cplx3() && r3 >= a && r3 <= b ) r[nr++] = r3;
+    return nr;
+  }
+
+  indexType
+  Quartic::getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const {
+    indexType nr = 0;
+    if ( !cplx0() && r0 > a && r0 < b ) r[nr++] = r0;
+    if ( !cplx1() && r1 > a && r1 < b ) r[nr++] = r1;
+    if ( !cplx2() && r2 > a && r2 < b ) r[nr++] = r2;
+    if ( !cplx3() && r3 > a && r3 < b ) r[nr++] = r3;
+    return nr;
+  }
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //
   // x^4 + A x^3 + B x^2 + C x + D

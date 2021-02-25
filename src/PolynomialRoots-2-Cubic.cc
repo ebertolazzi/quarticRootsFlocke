@@ -70,6 +70,32 @@ namespace PolynomialRoots {
     return nr;
   }
 
+  indexType
+  Cubic::getRootsInRange( valueType a, valueType b, valueType r[] ) const {
+    indexType nr = 0;
+    if ( cplx ) {
+      if ( nrts > 2 && r2 >= a && r2 <= b ) r[nr++] = r2;
+    } else {
+      if ( nrts > 0 && r0 >= a && r0 <= b ) r[nr++] = r0;
+      if ( nrts > 1 && r1 >= a && r1 <= b ) r[nr++] = r1;
+      if ( nrts > 2 && r2 >= a && r2 <= b ) r[nr++] = r2;
+    }
+    return nr;
+  }
+
+  indexType
+  Cubic::getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const {
+    indexType nr = 0;
+    if ( cplx ) {
+      if ( nrts > 2 && r2 > a && r2 < b ) r[nr++] = r2;
+    } else {
+      if ( nrts > 0 && r0 > a && r0 < b ) r[nr++] = r0;
+      if ( nrts > 1 && r1 > a && r1 < b ) r[nr++] = r1;
+      if ( nrts > 2 && r2 > a && r2 < b ) r[nr++] = r2;
+    }
+    return nr;
+  }
+
   void
   Cubic::eval( valueType x, valueType & p, valueType & dp ) const {
     valueType const & A = ABCD[0];

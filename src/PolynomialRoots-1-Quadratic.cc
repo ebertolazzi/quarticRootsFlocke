@@ -42,7 +42,7 @@ namespace PolynomialRoots {
   Quadratic::getPositiveRoots( valueType r[] ) const {
     indexType nr = 0;
     if ( !cplx ) {
-      if ( r0 > 0 ) r[nr++] = r0;
+      if ( nrts > 0 && r0 > 0 ) r[nr++] = r0;
       if ( nrts > 1 && r1 > 0 ) r[nr++] = r1;
     }
     return nr;
@@ -52,8 +52,28 @@ namespace PolynomialRoots {
   Quadratic::getNegativeRoots( valueType r[] ) const {
     indexType nr = 0;
     if ( !cplx ) {
-      if ( r0 < 0 ) r[nr++] = r0;
+      if ( nrts > 0 && r0 < 0 ) r[nr++] = r0;
       if ( nrts > 1 && r1 < 0 ) r[nr++] = r1;
+    }
+    return nr;
+  }
+
+  indexType
+  Quadratic::getRootsInRange( valueType a, valueType b, valueType r[] ) const {
+    indexType nr = 0;
+    if ( !cplx ) {
+      if ( nrts > 0 && r0 >= a && r0 <= b ) r[nr++] = r0;
+      if ( nrts > 1 && r1 >= a && r1 <= b ) r[nr++] = r1;
+    }
+    return nr;
+  }
+
+  indexType
+  Quadratic::getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const {
+    indexType nr = 0;
+    if ( !cplx ) {
+      if ( nrts > 0 && r0 > a && r0 < b ) r[nr++] = r0;
+      if ( nrts > 1 && r1 > a && r1 < b ) r[nr++] = r1;
     }
     return nr;
   }
