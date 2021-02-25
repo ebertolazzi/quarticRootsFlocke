@@ -67,6 +67,10 @@ static double rootCubicReal12[] = { -r, -r, -r };
 static double rootCubicImag12[] = { 0, 0, 0 };
 static double cubic12[]         = { 2.25, 37.727978648722122, 142.67292879536021, -132.84295088443082 };
 
+static double rootCubicReal13[] = { -133943466.087994218, -0.999999997325170642, 1.00000000267482947 };
+static double rootCubicImag13[] = { 0, 0, 0 };
+static double cubic13[]         = { 0.25, 33485866.521998554, -0.4291379596999101, -33485866.521998554 };
+
 static
 void
 do_test(
@@ -107,6 +111,7 @@ main() {
   DO_TEST(10);
   DO_TEST(11);
   DO_TEST(12);
+  DO_TEST(13);
   cout << "\n\nALL DONE!\n";
   return 0;
 }

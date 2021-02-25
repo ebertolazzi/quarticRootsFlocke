@@ -140,6 +140,22 @@ namespace PolynomialRoots {
     valueType       x
   );
 
+  void
+  evalPolyDPoly(
+    valueType const op[],
+    indexType       Degree,
+    valueType       x,
+    valueType     & p,
+    valueType     & dp
+  );
+
+  bool
+  NewtonStep(
+    valueType const op[],
+    indexType       Degree,
+    valueType     & x
+  );
+
   //! evaluate real polynomial with complex value
   std::complex<valueType>
   evalPolyC(
@@ -266,10 +282,8 @@ namespace PolynomialRoots {
     }
 
     void
-    getRoot0( complexType & r ) const {
-      if ( cplx ) r = complexType(r0,r1);
-      else        r = complexType(r0,0);
-    }
+    getRoot0( complexType & r ) const
+    { r = cplx ? complexType(r0,r1) : complexType(r0,0); }
 
     void
     getRoot1( valueType & re, valueType & im ) const {
@@ -278,10 +292,8 @@ namespace PolynomialRoots {
     }
 
     void
-    getRoot1( complexType & r ) const {
-      if ( cplx ) r = complexType(r0,-r1);
-      else        r = complexType(r1,0);
-    }
+    getRoot1( complexType & r ) const
+    { r = cplx ? complexType(r0,-r1) : complexType(r1,0); }
 
     //! evalute the quadratic polynomial
     /*!
@@ -438,10 +450,8 @@ namespace PolynomialRoots {
     }
 
     void
-    getRoot0( complexType & r ) const {
-      if ( cplx ) r = complexType(r0,r1);
-      else        r = complexType(r0,0);
-    }
+    getRoot0( complexType & r ) const
+    { r = cplx ? complexType(r0,r1) : complexType(r0,0); }
 
     void
     getRoot1( valueType & re, valueType & im ) const {
@@ -450,10 +460,8 @@ namespace PolynomialRoots {
     }
 
     void
-    getRoot1( complexType & r ) const {
-      if ( cplx ) r = complexType(r0,-r1);
-      else        r = complexType(r1,0);
-    }
+    getRoot1( complexType & r ) const
+    { r = cplx ? complexType(r0,-r1) : complexType(r1,0); }
 
     void
     getRoot2( valueType & re, valueType & im ) const

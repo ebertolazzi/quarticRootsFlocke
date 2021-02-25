@@ -438,10 +438,16 @@ namespace PolynomialRoots {
     r2 *= scale;
 
     // deflate
-    // A*x^3 + B*x^2 + C*x + D = A*(x-r2)*(x^2+b1*x+b0)
-    valueType b0 = -cc/r2; // -(D/A)/r2;
-    valueType b1 = aa+r2; // (B/A)+r2;
-    //std::cout << "err = " << A*(b1*r2-b0)+C << '\n';
+    // x^3 + aa*x^2 + bb*x + cc
+    //    = (x-r2)*(x^2+b1*x+b0)
+    //    = x^3 + x^2 * ( b1 - r2 ) + x * ( b0 - b1*r2 ) - r2 * b0
+    //
+    //    aa == b1 - r2        -> b1 = aa+r2
+    //    bb == b0 - b1*r2     -> b1 = (b0-bb)/r2
+    //    cc == -r2 * b0       -> b0 = -cc/r2
+    valueType b0 = -cc/r2;
+    //valueType b1 = aa+r2; // changed deflaction, seems more accurate
+    valueType b1 = (b0-bb)/r2;
 
     // solve quadratic polynomial
     Quadratic qsolve( 1.0, b1, b0 );
@@ -450,6 +456,7 @@ namespace PolynomialRoots {
     dblx = qsolve.doubleRoot();
     r0   = qsolve.real_root0();
     r1   = qsolve.real_root1();
+
     if ( !cplx ) { // if real roots sort it!
       if ( r1 > r2 ) std::swap(r1,r2);
       if ( r0 > r1 ) std::swap(r0,r1);
