@@ -5,6 +5,8 @@ bin
 build
 others
 doc
-docs
 
 .vscode
+docs_build/sphinx/_build
+docs_build/sphinx/api
+docs_build/xml

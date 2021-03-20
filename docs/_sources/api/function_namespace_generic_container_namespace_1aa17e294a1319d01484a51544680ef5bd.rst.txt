@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_generic_container_namespace_1aa17e294a1319d01484a51544680ef5bd:
+
+Function GenericContainerNamespace::pmain
+=========================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaInterface.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GenericContainerNamespace::pmain(lua_State *)

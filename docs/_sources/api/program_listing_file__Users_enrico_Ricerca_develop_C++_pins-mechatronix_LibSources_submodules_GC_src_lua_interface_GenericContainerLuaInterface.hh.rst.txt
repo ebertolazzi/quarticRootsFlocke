@@ -1,0 +1,61 @@
+
+.. _program_listing_file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaInterface.hh:
+
+Program Listing for File GenericContainerLuaInterface.hh
+========================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaInterface.hh>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src_lua_interface/GenericContainerLuaInterface.hh``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*--------------------------------------------------------------------------*\
+    |                                                                          |
+    |  Copyright (C) 2013                                                      |
+    |                                                                          |
+    |         , __                 , __                                        |
+    |        /|/  \               /|/  \                                       |
+    |         | __/ _   ,_         | __/ _   ,_                                |
+    |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
+    |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
+    |                           /|                   /|                        |
+    |                           \|                   \|                        |
+    |                                                                          |
+    |      Enrico Bertolazzi                                                   |
+    |      Dipartimento di Ingegneria Industriale                              |
+    |      Universita` degli Studi di Trento                                   |
+    |      email: enrico.bertolazzi@unitn.it                                   |
+    |                                                                          |
+   \*--------------------------------------------------------------------------*/
+   
+   #ifndef GENERIC_CONTAINER_LUA_INTERFACE_HH
+   #define GENERIC_CONTAINER_LUA_INTERFACE_HH
+   
+   #ifdef __clang__
+   #pragma clang diagnostic ignored "-Wpoison-system-directories"
+   #endif
+   
+   #include "GenericContainer.hh"
+   
+   namespace GenericContainerNamespace {
+   
+     class GENERIC_CONTAINER_API_DLL LuaInterpreter {
+       /* lua_State * */ void * void_L; 
+     public:
+       LuaInterpreter();
+       ~LuaInterpreter();
+       void dump( ostream_type & stream );
+       void execute( char const cmd[] );
+       void call( GenericContainer const & args, GenericContainer & res );
+       void do_file( char const fname[] );
+       void GC_to_global( GenericContainer const & gc, char const [] ); // not yet implemented
+       void global_to_GC( char const var[], GenericContainer & gc );
+       int  interactive( int argc,
+                         char const * argv[],
+                         char const * messages[],
+                         char const * prompt ); // launch interpret mode
+     };
+   }
+   
+   #endif

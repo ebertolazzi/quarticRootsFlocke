@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1a049f0013b918de73310ba7c98e94a01e:
+
+Function PolynomialRoots::QuadraticSyntheticDivision
+====================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Jenkins-Traub.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::QuadraticSyntheticDivision(indexType, valueType, valueType, valueType const, valueType, valueType&, valueType&)

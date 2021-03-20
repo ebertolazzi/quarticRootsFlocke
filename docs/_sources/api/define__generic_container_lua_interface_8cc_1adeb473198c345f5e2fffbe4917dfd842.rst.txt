@@ -1,0 +1,13 @@
+.. _exhale_define__generic_container_lua_interface_8cc_1adeb473198c345f5e2fffbe4917dfd842:
+
+Define GC_ASSERT
+================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaInterface.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: GC_ASSERT

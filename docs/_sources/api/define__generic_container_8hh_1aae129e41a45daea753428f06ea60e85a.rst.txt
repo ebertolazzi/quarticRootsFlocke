@@ -1,0 +1,13 @@
+.. _exhale_define__generic_container_8hh_1aae129e41a45daea753428f06ea60e85a:
+
+Define GC_DO_ERROR
+==================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: GC_DO_ERROR

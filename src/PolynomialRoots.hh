@@ -103,6 +103,8 @@ namespace PolynomialRoots {
   typedef int    indexType;
   typedef std::complex<valueType> complexType;
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
   //! check if cloating point number `x` is zero
   static
   inline
@@ -163,6 +165,8 @@ namespace PolynomialRoots {
     indexType                       Degree,
     std::complex<valueType> const & x
   );
+
+  #endif
 
   //! find roots of a generic polinomial using Jenkins-Traub method
   int
@@ -724,6 +728,8 @@ namespace PolynomialRoots {
    |   \___/ \__|_|_|___/
   \*/
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
   // x^3 + a*x^2 + b*x + c
   static
   inline
@@ -853,6 +859,8 @@ namespace PolynomialRoots {
     dp  = dp * x + p;
     p   = p * x + d;
   }
+
+  #endif
 
 }
 

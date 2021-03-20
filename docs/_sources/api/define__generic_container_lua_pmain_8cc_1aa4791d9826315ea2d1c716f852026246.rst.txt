@@ -1,0 +1,13 @@
+.. _exhale_define__generic_container_lua_pmain_8cc_1aa4791d9826315ea2d1c716f852026246:
+
+Define lua_writeline
+====================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: lua_writeline

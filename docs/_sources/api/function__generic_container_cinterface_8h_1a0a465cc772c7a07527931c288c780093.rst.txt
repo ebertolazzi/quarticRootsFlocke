@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8h_1a0a465cc772c7a07527931c288c780093:
+
+Function GC_set_empty_vector_of_real(void)
+==========================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_set_empty_vector_of_real(void)

@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_generic_container_namespace_1aecb4f19394619f28037d2216fd3d62f0:
+
+Function GenericContainerNamespace::operator<<(ostream_type&, mat_type<real_type> const&)
+=========================================================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GenericContainerNamespace::operator<<(ostream_type&, mat_type<real_type> const&)

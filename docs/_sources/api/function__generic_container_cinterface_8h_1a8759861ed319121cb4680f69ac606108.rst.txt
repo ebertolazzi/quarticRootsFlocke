@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8h_1a8759861ed319121cb4680f69ac606108:
+
+Function GC_pop_head(void)
+==========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_pop_head(void)

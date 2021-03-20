@@ -30,6 +30,8 @@
 //the console.
 //
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 #include "PolynomialRoots.hh"
 
 #ifdef __GNUC__
@@ -781,3 +783,5 @@ namespace PolynomialRoots {
     return 0;
   }
 }
+
+#endif

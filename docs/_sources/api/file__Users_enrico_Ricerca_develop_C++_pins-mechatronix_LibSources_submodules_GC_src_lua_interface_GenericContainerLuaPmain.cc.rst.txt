@@ -1,0 +1,167 @@
+
+.. _file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc:
+
+File GenericContainerLuaPmain.cc
+================================
+
+|exhale_lsh| :ref:`Parent directory <dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src_lua_interface``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src_lua_interface/GenericContainerLuaPmain.cc``)
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``GenericContainerLuaInterface.hh`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaInterface.hh`)
+
+- ``lua/lua.hpp``
+
+- ``signal.h``
+
+- ``stdio.h``
+
+- ``stdlib.h``
+
+- ``string.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_GenericContainerNamespace`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1abe2d2b9101fdac08fba2d071fde373f7`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a1eb8e1daaf00e7189276077c370ee20c`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1ae97a68ae8a927b55520b65d0a56a59d2`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a49e04420c2846b52e378ef6272bbf75b`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a84103428a06a64ccca2c23a8045f3291`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a9708ea7bd36bee3c2d952cdd787246cc`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1ad256d556c3f941b29351d92606e67753`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1af66e3d694486cfc543c79e331a9d5589`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1ae8312476ab6a3db74a9a5b1a981d023f`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1af30330b1ce029ad490faaeab255cf52d`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a5d9d02779b2853fbef2aa54e2f8e017e`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a5a944babaacde1035f1aa8b4156cc06a`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1afcb03dd7d7d29972ed50628d7bfdac14`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1ad0f0975de65acf5a5edf0953299b3747`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1aa6faba0570416a2dfe7783da2dcbf6df`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1acbccdc65e78da44329f7ee6be03cf0bd`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1ad7e840f79b193c164616ed9748e68ec6`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1ae5ebcac6e57edd770e9176473e4adc0b`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1aaf236b6f4e03469c893b4a32e9a02ab2`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1affef5a04b31963c2c3f5028518777e12`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1aa0f8bc082ef913cb0a4df437bf5f5019`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a91632fe91cad1a0dd44a149ba105f5fc`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a4997046396c9b865217bdb02edf9c20f`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a1e73bab660617a11ddcbb7d647980d40`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a83a7cb21b34095ca93f2a2a863f58fda`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a037f0feafa76682f422cd7e2fb387f44`
+
+- :ref:`exhale_function__generic_container_lua_pmain_8cc_1a95a376c847572def6b3f78d33a7bc881`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1a0972b8ff1b2e2d2abdd184890b79ad90`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1a062f4556e993b5521901729db1abb78b`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1a8c7799a931aadcdf663a40d5973e9457`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1a7aa07cb625a50d1de019e68b223629dd`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1abe04c677e6b350ca13b68c28a2a12f04`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1a7136ee26052850280aaffb4e04db8f0d`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1a57d068e6351de5511a9837517ed34282`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1aa26556c39a8c231bc647902b495de4a6`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1a23a4ddde7b8770311b5f5cfe0e7b6b9c`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1a05ae1f2d6224a7ed765d937f3e29b273`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1af34f43dfd47b8179ae1eb1a03e4abc60`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1aa23cea14795d309b45458e284c03feb4`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1ac2d8f72be488d4fcc8483eda1f19e10d`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1afe1d78b44717d692becd41251c1edeea`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1ab02d1e224c8aabccb5e313584493c32b`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1ac64250ed95450c29366bf34f4b1f0cbf`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1aa4791d9826315ea2d1c716f852026246`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1a575f50815c13a7a99b8ed1ac03fe714a`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1a0706f68a79575584d365d033d613707b`
+
+- :ref:`exhale_define__generic_container_lua_pmain_8cc_1af4095ba5ce624b3061385b49e5863c90`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable__generic_container_lua_pmain_8cc_1af2f256e94f7ca1748abb736e9b311cc4`
+
+- :ref:`exhale_variable__generic_container_lua_pmain_8cc_1ad785d8a8f8ff378aa21eb1fa7a6085df`
+

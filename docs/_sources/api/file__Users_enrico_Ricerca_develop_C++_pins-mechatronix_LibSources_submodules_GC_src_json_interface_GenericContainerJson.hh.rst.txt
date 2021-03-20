@@ -1,0 +1,81 @@
+
+.. _file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJson.hh:
+
+File GenericContainerJson.hh
+============================
+
+|exhale_lsh| :ref:`Parent directory <dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src_json_interface``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src_json_interface/GenericContainerJson.hh``)
+---------------------------------------------------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJson.hh.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``GenericContainer.hh`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJson.cc`
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJsonHandler.hh`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_GenericContainerNamespace`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespace_generic_container_namespace_1ace9490dce38528a940e09acc53a9771a`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespace_generic_container_namespace_1a1320f92dc3005ce706ac423f28063e80`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define__generic_container_json_8hh_1afde9e5a6d77ca3ccb91aef4cff9e91b8`
+
+- :ref:`exhale_define__generic_container_json_8hh_1ac764b84e299eb34ec27ee2010e0e7553`
+
+- :ref:`exhale_define__generic_container_json_8hh_1a44ba0558182e04760a1021bf769f2600`
+
+- :ref:`exhale_define__generic_container_json_8hh_1a0159b3d42a5eaa7ba2df68ae69942014`
+
+- :ref:`exhale_define__generic_container_json_8hh_1a9e507ede41dd82ae2d97c730ce624cf3`
+

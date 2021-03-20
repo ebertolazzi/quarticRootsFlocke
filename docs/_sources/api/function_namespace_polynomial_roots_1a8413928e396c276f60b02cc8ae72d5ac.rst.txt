@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1a8413928e396c276f60b02cc8ae72d5ac:
+
+Function PolynomialRoots::TwoSum(valueType, valueType, valueType&, valueType&)
+==============================================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.hh`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::TwoSum(valueType, valueType, valueType&, valueType&)

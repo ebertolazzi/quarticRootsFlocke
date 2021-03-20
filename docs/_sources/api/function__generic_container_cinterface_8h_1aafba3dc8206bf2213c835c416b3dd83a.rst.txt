@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8h_1aafba3dc8206bf2213c835c416b3dd83a:
+
+Function GC_get_int(void)
+=========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_get_int(void)

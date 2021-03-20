@@ -1,0 +1,13 @@
+.. _exhale_define__generic_container_lua_pmain_8cc_1ac2d8f72be488d4fcc8483eda1f19e10d:
+
+Define LUA_PROMPT2
+==================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: LUA_PROMPT2

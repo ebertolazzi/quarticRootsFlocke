@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1ab0708852456cad492ac4aa4887c00008:
+
+Function PolynomialRoots::roots
+===============================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Jenkins-Traub.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::roots(valueType const, indexType, valueType, valueType)

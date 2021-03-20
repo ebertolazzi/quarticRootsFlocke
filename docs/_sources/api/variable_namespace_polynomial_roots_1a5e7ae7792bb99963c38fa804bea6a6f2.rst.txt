@@ -1,0 +1,13 @@
+.. _exhale_variable_namespace_polynomial_roots_1a5e7ae7792bb99963c38fa804bea6a6f2:
+
+Variable PolynomialRoots::splitFactor
+=====================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.hh`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: PolynomialRoots::splitFactor

@@ -1,0 +1,18 @@
+
+File Hierarchy
+--------------
+
+
+.. raw:: html
+
+   <ul class="treeView" id="file-treeView">
+     <li>
+       <ul class="collapsibleList">
+         <li class="lastChild">Directory <a href="dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src.html#dir-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src">src</a><ul><li>File <a href="file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-1-Quadratic.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-1-Quadratic.cc">PolynomialRoots-1-Quadratic.cc</a></li><li>File <a href="file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-2-Cubic.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-2-Cubic.cc">PolynomialRoots-2-Cubic.cc</a></li><li>File <a href="file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-3-Quartic.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-3-Quartic.cc">PolynomialRoots-3-Quartic.cc</a></li><li>File <a href="file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Jenkins-Traub.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-Jenkins-Traub.cc">PolynomialRoots-Jenkins-Traub.cc</a></li><li>File <a href="file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-Utils.cc">PolynomialRoots-Utils.cc</a></li><li>File <a href="file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.hh.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-Utils.hh">PolynomialRoots-Utils.hh</a></li><li class="lastChild">File <a href="file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots.hh.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots.hh">PolynomialRoots.hh</a></li></ul></li>
+       </ul>
+     </li><!-- only tree view element -->
+   </ul><!-- /treeView file-treeView -->
+
+.. end raw html for treeView
+
+

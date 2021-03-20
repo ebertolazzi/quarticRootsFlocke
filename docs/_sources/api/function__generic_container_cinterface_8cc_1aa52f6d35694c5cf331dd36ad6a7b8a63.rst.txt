@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8cc_1aa52f6d35694c5cf331dd36ad6a7b8a63:
+
+Function GC_get_complex_im()
+============================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_get_complex_im()

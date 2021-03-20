@@ -1,0 +1,210 @@
+
+.. _program_listing_file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h:
+
+Program Listing for File GenericContainerCinterface.h
+=====================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src/GenericContainerCinterface.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*--------------------------------------------------------------------------*\
+    |                                                                          |
+    |  Copyright (C) 2013                                                      |
+    |                                                                          |
+    |         , __                 , __                                        |
+    |        /|/  \               /|/  \                                       |
+    |         | __/ _   ,_         | __/ _   ,_                                |
+    |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
+    |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
+    |                           /|                   /|                        |
+    |                           \|                   \|                        |
+    |                                                                          |
+    |      Enrico Bertolazzi                                                   |
+    |      Dipartimento di Ingegneria Industriale                              |
+    |      Universita` degli Studi di Trento                                   |
+    |      email: enrico.bertolazzi@unitn.it                                   |
+    |                                                                          |
+   \*--------------------------------------------------------------------------*/
+   
+   /*
+   // file: GenericContainerCinterface.h
+   */
+   
+   /* @{ */
+   
+   #ifndef GENERIC_CONTAINER_C_INTERFACE_H
+   #define GENERIC_CONTAINER_C_INTERFACE_H
+   
+   #ifdef __cplusplus
+   extern "C" {
+   #endif
+   
+   enum {
+     GENERIC_CONTAINER_OK = 0,
+     GENERIC_CONTAINER_BAD_TYPE,
+     GENERIC_CONTAINER_NO_DATA,
+     GENERIC_CONTAINER_NOT_EMPTY,
+     GENERIC_CONTAINER_BAD_HEAD
+   };
+   
+   typedef struct {
+     double real;
+     double imag;
+   } c_complex_type;
+   
+   int GC_new( char const id[] );
+   
+   int GC_select( char const id[] );
+   
+   int GC_delete( char const id[] );
+   
+   int GC_fill_for_test( char const id[] );
+   
+   int GC_pop_head();
+   
+   int GC_reset_head();
+   
+   int GC_dump();
+   
+   int GC_print_content_types();
+   
+   int GC_get_type();
+   
+   char const * GC_get_type_name( void );
+   
+   void * GC_mem_ptr( char const id[] );
+   
+   // -----------------------------------------------------------------------------
+   
+   int GC_set_bool( int const a );
+   
+   int GC_set_int( int const a );
+   
+   int GC_set_real( double const a );
+   
+   int GC_set_complex( c_complex_type const * a );
+   
+   int GC_set_complex2( double const re, double const im );
+   
+   int GC_set_string( char const a[] );
+   
+   // -----------------------------------------------------------------------------
+   
+   int GC_get_bool();
+   
+   int GC_get_int();
+   
+   long GC_get_long();
+   
+   double GC_get_real();
+   
+   c_complex_type GC_get_complex();
+   
+   double GC_get_complex_re();
+   
+   double GC_get_complex_im();
+   
+   char const * GC_get_string();
+   
+   // -----------------------------------------------------------------------------
+   
+   int GC_push_bool( int const a );
+   
+   int GC_push_int( int const a );
+   
+   int GC_push_real( double const a );
+   
+   int GC_push_complex( c_complex_type const * a );
+   
+   int GC_push_complex2( double const re, double const im );
+   
+   int GC_push_string( char const a[] );
+   
+   // -----------------------------------------------------------------------------
+   
+   int GC_get_bool_at_pos( int pos );
+   
+   int GC_get_int_at_pos( int pos );
+   
+   double GC_get_real_at_pos( int pos );
+   
+   c_complex_type GC_get_complex_at_pos( int pos );
+   
+   double GC_get_complex_real_at_pos( int pos );
+   
+   double GC_get_complex_imag_at_pos( int pos );
+   
+   char const * GC_get_string_at_pos( int pos );
+   
+   // -----------------------------------------------------------------------------
+   
+   double GC_get_real_at_coor( int i, int j );
+   
+   c_complex_type GC_get_complex_at_coor( int i, int j );
+   
+   double GC_get_complex_real_at_coor( int i, int j );
+   
+   double GC_get_complex_imag_at_coor( int i, int j );
+   
+   // -----------------------------------------------------------------------------
+   
+   int GC_set_empty_vector_of_bool();
+   
+   int GC_set_empty_vector_of_int();
+   
+   int GC_set_empty_vector_of_real();
+   
+   int GC_set_empty_vector_of_complex();
+   
+   int GC_set_empty_vector_of_string();
+   
+   // -----------------------------------------------------------------------------
+   
+   int GC_set_vector_of_bool( int const a[], int nelem );
+   
+   int GC_set_vector_of_int( int const a[], int nelem );
+   
+   int GC_set_vector_of_real( double const a[], int nelem );
+   
+   int GC_set_vector_of_complex( double const re[], double const im[], int nelem );
+   
+   int GC_set_vector_of_string( char const *a[], int nelem );
+   
+   // -----------------------------------------------------------------------------
+   
+   int GC_set_vector( int nelem );
+   
+   int GC_set_empty_vector( );
+   
+   int GC_get_vector_size( );
+   
+   int GC_get_matrix_num_rows( );
+   
+   int GC_get_matrix_num_cols( );
+   
+   int GC_push_vector_position( int pos );
+   
+   // -----------------------------------------------------------------------------
+   
+   int GC_set_map( );
+   
+   int GC_init_map_key( );
+   
+   char const * GC_get_next_key( );
+   
+   int GC_push_map_position( char const pos[] );
+   
+   #ifdef __cplusplus
+   }
+   #endif
+   
+   #endif
+   
+   /* @} */
+   
+   /*
+   // eof: GenericContainerCinterface.hh
+   */

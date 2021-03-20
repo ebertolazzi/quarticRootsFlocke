@@ -1,0 +1,13 @@
+.. _exhale_variable_namespace_polynomial_roots_1a227a6c783f5b20a6693d7f525f4a4516:
+
+Variable PolynomialRoots::one27th
+=================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-2-Cubic.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: PolynomialRoots::one27th

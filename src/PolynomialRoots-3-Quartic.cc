@@ -23,6 +23,8 @@
 #include <algorithm>
 #include <limits>
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 namespace PolynomialRoots {
 
   using std::abs;
@@ -756,5 +758,7 @@ namespace PolynomialRoots {
   }
 
 }
+
+#endif
 
 // EOF: PolynomialRoots-3-Quartic.cc

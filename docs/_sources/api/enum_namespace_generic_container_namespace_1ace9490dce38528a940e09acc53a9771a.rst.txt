@@ -1,0 +1,13 @@
+.. _exhale_enum_namespace_generic_container_namespace_1ace9490dce38528a940e09acc53a9771a:
+
+Enum GCJsonMatrixOrder
+======================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJson.hh`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: GenericContainerNamespace::GCJsonMatrixOrder

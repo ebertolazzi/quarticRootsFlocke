@@ -1,0 +1,13 @@
+.. _exhale_variable__generic_container_cinterface_8cc_1a47f857aa659a53f0c395dd72578f3868:
+
+Variable gc_active
+==================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: gc_active

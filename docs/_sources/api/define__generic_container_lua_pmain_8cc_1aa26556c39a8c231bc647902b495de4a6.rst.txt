@@ -1,0 +1,13 @@
+.. _exhale_define__generic_container_lua_pmain_8cc_1aa26556c39a8c231bc647902b495de4a6:
+
+Define LUA_INIT_VAR
+===================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: LUA_INIT_VAR

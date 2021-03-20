@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8h_1a0970c098632ead4d47aacff7ead0bdf1:
+
+Function GC_reset_head(void)
+============================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_reset_head(void)

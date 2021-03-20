@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_lua_pmain_8cc_1affef5a04b31963c2c3f5028518777e12:
+
+Function multiline
+==================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: multiline(lua_State *)

@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1ab1c6bee9d5eb29b7d9b97346d1e2365b:
+
+Function PolynomialRoots::QuadIT
+================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Jenkins-Traub.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::QuadIT(indexType, indexType&, valueType, valueType, valueType&, valueType&, valueType&, valueType&, valueType, indexType, valueType&, valueType&, valueType const, valueType, valueType&, valueType&, valueType&, valueType&, valueType&, valueType&, valueType&, valueType&, valueType&, valueType)

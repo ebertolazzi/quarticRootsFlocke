@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8h_1ad848e2f1eb0ffb2d7fa2d3cba68efdeb:
+
+Function GC_set_vector_of_bool
+==============================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_set_vector_of_bool(int const, int)

@@ -1,0 +1,167 @@
+
+.. _file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh:
+
+File GenericContainer.hh
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src/GenericContainer.hh``)
+--------------------------------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``GenericContainerConfig.hh`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerConfig.hh`)
+
+- ``complex``
+
+- ``deque``
+
+- ``iostream``
+
+- ``map``
+
+- ``sstream``
+
+- ``stdexcept``
+
+- ``string``
+
+- ``vector``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.cc`
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerSupport.cc`
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerTables.cc`
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaInterface.hh`
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJson.hh`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_GenericContainerNamespace`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_class_generic_container_namespace_1_1_generic_container`
+
+- :ref:`exhale_class_class_generic_container_namespace_1_1_generic_container_explorer`
+
+- :ref:`exhale_class_class_generic_container_namespace_1_1mat__type`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespace_generic_container_namespace_1ab116aaf502419402dd33645b16f95398`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define__generic_container_8hh_1adeb473198c345f5e2fffbe4917dfd842`
+
+- :ref:`exhale_define__generic_container_8hh_1aae129e41a45daea753428f06ea60e85a`
+
+- :ref:`exhale_define__generic_container_8hh_1a8dc0216e4b1676666f0dfab4a71f5865`
+
+- :ref:`exhale_define__generic_container_8hh_1a9d628c1d085b17ba563cea534312adc4`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a4e99e41c6f73a16c9a0e79f60f05019e`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1af7c7ec8711f87ccd3446091044017d39`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a9031db120df7c208ba186d993d52f71f`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a9f241323f6766df029db7747adec53ce`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a13f1bd5529f3b5f0141104960894bafe`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1af634cb7e1f78a78ceb363eb78207629d`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a2056e277d8661916a444f119689cb66a`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1ae42c5f4031176c71245b8184a0fe9f4a`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1af3ca7bd6895e52a224a6e81b214c452c`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a49e3e5bd9229de6b3203d3b72eee2ef4`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a6fd6b7e784cac6dc55f1bd2c0859f507`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1ac0b09ba58a37f5f3ca415be4a02ec7aa`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a0ea13cef03b682f109fc42225a8751e6`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a033d842f4e01994b8b31b97be56f3b9f`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a992e31427cde5cd2157ba6612ae61c7a`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1ad7e0f81d31a4206d76a823c50819d6e8`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1abb7ebefb90b56e10d053c88a8f09a326`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1ad789e891949350a5297fc512aaf23b5e`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1af597a067bcddb0d974f0b1c556d5c73c`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1ae63e26b1a2de85c3d18a6da2973d0925`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a26504af67033dbba39bf311870b90f50`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a87c0edf71c4d853b31b9c5689d3572a7`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a540d37ef823612346a44852cd0103a3f`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a8160e26547b618e76771ea01e5b740ec`
+
+- :ref:`exhale_typedef_namespace_generic_container_namespace_1a2cf1e9c5407fd7711f474bbf93021ecd`
+
+
+Unions
+------
+
+
+- :ref:`exhale_union_union_generic_container_namespace_1_1_generic_container_1_1_data_storage`
+

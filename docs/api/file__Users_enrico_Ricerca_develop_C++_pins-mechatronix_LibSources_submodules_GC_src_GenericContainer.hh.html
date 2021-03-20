@@ -1,0 +1,332 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
+
+    <meta name="generator" content="sphinx-3.5.2, furo 2021.03.20.beta30"/>
+        <title>File GenericContainer.hh - Quartic Roots documentation</title>
+      <link rel="stylesheet" href="../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
+    <link rel="stylesheet" href="../_static/pygments.css">
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../_static/pygments_dark.css">
+    
+
+
+<style>
+  :root {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+
+  /* For allowing end-user-specific overrides */
+  .override-light {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  .override-dark {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+</style><link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <link rel="stylesheet" href="../_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
+  <body dir="">
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z"/>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Quartic Roots  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Quartic Roots  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html">
+  <input class="sidebar-search" placeholder=Search name="q">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Quartic Roots Solver</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="library_root.html">C/C++ API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespace_PolynomialRoots.html">Namespace PolynomialRoots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_polynomial_roots_1_1_cubic.html">Class Cubic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_polynomial_roots_1_1_quadratic.html">Class Quadratic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_polynomial_roots_1_1_quartic.html">Class Quartic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespace_polynomial_roots_1abcfe95455907d440930b77f57ca6d965.html">Function PolynomialRoots::roots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_polynomial_roots_1a40133214a5734236361cf3e4896c80bf.html">Typedef PolynomialRoots::complexType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_polynomial_roots_1a15b6d72b5de39b768482af271e79da41.html">Typedef PolynomialRoots::indexType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_polynomial_roots_1a1ed20b9a70e93f952f0aa4257b960ea0.html">Typedef PolynomialRoots::valueType</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <article role="main">
+        <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        </label>
+        <div class="section" id="file-genericcontainer-hh">
+<span id="file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src-genericcontainer-hh"></span><h1>File GenericContainer.hh<a class="headerlink" href="#file-genericcontainer-hh" title="Permalink to this headline">¶</a>
+</h1>
+<p>↰ <a class="reference internal" href="dir__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_GC_src.html#dir-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src-genericcontainer-hh" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src/GenericContainer.hh</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#included-by" id="id3">Included By</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id4">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#classes" id="id5">Classes</a></p></li>
+<li><p><a class="reference internal" href="#enums" id="id6">Enums</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id7">Defines</a></p></li>
+<li><p><a class="reference internal" href="#typedefs" id="id8">Typedefs</a></p></li>
+<li><p><a class="reference internal" href="#unions" id="id9">Unions</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src-genericcontainer-hh">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src/GenericContainer.hh</span></code>)<a class="headerlink" href="#definition-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src-genericcontainer-hh" title="Permalink to this headline">¶</a>
+</h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh.html">Program Listing for File GenericContainer.hh</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a>
+</h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GenericContainerConfig.hh</span></code> (<a class="reference internal" href="file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerConfig.hh.html#file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src-genericcontainerconfig-hh"><span class="std std-ref">File GenericContainerConfig.hh</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">complex</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deque</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iostream</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">map</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sstream</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdexcept</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vector</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="included-by">
+<h2>Included By<a class="headerlink" href="#included-by" title="Permalink to this headline">¶</a>
+</h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.cc.html#file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src-genericcontainer-cc"><span class="std std-ref">File GenericContainer.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerSupport.cc.html#file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src-genericcontainersupport-cc"><span class="std std-ref">File GenericContainerSupport.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerTables.cc.html#file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src-genericcontainertables-cc"><span class="std std-ref">File GenericContainerTables.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaInterface.hh.html#file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src-lua-interface-genericcontainerluainterface-hh"><span class="std std-ref">File GenericContainerLuaInterface.hh</span></a></p></li>
+<li><p><a class="reference internal" href="file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJson.hh.html#file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src-json-interface-genericcontainerjson-hh"><span class="std std-ref">File GenericContainerJson.hh</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a>
+</h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_GenericContainerNamespace.html#namespace-genericcontainernamespace"><span class="std std-ref">Namespace GenericContainerNamespace</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a>
+</h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="class_generic_container_namespace_1_1_generic_container.html#exhale-class-class-generic-container-namespace-1-1-generic-container"><span class="std std-ref">Class GenericContainer</span></a></p></li>
+<li><p><a class="reference internal" href="class_generic_container_namespace_1_1_generic_container_explorer.html#exhale-class-class-generic-container-namespace-1-1-generic-container-explorer"><span class="std std-ref">Class GenericContainerExplorer</span></a></p></li>
+<li><p><a class="reference internal" href="class_generic_container_namespace_1_1mat__type.html#exhale-class-class-generic-container-namespace-1-1mat-type"><span class="std std-ref">Template Class mat_type</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="enums">
+<h2>Enums<a class="headerlink" href="#enums" title="Permalink to this headline">¶</a>
+</h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="enum_namespace_generic_container_namespace_1ab116aaf502419402dd33645b16f95398.html#exhale-enum-namespace-generic-container-namespace-1ab116aaf502419402dd33645b16f95398"><span class="std std-ref">Enum TypeAllowed</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a>
+</h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define__generic_container_8hh_1adeb473198c345f5e2fffbe4917dfd842.html#exhale-define-generic-container-8hh-1adeb473198c345f5e2fffbe4917dfd842"><span class="std std-ref">Define GC_ASSERT</span></a></p></li>
+<li><p><a class="reference internal" href="define__generic_container_8hh_1aae129e41a45daea753428f06ea60e85a.html#exhale-define-generic-container-8hh-1aae129e41a45daea753428f06ea60e85a"><span class="std std-ref">Define GC_DO_ERROR</span></a></p></li>
+<li><p><a class="reference internal" href="define__generic_container_8hh_1a8dc0216e4b1676666f0dfab4a71f5865.html#exhale-define-generic-container-8hh-1a8dc0216e4b1676666f0dfab4a71f5865"><span class="std std-ref">Define GC_NO_RETURN</span></a></p></li>
+<li><p><a class="reference internal" href="define__generic_container_8hh_1a9d628c1d085b17ba563cea534312adc4.html#exhale-define-generic-container-8hh-1a9d628c1d085b17ba563cea534312adc4"><span class="std std-ref">Define GC_WARNING</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="typedefs">
+<h2>Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a>
+</h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a4e99e41c6f73a16c9a0e79f60f05019e.html#exhale-typedef-namespace-generic-container-namespace-1a4e99e41c6f73a16c9a0e79f60f05019e"><span class="std std-ref">Typedef GenericContainerNamespace::bool_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1af7c7ec8711f87ccd3446091044017d39.html#exhale-typedef-namespace-generic-container-namespace-1af7c7ec8711f87ccd3446091044017d39"><span class="std std-ref">Typedef GenericContainerNamespace::complex_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a9031db120df7c208ba186d993d52f71f.html#exhale-typedef-namespace-generic-container-namespace-1a9031db120df7c208ba186d993d52f71f"><span class="std std-ref">Typedef GenericContainerNamespace::int_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a9f241323f6766df029db7747adec53ce.html#exhale-typedef-namespace-generic-container-namespace-1a9f241323f6766df029db7747adec53ce"><span class="std std-ref">Typedef GenericContainerNamespace::long_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a13f1bd5529f3b5f0141104960894bafe.html#exhale-typedef-namespace-generic-container-namespace-1a13f1bd5529f3b5f0141104960894bafe"><span class="std std-ref">Typedef GenericContainerNamespace::map_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1af634cb7e1f78a78ceb363eb78207629d.html#exhale-typedef-namespace-generic-container-namespace-1af634cb7e1f78a78ceb363eb78207629d"><span class="std std-ref">Typedef GenericContainerNamespace::mat_complex_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a2056e277d8661916a444f119689cb66a.html#exhale-typedef-namespace-generic-container-namespace-1a2056e277d8661916a444f119689cb66a"><span class="std std-ref">Typedef GenericContainerNamespace::mat_int_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1ae42c5f4031176c71245b8184a0fe9f4a.html#exhale-typedef-namespace-generic-container-namespace-1ae42c5f4031176c71245b8184a0fe9f4a"><span class="std std-ref">Typedef GenericContainerNamespace::mat_long_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1af3ca7bd6895e52a224a6e81b214c452c.html#exhale-typedef-namespace-generic-container-namespace-1af3ca7bd6895e52a224a6e81b214c452c"><span class="std std-ref">Typedef GenericContainerNamespace::mat_real_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a49e3e5bd9229de6b3203d3b72eee2ef4.html#exhale-typedef-namespace-generic-container-namespace-1a49e3e5bd9229de6b3203d3b72eee2ef4"><span class="std std-ref">Typedef GenericContainerNamespace::ostream_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a6fd6b7e784cac6dc55f1bd2c0859f507.html#exhale-typedef-namespace-generic-container-namespace-1a6fd6b7e784cac6dc55f1bd2c0859f507"><span class="std std-ref">Typedef GenericContainerNamespace::pointer_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1ac0b09ba58a37f5f3ca415be4a02ec7aa.html#exhale-typedef-namespace-generic-container-namespace-1ac0b09ba58a37f5f3ca415be4a02ec7aa"><span class="std std-ref">Typedef GenericContainerNamespace::real_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a0ea13cef03b682f109fc42225a8751e6.html#exhale-typedef-namespace-generic-container-namespace-1a0ea13cef03b682f109fc42225a8751e6"><span class="std std-ref">Typedef GenericContainerNamespace::string_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a033d842f4e01994b8b31b97be56f3b9f.html#exhale-typedef-namespace-generic-container-namespace-1a033d842f4e01994b8b31b97be56f3b9f"><span class="std std-ref">Typedef GenericContainerNamespace::uint_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a992e31427cde5cd2157ba6612ae61c7a.html#exhale-typedef-namespace-generic-container-namespace-1a992e31427cde5cd2157ba6612ae61c7a"><span class="std std-ref">Typedef GenericContainerNamespace::ulong_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1ad7e0f81d31a4206d76a823c50819d6e8.html#exhale-typedef-namespace-generic-container-namespace-1ad7e0f81d31a4206d76a823c50819d6e8"><span class="std std-ref">Typedef GenericContainerNamespace::vec_bool_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1abb7ebefb90b56e10d053c88a8f09a326.html#exhale-typedef-namespace-generic-container-namespace-1abb7ebefb90b56e10d053c88a8f09a326"><span class="std std-ref">Typedef GenericContainerNamespace::vec_complex_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1ad789e891949350a5297fc512aaf23b5e.html#exhale-typedef-namespace-generic-container-namespace-1ad789e891949350a5297fc512aaf23b5e"><span class="std std-ref">Typedef GenericContainerNamespace::vec_int_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1af597a067bcddb0d974f0b1c556d5c73c.html#exhale-typedef-namespace-generic-container-namespace-1af597a067bcddb0d974f0b1c556d5c73c"><span class="std std-ref">Typedef GenericContainerNamespace::vec_long_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1ae63e26b1a2de85c3d18a6da2973d0925.html#exhale-typedef-namespace-generic-container-namespace-1ae63e26b1a2de85c3d18a6da2973d0925"><span class="std std-ref">Typedef GenericContainerNamespace::vec_pointer_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a26504af67033dbba39bf311870b90f50.html#exhale-typedef-namespace-generic-container-namespace-1a26504af67033dbba39bf311870b90f50"><span class="std std-ref">Typedef GenericContainerNamespace::vec_real_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a87c0edf71c4d853b31b9c5689d3572a7.html#exhale-typedef-namespace-generic-container-namespace-1a87c0edf71c4d853b31b9c5689d3572a7"><span class="std std-ref">Typedef GenericContainerNamespace::vec_string_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a540d37ef823612346a44852cd0103a3f.html#exhale-typedef-namespace-generic-container-namespace-1a540d37ef823612346a44852cd0103a3f"><span class="std std-ref">Typedef GenericContainerNamespace::vec_uint_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a8160e26547b618e76771ea01e5b740ec.html#exhale-typedef-namespace-generic-container-namespace-1a8160e26547b618e76771ea01e5b740ec"><span class="std std-ref">Typedef GenericContainerNamespace::vec_ulong_type</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_namespace_generic_container_namespace_1a2cf1e9c5407fd7711f474bbf93021ecd.html#exhale-typedef-namespace-generic-container-namespace-1a2cf1e9c5407fd7711f474bbf93021ecd"><span class="std std-ref">Typedef GenericContainerNamespace::vector_type</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="unions">
+<h2>Unions<a class="headerlink" href="#unions" title="Permalink to this headline">¶</a>
+</h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="union_generic_container_namespace_1_1_generic_container_1_1_data_storage.html#exhale-union-union-generic-container-namespace-1-1-generic-container-1-1-data-storage"><span class="std std-ref">Union GenericContainer::DataStorage</span></a></p></li>
+</ul>
+</div>
+</div>
+
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, Enrico Bertolazzi
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            |
+            <a class="muted-link" href="../_sources/api/file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh.rst.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">File GenericContainer.hh</a><ul>
+<li><a class="reference internal" href="#definition-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-gc-src-genericcontainer-hh">Definition (<code class="docutils literal notranslate"><span class="pre">/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src/GenericContainer.hh</span></code>)</a></li>
+<li><a class="reference internal" href="#includes">Includes</a></li>
+<li><a class="reference internal" href="#included-by">Included By</a></li>
+<li><a class="reference internal" href="#namespaces">Namespaces</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#enums">Enums</a></li>
+<li><a class="reference internal" href="#defines">Defines</a></li>
+<li><a class="reference internal" href="#typedefs">Typedefs</a></li>
+<li><a class="reference internal" href="#unions">Unions</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </main>
+</div>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <script src="../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
+</html>

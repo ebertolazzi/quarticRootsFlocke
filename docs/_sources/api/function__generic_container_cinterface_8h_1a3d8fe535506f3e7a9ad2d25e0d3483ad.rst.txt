@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8h_1a3d8fe535506f3e7a9ad2d25e0d3483ad:
+
+Function GC_get_complex
+=======================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_get_complex()

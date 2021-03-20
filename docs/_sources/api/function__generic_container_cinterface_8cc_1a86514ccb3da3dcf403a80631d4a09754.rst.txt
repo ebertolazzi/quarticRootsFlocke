@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8cc_1a86514ccb3da3dcf403a80631d4a09754:
+
+Function GC_get_complex_at_coor(int, int)
+=========================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_get_complex_at_coor(int, int)

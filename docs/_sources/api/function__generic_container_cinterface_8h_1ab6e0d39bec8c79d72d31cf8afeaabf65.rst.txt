@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8h_1ab6e0d39bec8c79d72d31cf8afeaabf65:
+
+Function GC_get_type_name
+=========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_get_type_name(void)

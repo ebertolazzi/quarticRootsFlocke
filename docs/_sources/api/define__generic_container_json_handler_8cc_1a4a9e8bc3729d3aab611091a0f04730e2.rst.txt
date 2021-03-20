@@ -1,0 +1,13 @@
+.. _exhale_define__generic_container_json_handler_8cc_1a4a9e8bc3729d3aab611091a0f04730e2:
+
+Define ASSERT_STACK_SIZE
+========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJsonHandler.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: ASSERT_STACK_SIZE

@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1aeb7c67a710e3cc8bd0893ebd4edba867:
+
+Function PolynomialRoots::evalMonicQuartic(valueType, valueType, valueType, valueType, valueType, valueType&, valueType&, valueType&)
+=====================================================================================================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots.hh`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::evalMonicQuartic(valueType, valueType, valueType, valueType, valueType, valueType&, valueType&, valueType&)

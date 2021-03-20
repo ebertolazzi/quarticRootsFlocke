@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1a20e8d257eadce2627deff55005de678a:
+
+Function PolynomialRoots::NewtonStep
+====================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::NewtonStep(valueType const, indexType, valueType&)

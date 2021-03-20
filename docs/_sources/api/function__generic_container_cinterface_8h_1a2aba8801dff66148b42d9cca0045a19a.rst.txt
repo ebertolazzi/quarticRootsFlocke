@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8h_1a2aba8801dff66148b42d9cca0045a19a:
+
+Function GC_set_map(void)
+=========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_set_map(void)

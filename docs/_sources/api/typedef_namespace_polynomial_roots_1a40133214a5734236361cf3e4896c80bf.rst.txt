@@ -1,0 +1,13 @@
+.. _exhale_typedef_namespace_polynomial_roots_1a40133214a5734236361cf3e4896c80bf:
+
+Typedef PolynomialRoots::complexType
+====================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.hh`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: PolynomialRoots::complexType

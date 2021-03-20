@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_lua_pmain_8cc_1ae8312476ab6a3db74a9a5b1a981d023f:
+
+Function dostring
+=================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: dostring(lua_State *, const char *, const char *)

@@ -1,0 +1,13 @@
+.. _exhale_variable__generic_container_lua_pmain_8cc_1ad785d8a8f8ff378aa21eb1fa7a6085df:
+
+Variable progname
+=================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: progname

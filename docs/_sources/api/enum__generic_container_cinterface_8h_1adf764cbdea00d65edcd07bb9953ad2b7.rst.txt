@@ -1,0 +1,13 @@
+.. _exhale_enum__generic_container_cinterface_8h_1adf764cbdea00d65edcd07bb9953ad2b7:
+
+Enum @1
+=======
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: @1

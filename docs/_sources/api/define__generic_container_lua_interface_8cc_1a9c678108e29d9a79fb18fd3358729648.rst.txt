@@ -1,0 +1,13 @@
+.. _exhale_define__generic_container_lua_interface_8cc_1a9c678108e29d9a79fb18fd3358729648:
+
+Define GC_ASSERT_DEBUG
+======================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaInterface.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: GC_ASSERT_DEBUG

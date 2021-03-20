@@ -1,0 +1,13 @@
+.. _exhale_variable_namespace_polynomial_roots_1a94c4ef16ddd43378db8e54e92e65571e:
+
+Variable PolynomialRoots::cosr
+==============================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Jenkins-Traub.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: PolynomialRoots::cosr

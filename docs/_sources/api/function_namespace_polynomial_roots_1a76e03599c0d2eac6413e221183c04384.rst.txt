@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1a76e03599c0d2eac6413e221183c04384:
+
+Function PolynomialRoots::isInfinite
+====================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots.hh`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::isInfinite(valueType)

@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_generic_container_namespace_1a98eac52fb4c7bd31567ae133312a6cdd:
+
+Function GenericContainerNamespace::real_to_stream
+==================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJson.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GenericContainerNamespace::real_to_stream(real_type, ostream_type&)

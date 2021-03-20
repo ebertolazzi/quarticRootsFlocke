@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_lua_pmain_8cc_1ae5ebcac6e57edd770e9176473e4adc0b:
+
+Function lstop
+==============
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: lstop(lua_State *, lua_Debug *)

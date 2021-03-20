@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8cc_1a8a23ea9cc0be034ef620be70086d6072:
+
+Function GC_get_string()
+========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_get_string()

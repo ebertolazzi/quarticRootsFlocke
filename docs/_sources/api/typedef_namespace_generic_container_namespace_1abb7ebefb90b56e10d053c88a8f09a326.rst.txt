@@ -1,0 +1,13 @@
+.. _exhale_typedef_namespace_generic_container_namespace_1abb7ebefb90b56e10d053c88a8f09a326:
+
+Typedef GenericContainerNamespace::vec_complex_type
+===================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: GenericContainerNamespace::vec_complex_type

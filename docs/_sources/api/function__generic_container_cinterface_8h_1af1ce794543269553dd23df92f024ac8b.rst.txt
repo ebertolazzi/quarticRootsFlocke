@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8h_1af1ce794543269553dd23df92f024ac8b:
+
+Function GC_get_matrix_num_rows(void)
+=====================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_get_matrix_num_rows(void)

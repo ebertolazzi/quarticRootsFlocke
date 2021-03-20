@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8h_1ab655420d208fed344ad592058e099e96:
+
+Function GC_dump
+================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_dump()

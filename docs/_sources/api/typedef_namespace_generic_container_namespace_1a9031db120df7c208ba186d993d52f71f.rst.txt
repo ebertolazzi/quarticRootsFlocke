@@ -1,0 +1,13 @@
+.. _exhale_typedef_namespace_generic_container_namespace_1a9031db120df7c208ba186d993d52f71f:
+
+Typedef GenericContainerNamespace::int_type
+===========================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: GenericContainerNamespace::int_type

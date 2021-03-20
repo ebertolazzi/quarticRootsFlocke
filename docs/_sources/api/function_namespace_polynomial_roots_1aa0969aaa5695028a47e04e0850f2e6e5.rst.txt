@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1aa0969aaa5695028a47e04e0850f2e6e5:
+
+Function PolynomialRoots::guess6
+================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-2-Cubic.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::guess6(valueType const)

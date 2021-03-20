@@ -1,0 +1,16 @@
+.. _exhale_class_class_generic_container_namespace_1_1_lua_interpreter:
+
+Class LuaInterpreter
+====================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaInterface.hh`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: GenericContainerNamespace::LuaInterpreter
+   :members:
+   :protected-members:
+   :undoc-members:

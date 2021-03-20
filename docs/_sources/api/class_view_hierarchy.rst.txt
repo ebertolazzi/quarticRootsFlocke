@@ -1,0 +1,18 @@
+
+Class Hierarchy
+---------------
+
+
+.. raw:: html
+
+   <ul class="treeView" id="class-treeView">
+     <li>
+       <ul class="collapsibleList">
+         <li class="lastChild">Namespace <a href="namespace_PolynomialRoots.html#namespace-PolynomialRoots">PolynomialRoots</a><ul><li>Class <a href="class_polynomial_roots_1_1_cubic.html#exhale-class-class-polynomial-roots-1-1-cubic">Cubic</a></li><li>Class <a href="class_polynomial_roots_1_1_quadratic.html#exhale-class-class-polynomial-roots-1-1-quadratic">Quadratic</a></li><li class="lastChild">Class <a href="class_polynomial_roots_1_1_quartic.html#exhale-class-class-polynomial-roots-1-1-quartic">Quartic</a></li></ul></li>
+       </ul>
+     </li><!-- only tree view element -->
+   </ul><!-- /treeView class-treeView -->
+
+.. end raw html for treeView
+
+

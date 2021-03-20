@@ -26,6 +26,8 @@
 #pragma clang diagnostic ignored "-Wunused-function"
 #endif
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 namespace PolynomialRoots {
 
   // static valueType const machepsi = std::numeric_limits<valueType>::epsilon();
@@ -374,5 +376,7 @@ namespace PolynomialRoots {
   }
 
 }
+
+#endif
 
 // EOF: PolynomialRoots-Utils.cc

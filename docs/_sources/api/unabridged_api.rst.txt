@@ -1,0 +1,59 @@
+
+Full API
+--------
+
+Namespaces
+**********
+
+
+.. toctree::
+   :maxdepth: 5
+
+   namespace_PolynomialRoots.rst
+
+Classes and Structs
+*******************
+
+
+.. toctree::
+   :maxdepth: 5
+
+   class_polynomial_roots_1_1_cubic.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   class_polynomial_roots_1_1_quadratic.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   class_polynomial_roots_1_1_quartic.rst
+
+Functions
+*********
+
+
+.. toctree::
+   :maxdepth: 5
+
+   function_namespace_polynomial_roots_1abcfe95455907d440930b77f57ca6d965.rst
+
+Typedefs
+********
+
+
+.. toctree::
+   :maxdepth: 5
+
+   typedef_namespace_polynomial_roots_1a40133214a5734236361cf3e4896c80bf.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   typedef_namespace_polynomial_roots_1a15b6d72b5de39b768482af271e79da41.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   typedef_namespace_polynomial_roots_1a1ed20b9a70e93f952f0aa4257b960ea0.rst

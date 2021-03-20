@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_lua_pmain_8cc_1ad0f0975de65acf5a5edf0953299b3747:
+
+Function l_message
+==================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: l_message(const char *, const char *)

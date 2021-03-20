@@ -1,0 +1,75 @@
+
+.. _file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJson.cc:
+
+File GenericContainerJson.cc
+============================
+
+|exhale_lsh| :ref:`Parent directory <dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src_json_interface``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src_json_interface/GenericContainerJson.cc``)
+---------------------------------------------------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJson.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``GenericContainerJson.hh`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJson.hh`)
+
+- ``GenericContainerJsonHandler.hh`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJsonHandler.hh`)
+
+- ``iomanip``
+
+- ``iostream``
+
+- ``rapidjson/prettywriter.h``
+
+- ``rapidjson/reader.h``
+
+- ``rapidjson/writer.h``
+
+- ``string``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_GenericContainerNamespace`
+
+- :ref:`namespace_rapidjson`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespace_generic_container_namespace_1aa1bdbc3917730a9ba0ff7ab36ece9374`
+
+- :ref:`exhale_function_namespace_generic_container_namespace_1a14d953c3cf283985c7980da86851fb23`
+
+- :ref:`exhale_function_namespace_generic_container_namespace_1a19df1599db99d5772551ca5791cad0e1`
+
+- :ref:`exhale_function_namespace_generic_container_namespace_1a0d778af2aa29dc0ba68f41aa78103167`
+
+- :ref:`exhale_function_namespace_generic_container_namespace_1a98eac52fb4c7bd31567ae133312a6cdd`
+

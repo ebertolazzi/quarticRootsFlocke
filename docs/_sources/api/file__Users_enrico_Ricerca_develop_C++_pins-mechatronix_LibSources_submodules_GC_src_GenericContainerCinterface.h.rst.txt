@@ -1,0 +1,174 @@
+
+.. _file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h:
+
+File GenericContainerCinterface.h
+=================================
+
+|exhale_lsh| :ref:`Parent directory <dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src/GenericContainerCinterface.h``)
+-----------------------------------------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h.rst
+
+
+
+
+
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structc__complex__type`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum__generic_container_cinterface_8h_1adf764cbdea00d65edcd07bb9953ad2b7`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a9ab1bd1155b5508ec3a00212ae354e2e`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1ab655420d208fed344ad592058e099e96`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a6f5d49dd5f593cb0ef29f3fc292a6ded`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a0d8384363f714f4778d1feaf6dfe70d4`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a63982106109a2aa082784931602998a5`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a3d8fe535506f3e7a9ad2d25e0d3483ad`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a86514ccb3da3dcf403a80631d4a09754`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a94bb55c93d8ca227cc8c6b3d439e8d59`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1aa52f6d35694c5cf331dd36ad6a7b8a63`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a59d484ae54ce67d3b2fd028ac1db90a4`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1aea64019c8ef0d11042e411e367fcd517`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1aefcec24004bbb7fdb8748ecc576e2307`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a500e4630417332cdab4f9960177a3fe9`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1aad1ae490f3b8b0bbd8c38e08977f5103`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1af0e14b5c2fd60e0a15ec4cd5394404b2`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1aea7d09afcead1fc112a1fe24bc454fea`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1aa79c2c4908b94e3c215bb93ef31b77d4`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1aa2d72c2e7aaf63f70b545d0998dd9767`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a2e06a7d7f7bc39fe644b726f2c39f642`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1aeda369c8b55c1f4dbc6d60aef8e86ffa`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a0c9ffe201c3e1827921b02eaeee7460f`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a580b30b6b2cd870df70a7d63a4d1f90e`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1acc732ec460b0f400643269883b5a5319`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a8a23ea9cc0be034ef620be70086d6072`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1aa152cb8ae4806557a2dbc63976ba6fa0`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a85f3102cc4c8212ca7b4602505bb8086`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1ab6e0d39bec8c79d72d31cf8afeaabf65`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a654c04d499921f0065bebcdf16ced97d`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a05342ee80f13edc85aafe12ef9b841b3`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a9c4d1638edae5cd0cd952eadc9d16670`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1abc5be84dd048a37ae7b391f1a5a2f798`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a04506ce2900be0d3122e67e1c0e65b39`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1acea3914c0b3c06e635817bd4ff37252f`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a791f636e93197873406402aeffd50919`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a94001ed7c98a02b145905f06f0594f95`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a1157758699b3af448fbe4f7086bcb332`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a2017a52e27e37c2ec0ef06f15ebd3d7e`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a466ad50bf43dcf4100e95d64f238900d`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a03d27836197f659543705b56e7ee5b94`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a3e65e06c95680394ae21d7ae14824dd7`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a446e5e057707b59033f27ddcfb8a99ac`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a96a0b00683696835357069a9b252cc77`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a58e721f53614a628c86aa3192a10bda5`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1afd9bcdaffc85561a02377aef94eb9b60`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a876d695c75b7e4ada206895af4f5dbce`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1ab0ba13b90f5ed9f804fec6df44c1c1e2`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a9e6cda6086e95e66d82dd2f838285a60`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a89e6cf707be706de926d137fb140828b`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a7beef25a3a19b509c44e3df6639b2ace`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1adacb4c8d6729aa59e14681eb099ab69b`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1acff492e97fc6dd33467002aa50c64ac6`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1ab5c51d363602f1cbe42142c6cebb4a32`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a145c4dbf28b8d28470f569cb35ad9024`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1ad0c3f19dcf90486ddc53116870c76d56`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a8db80d447cb8d2b14f784f5af904d620`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a620562c4b3400d365a7da44d799f1255`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1af14c1be318b456d250057cb5d5acb2cc`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1ad848e2f1eb0ffb2d7fa2d3cba68efdeb`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a1573e79596fbb65e7516fd6105e6461f`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a8b8bd861050924c1cb3fadc43f056a3f`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1a4380e994515935d999de2cccfd14cf93`
+
+- :ref:`exhale_function__generic_container_cinterface_8h_1aa85686cbc4c4fd73ea615c04613d2b23`
+

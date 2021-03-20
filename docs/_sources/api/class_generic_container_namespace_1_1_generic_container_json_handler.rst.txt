@@ -1,0 +1,25 @@
+.. _exhale_class_class_generic_container_namespace_1_1_generic_container_json_handler:
+
+Class GenericContainerJsonHandler
+=================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJsonHandler.hh`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public rapidjson::BaseReaderHandler< rapidjson::UTF8<>, GenericContainerJsonHandler >``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: GenericContainerNamespace::GenericContainerJsonHandler
+   :members:
+   :protected-members:
+   :undoc-members:

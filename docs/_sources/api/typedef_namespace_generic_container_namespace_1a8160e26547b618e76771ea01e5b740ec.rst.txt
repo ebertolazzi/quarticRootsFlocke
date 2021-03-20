@@ -1,0 +1,13 @@
+.. _exhale_typedef_namespace_generic_container_namespace_1a8160e26547b618e76771ea01e5b740ec:
+
+Typedef GenericContainerNamespace::vec_ulong_type
+=================================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: GenericContainerNamespace::vec_ulong_type

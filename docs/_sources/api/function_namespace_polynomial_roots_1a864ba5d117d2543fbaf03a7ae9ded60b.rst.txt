@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1a864ba5d117d2543fbaf03a7ae9ded60b:
+
+Function PolynomialRoots::isNaN
+===============================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots.hh`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::isNaN(valueType)

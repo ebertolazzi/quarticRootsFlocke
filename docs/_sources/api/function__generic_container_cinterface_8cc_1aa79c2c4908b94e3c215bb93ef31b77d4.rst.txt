@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8cc_1aa79c2c4908b94e3c215bb93ef31b77d4:
+
+Function GC_get_long()
+======================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_get_long()

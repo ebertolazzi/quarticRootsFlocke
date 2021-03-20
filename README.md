@@ -1,11 +1,15 @@
-quarticRootsFlocke [![Build Status](https://travis-ci.org/ebertolazzi/quarticRootsFlocke.svg?branch=master)](https://travis-ci.org/ebertolazzi/quarticRootsFlocke)
+Quartic Roots Solver
+====================
+
+[![Build Status](https://travis-ci.org/ebertolazzi/quarticRootsFlocke.svg?branch=master)](https://travis-ci.org/ebertolazzi/quarticRootsFlocke)
 
 Polynomial Roots Solver
-=======================
+-----------------------
 
 Port to C++ of Jenkins-Traub real
 polynomial root finder and the algorithm
-of Norbert Flocke for polynoms up to degree 4.
+of Norbert Flocke for polynomial roots
+up to degree 4.
 
 [Doxygen documentation: http://ebertolazzi.github.io/quarticRootsFlocke/](http://ebertolazzi.github.io/quarticRootsFlocke/)
 
@@ -14,7 +18,7 @@ of Norbert Flocke for polynoms up to degree 4.
 Usage
 -----
 
-~~~~~~~~~~~~~~~~~~~~~
+```cpp
   #include "PolynomialRoots.hh"
   ....
 
@@ -28,11 +32,11 @@ Usage
   cout << " ok = " << ok << '\n' ;
   for ( int i = 0 ; i < degree ; ++i )
     cout << zeror[i] << " + I* " << zeroi[i] << '\n';
-~~~~~~~~~~~~~~~~~~~~~
+```
 
 To solve quadratic, cubic or quartic use specialized classes
 
-~~~~
+```cpp
   Quadratic qsolve(a,b,c);
   qsolve.info(cout);
 
@@ -41,26 +45,33 @@ To solve quadratic, cubic or quartic use specialized classes
 
   Quartic q4(a,b,c,d,e);
   q4.info(cout);
-~~~~
+```
 
 look at the class definition to see how to access the computed roots.
+
+Online Documentation
+--------------------
+
+Available at: [http://ebertolazzi.github.io/quarticRootsFlocke](http://ebertolazzi.github.io/quarticRootsFlocke)
 
 References
 ----------
 
-- Algorithm 954: An Accurate and Efficient Cubic and Quartic
-  Equation Solver for Physical Applications, ACM TOMS,
-  vol 41, n.4, 2015
+- **N.Flocke**  
+  Algorithm 954: An Accurate and Efficient Cubic and Quartic  
+  Equation Solver for Physical Applications  
+  ACM TOMS, vol 41, n.4, 2015
 
-- A Three-Stage Algorithm for Real Polynomials Using Quadratic Iteration
-  M. A.   Jenkins and J. F. Traub
-  SIAM Journal on Numerical Analysis,
+- **M.A. Jenkins and J.F.Traub**  
+  A Three-Stage Algorithm for Real Polynomials
+  Using Quadratic Iteration    
+  SIAM Journal on Numerical Analysis  
   Vol. 7, No. 4 (Dec., 1970), pp. 545-566
 
 Author
 ------
 
-Enrico Bertolazzi<br>
-Dipartimento di Ingegneria Industriale<br>
-Universita` degli Studi di Trento<br>
-email: enrico.bertolazzi@unitn.it
+    Enrico Bertolazzi  
+    Dipartimento di Ingegneria Industriale  
+    Universita` degli Studi di Trento  
+    email: enrico.bertolazzi@unitn.it

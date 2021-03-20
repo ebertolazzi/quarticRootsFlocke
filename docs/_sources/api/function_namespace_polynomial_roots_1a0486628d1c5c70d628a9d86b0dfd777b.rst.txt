@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1a0486628d1c5c70d628a9d86b0dfd777b:
+
+Function PolynomialRoots::Split
+===============================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.hh`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::Split(valueType, valueType&, valueType&)

@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_json_handler_8cc_1a35b0a5fab42712b339ebee06211bcb1a:
+
+Function findMinimumCommonTypeAllowed
+=====================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJsonHandler.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: findMinimumCommonTypeAllowed(TypeAllowed, TypeAllowed)

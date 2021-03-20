@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_lua_pmain_8cc_1aa0f8bc082ef913cb0a4df437bf5f5019:
+
+Function pmain
+==============
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: pmain(lua_State *)

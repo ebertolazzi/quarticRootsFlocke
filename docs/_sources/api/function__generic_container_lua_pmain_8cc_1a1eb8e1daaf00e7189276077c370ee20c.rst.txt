@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_lua_pmain_8cc_1a1eb8e1daaf00e7189276077c370ee20c:
+
+Function collectargs
+====================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_lua_interface_GenericContainerLuaPmain.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: collectargs(char **, int *)

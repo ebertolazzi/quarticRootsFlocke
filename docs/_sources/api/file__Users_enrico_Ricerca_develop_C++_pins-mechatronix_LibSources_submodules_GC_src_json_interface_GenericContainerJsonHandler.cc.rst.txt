@@ -1,0 +1,91 @@
+
+.. _file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJsonHandler.cc:
+
+File GenericContainerJsonHandler.cc
+===================================
+
+|exhale_lsh| :ref:`Parent directory <dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src_json_interface``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/GC/src_json_interface/GenericContainerJsonHandler.cc``)
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJsonHandler.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``GenericContainerJsonHandler.hh`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJsonHandler.hh`)
+
+- ``algorithm``
+
+- ``iomanip``
+
+- ``iostream``
+
+- ``rapidjson/reader.h``
+
+- ``regex``
+
+- ``string``
+
+
+
+
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a3bcd7925c802a46041c7cb86690f4e21`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a29172691adef743170e68b5b3c5e3f97`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a36759f2521c94d8983f14eee8f01fe41`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a1335cfd54e1b568405d21bc08a45d40f`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a02aaa441f7c97a75bcfc4a79b4a15d86`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a7725da0936236407e95c278e832cfe11`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1aa8ee17dc18fd7fd20bd8a68856ec5e4a`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a4fe6fc0caaae46218582e96930e5749e`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a1e619b4c90e5297d9e5d151b2eb5d613`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a53da8b17965ba877c6ada995283dde9e`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a35b0a5fab42712b339ebee06211bcb1a`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a8ad15573a72a0bc28725d9a45d4654fc`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1ade0ad335354ee6e556f4ead4b40e4de6`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a5be0718470d6cffaae34a2f6a05ececd`
+
+- :ref:`exhale_function__generic_container_json_handler_8cc_1a7abd005a7e5c82afe3943753a1052447`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define__generic_container_json_handler_8cc_1a4a9e8bc3729d3aab611091a0f04730e2`
+

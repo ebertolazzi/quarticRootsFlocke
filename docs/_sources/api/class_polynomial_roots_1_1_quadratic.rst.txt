@@ -1,0 +1,16 @@
+.. _exhale_class_class_polynomial_roots_1_1_quadratic:
+
+Class Quadratic
+===============
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots.hh`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PolynomialRoots::Quadratic
+   :members:
+   :protected-members:
+   :undoc-members:

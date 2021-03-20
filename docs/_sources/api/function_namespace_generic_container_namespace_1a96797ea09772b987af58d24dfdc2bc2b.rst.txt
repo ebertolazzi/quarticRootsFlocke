@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_generic_container_namespace_1a96797ea09772b987af58d24dfdc2bc2b:
+
+Function GenericContainerNamespace::backtrace
+=============================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GenericContainerNamespace::backtrace(ostream_type&)

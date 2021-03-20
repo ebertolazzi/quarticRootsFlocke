@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1a303b908341845838f05a2c953687419e:
+
+Function PolynomialRoots::isRegular
+===================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots.hh`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::isRegular(valueType)

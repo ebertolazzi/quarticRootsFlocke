@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1a8b021dd5135c38464f36825c1749fc87:
+
+Function PolynomialRoots::FixedShift
+====================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Jenkins-Traub.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::FixedShift(indexType, valueType, valueType, valueType, indexType, valueType, indexType, valueType, valueType, valueType&, valueType&, valueType&, valueType&)

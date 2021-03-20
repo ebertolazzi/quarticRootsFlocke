@@ -1,0 +1,13 @@
+.. _exhale_define__generic_container_8hh_1a8dc0216e4b1676666f0dfab4a71f5865:
+
+Define GC_NO_RETURN
+===================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: GC_NO_RETURN

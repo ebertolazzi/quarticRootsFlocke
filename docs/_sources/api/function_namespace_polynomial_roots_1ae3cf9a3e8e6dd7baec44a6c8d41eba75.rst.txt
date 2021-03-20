@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1ae3cf9a3e8e6dd7baec44a6c8d41eba75:
+
+Function PolynomialRoots::deflatePolynomial
+===========================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::deflatePolynomial(indexType, valueType const, valueType, valueType)

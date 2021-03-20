@@ -1,0 +1,13 @@
+.. _exhale_function__generic_container_cinterface_8h_1a1a65d824f528f9d3ed6b7a3e07dea638:
+
+Function GC_get_real(void)
+==========================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainerCinterface.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: GC_get_real(void)

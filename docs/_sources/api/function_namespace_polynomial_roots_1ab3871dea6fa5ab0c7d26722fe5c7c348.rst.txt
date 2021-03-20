@@ -1,0 +1,13 @@
+.. _exhale_function_namespace_polynomial_roots_1ab3871dea6fa5ab0c7d26722fe5c7c348:
+
+Function PolynomialRoots::isZero
+================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots.hh`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: PolynomialRoots::isZero(valueType)

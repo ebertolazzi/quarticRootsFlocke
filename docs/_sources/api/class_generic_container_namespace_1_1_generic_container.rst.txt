@@ -1,0 +1,26 @@
+.. _exhale_class_class_generic_container_namespace_1_1_generic_container:
+
+Class GenericContainer
+======================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh`
+
+
+Nested Relationships
+--------------------
+
+
+Nested Types
+************
+
+- :ref:`exhale_union_union_generic_container_namespace_1_1_generic_container_1_1_data_storage`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: GenericContainerNamespace::GenericContainer
+   :members:
+   :protected-members:
+   :undoc-members:

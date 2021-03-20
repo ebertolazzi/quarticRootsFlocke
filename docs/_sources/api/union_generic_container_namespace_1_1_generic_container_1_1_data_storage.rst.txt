@@ -1,0 +1,19 @@
+.. _exhale_union_union_generic_container_namespace_1_1_generic_container_1_1_data_storage:
+
+Union GenericContainer::DataStorage
+===================================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_GenericContainer.hh`
+
+
+Nested Relationships
+--------------------
+
+This union is a nested type of :ref:`exhale_class_class_generic_container_namespace_1_1_generic_container`.
+
+
+Union Documentation
+-------------------
+
+
+.. doxygenunion:: GenericContainerNamespace::GenericContainer::DataStorage

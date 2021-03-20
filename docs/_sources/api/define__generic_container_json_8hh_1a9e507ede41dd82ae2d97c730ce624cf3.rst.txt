@@ -1,0 +1,13 @@
+.. _exhale_define__generic_container_json_8hh_1a9e507ede41dd82ae2d97c730ce624cf3:
+
+Define GC_JSON_PRETTY
+=====================
+
+- Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_GC_src_json_interface_GenericContainerJson.hh`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: GC_JSON_PRETTY
