@@ -104,10 +104,10 @@ Program Listing for File PolynomialRoots.hh
    
      int
      roots(
-       valueType const op[],
-       indexType       Degree,
-       valueType       zeror[],
-       valueType       zeroi[]
+       valueType const * op,
+       indexType         Degree,
+       valueType       * zeror,
+       valueType       * zeroi
      );
    
      // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -132,45 +132,44 @@ Program Listing for File PolynomialRoots.hh
      public:
    
        Quadratic() : nrts(0), cplx(false), dblx(false) {}
-       Quadratic( valueType _a, valueType _b, valueType _c )
+   
+       Quadratic( valueType a, valueType b, valueType c )
        : nrts(0), cplx(false), dblx(false) {
          valueType & A = ABC[0];
          valueType & B = ABC[1];
          valueType & C = ABC[2];
-         A = _a; B = _b; C = _c;
+         A = a; B = b; C = c;
          findRoots();
        }
    
-   
        void
-       setup( valueType _a, valueType _b, valueType _c ) {
+       setup( valueType a, valueType b, valueType c ) {
          valueType & A = ABC[0];
          valueType & B = ABC[1];
          valueType & C = ABC[2];
-         A = _a; B = _b; C = _c;
+         A = a; B = b; C = c;
          findRoots();
        }
    
-       indexType numRoots()     const { return nrts; } 
-       bool      complexRoots() const { return cplx; } 
-       bool      doubleRoot()   const { return dblx; } 
+       indexType numRoots() const { return nrts; }
    
+       bool complexRoots() const { return cplx; }
+   
+       bool doubleRoot() const { return dblx; }
    
        indexType getRealRoots( valueType r[] ) const;
    
-   
        indexType getPositiveRoots( valueType r[] ) const;
    
-   
        indexType getNegativeRoots( valueType r[] ) const;
-   
    
        indexType getRootsInRange( valueType a, valueType b, valueType r[] ) const;
    
        indexType getRootsInOpenRange( valueType a, valueType b, valueType r[] ) const;
    
        valueType real_root0() const { return r0; } 
-       valueType real_root1() const { return r1; } 
+   
+       valueType real_root1() const { return r1; }
    
        complexType
        root0() const
@@ -256,12 +255,12 @@ Program Listing for File PolynomialRoots.hh
    
    
        void
-       setup( valueType _a, valueType _b, valueType _c, valueType _d ) {
+       setup( valueType a, valueType b, valueType c, valueType d ) {
          valueType & A = ABCD[0];
          valueType & B = ABCD[1];
          valueType & C = ABCD[2];
          valueType & D = ABCD[3];
-         A = _a; B = _b; C = _c; D = _d;
+         A = a; B = b; C = c; D = d;
          findRoots();
        }
    
@@ -394,18 +393,18 @@ Program Listing for File PolynomialRoots.hh
    
        void
        setup(
-         valueType _a,
-         valueType _b,
-         valueType _c,
-         valueType _d,
-         valueType _e
+         valueType a,
+         valueType b,
+         valueType c,
+         valueType d,
+         valueType e
        ) {
          valueType & A = ABCDE[0];
          valueType & B = ABCDE[1];
          valueType & C = ABCDE[2];
          valueType & D = ABCDE[3];
          valueType & E = ABCDE[4];
-         A = _a; B = _b; C = _c; D = _d; E = _e;
+         A = a; B = b; C = c; D = d; E = e;
          findRoots();
        }
    

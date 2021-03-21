@@ -7,11 +7,6 @@ File PolynomialRoots-Jenkins-Traub.cc
 |exhale_lsh| :ref:`Parent directory <dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src>` (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/quarticRootsFlocke/src``)
 
 .. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
-
-.. contents:: Contents
-   :local:
-   :backlinks: none
-
 Definition (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/quarticRootsFlocke/src/PolynomialRoots-Jenkins-Traub.cc``)
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -25,7 +20,39 @@ Definition (``/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/subm
 
 
 
+Includes
+--------
+
+
+- ``PolynomialRoots.hh`` (:ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots.hh`)
+
+- ``cctype``
+
+- ``cfloat``
+
+- ``cmath``
+
+- ``fstream``
+
+- ``iostream``
+
+- ``limits``
 
 
 
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PolynomialRoots`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespace_polynomial_roots_1ac18c1444f6f1642ac85d6021bf837952`
 

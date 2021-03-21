@@ -118,10 +118,10 @@
 <li class="toctree-l2"><a class="reference internal" href="class_polynomial_roots_1_1_cubic.html">Class Cubic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_polynomial_roots_1_1_quadratic.html">Class Quadratic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_polynomial_roots_1_1_quartic.html">Class Quartic</a></li>
-<li class="toctree-l2"><a class="reference internal" href="function_namespace_polynomial_roots_1abcfe95455907d440930b77f57ca6d965.html">Function PolynomialRoots::roots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_polynomial_roots_1a40133214a5734236361cf3e4896c80bf.html">Typedef PolynomialRoots::complexType</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_polynomial_roots_1a15b6d72b5de39b768482af271e79da41.html">Typedef PolynomialRoots::indexType</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_polynomial_roots_1a1ed20b9a70e93f952f0aa4257b960ea0.html">Typedef PolynomialRoots::valueType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function_namespace_polynomial_roots_1ac18c1444f6f1642ac85d6021bf837952.html">Function PolynomialRoots::roots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_polynomial_roots_1a1ac247f8669dde00caaec7b49131507f.html">Typedef PolynomialRoots::complexType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_polynomial_roots_1a976ab354b39108445a212bc362258292.html">Typedef PolynomialRoots::indexType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typedef_namespace_polynomial_roots_1a644e6dd20e81559412b8b5aef77c0a90.html">Typedef PolynomialRoots::valueType</a></li>
 </ul>
 </li>
 </ul>
@@ -174,8 +174,6 @@
 <span class="c1">//the console.</span>
 <span class="c1">//</span>
 
-<span class="cp">#ifndef DOXYGEN_SHOULD_SKIP_THIS</span>
-
 <span class="cp">#include</span> <span class="cpf">"PolynomialRoots.hh"</span><span class="cp"></span>
 
 <span class="cp">#ifdef __GNUC__</span>
@@ -195,9 +193,13 @@
 <span class="cp">#include</span> <span class="cpf">&lt;cfloat&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;limits&gt;</span><span class="cp"></span>
 
+<span class="cp">#ifndef DOXYGEN_SHOULD_SKIP_THIS</span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="cp">#endif</span>
 
 <span class="k">namespace</span> <span class="n">PolynomialRoots</span> <span class="p">{</span>
+
+  <span class="cp">#ifndef DOXYGEN_SHOULD_SKIP_THIS</span>
 
   <span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">;</span>
   <span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">;</span>
@@ -814,13 +816,15 @@
     <span class="p">}</span>
   <span class="p">}</span>
 
+  <span class="cp">#endif</span>
+
   <span class="c1">//============================================================================</span>
   <span class="kt">int</span>
   <span class="n">roots</span><span class="p">(</span>
-    <span class="n">valueType</span> <span class="k">const</span> <span class="n">op</span><span class="p">[],</span>
-    <span class="n">indexType</span>       <span class="n">Degree</span><span class="p">,</span>
-    <span class="n">valueType</span>       <span class="n">zeror</span><span class="p">[],</span>
-    <span class="n">valueType</span>       <span class="n">zeroi</span><span class="p">[]</span>
+    <span class="n">valueType</span> <span class="k">const</span> <span class="o">*</span> <span class="n">op</span><span class="p">,</span>
+    <span class="n">indexType</span>         <span class="n">Degree</span><span class="p">,</span>
+    <span class="n">valueType</span>       <span class="o">*</span> <span class="n">zeror</span><span class="p">,</span>
+    <span class="n">valueType</span>       <span class="o">*</span> <span class="n">zeroi</span>
   <span class="p">)</span> <span class="p">{</span>
 
     <span class="k">if</span> <span class="p">(</span> <span class="n">Degree</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="p">)</span> <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
@@ -927,8 +931,6 @@
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">}</span>
-
-<span class="cp">#endif</span>
 </pre></div>
 </div>
 </div>

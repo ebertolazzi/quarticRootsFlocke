@@ -6,21 +6,19 @@ Quartic Roots Solver
 Polynomial Roots Solver
 -----------------------
 
-Port to C++ of Jenkins-Traub real
-polynomial root finder and the algorithm
+Port to C++ of the algorithm
 of Norbert Flocke for polynomial roots
 up to degree 4.
-
-[Doxygen documentation: http://ebertolazzi.github.io/quarticRootsFlocke/](http://ebertolazzi.github.io/quarticRootsFlocke/)
-
-[Repository: https://github.com/ebertolazzi/quarticRootsFlocke](https://github.com/ebertolazzi/quarticRootsFlocke)
+Also Jenkins-Traub real polynomial root 
+finder is ported but is experimental for the moment.
 
 Usage
 -----
 
 ```cpp
   #include "PolynomialRoots.hh"
-  ....
+
+  // ....
 
   double coeffs[] = { 8, -8, 16,-16, 8,-8 }; // polynomial coeffs
 
@@ -53,6 +51,11 @@ Online Documentation
 --------------------
 
 Available at: [http://ebertolazzi.github.io/quarticRootsFlocke](http://ebertolazzi.github.io/quarticRootsFlocke)
+
+Repositori Home
+---------------
+
+[Repository: https://github.com/ebertolazzi/quarticRootsFlocke](https://github.com/ebertolazzi/quarticRootsFlocke)
 
 References
 ----------

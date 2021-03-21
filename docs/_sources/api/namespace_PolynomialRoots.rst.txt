@@ -5,14 +5,12 @@ Namespace PolynomialRoots
 =========================
 
 
-implementation of Flocke algorithm for roots of 3rd and 4th degree polynomials 
+Detailed Description
+--------------------
 
+Implementation of Flocke algorithm for roots of 3rd and 4th degree polynomials.
 
-
-
-.. contents:: Contents
-   :local:
-   :backlinks: none
+There are 3 classed for 2nd, 3rd and 4th degree polynomial 
 
 
 
@@ -33,15 +31,15 @@ Functions
 ---------
 
 
-- :ref:`exhale_function_namespace_polynomial_roots_1abcfe95455907d440930b77f57ca6d965`
+- :ref:`exhale_function_namespace_polynomial_roots_1ac18c1444f6f1642ac85d6021bf837952`
 
 
 Typedefs
 --------
 
 
-- :ref:`exhale_typedef_namespace_polynomial_roots_1a40133214a5734236361cf3e4896c80bf`
+- :ref:`exhale_typedef_namespace_polynomial_roots_1a1ac247f8669dde00caaec7b49131507f`
 
-- :ref:`exhale_typedef_namespace_polynomial_roots_1a15b6d72b5de39b768482af271e79da41`
+- :ref:`exhale_typedef_namespace_polynomial_roots_1a976ab354b39108445a212bc362258292`
 
-- :ref:`exhale_typedef_namespace_polynomial_roots_1a1ed20b9a70e93f952f0aa4257b960ea0`
+- :ref:`exhale_typedef_namespace_polynomial_roots_1a644e6dd20e81559412b8b5aef77c0a90`

@@ -1,4 +1,5 @@
 github:
+	@rm -rf xml
 	@cd sphinx; make clean; make html; cd ..
 	@make install
 

@@ -37,7 +37,7 @@ Functions
 .. toctree::
    :maxdepth: 5
 
-   function_namespace_polynomial_roots_1abcfe95455907d440930b77f57ca6d965.rst
+   function_namespace_polynomial_roots_1ac18c1444f6f1642ac85d6021bf837952.rst
 
 Typedefs
 ********
@@ -46,14 +46,14 @@ Typedefs
 .. toctree::
    :maxdepth: 5
 
-   typedef_namespace_polynomial_roots_1a40133214a5734236361cf3e4896c80bf.rst
+   typedef_namespace_polynomial_roots_1a1ac247f8669dde00caaec7b49131507f.rst
 
 .. toctree::
    :maxdepth: 5
 
-   typedef_namespace_polynomial_roots_1a15b6d72b5de39b768482af271e79da41.rst
+   typedef_namespace_polynomial_roots_1a976ab354b39108445a212bc362258292.rst
 
 .. toctree::
    :maxdepth: 5
 
-   typedef_namespace_polynomial_roots_1a1ed20b9a70e93f952f0aa4257b960ea0.rst
+   typedef_namespace_polynomial_roots_1a644e6dd20e81559412b8b5aef77c0a90.rst
