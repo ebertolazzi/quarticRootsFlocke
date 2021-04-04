@@ -1,0 +1,19 @@
+
+Class Hierarchy
+---------------
+
+
+.. raw:: html
+
+   <div id="class-treeView"></div>
+   <script type="text/javascript">
+     function getClassHierarchyTree() {
+        return [
+         {text:"<span class=\"text-muted\">Namespace</span> PolynomialRoots",href:"namespace_PolynomialRoots.html#namespace-PolynomialRoots",selectable:false,tags:['3'],nodes:[{text:"<span class=\"text-muted\">Class</span> Cubic",href:"class_polynomial_roots_1_1_cubic.html#exhale-class-class-polynomial-roots-1-1-cubic",selectable:false},{text:"<span class=\"text-muted\">Class</span> Quadratic",href:"class_polynomial_roots_1_1_quadratic.html#exhale-class-class-polynomial-roots-1-1-quadratic",selectable:false},{text:"<span class=\"text-muted\">Class</span> Quartic",href:"class_polynomial_roots_1_1_quartic.html#exhale-class-class-polynomial-roots-1-1-quartic",selectable:false}]},
+        ]
+     }
+   </script><!-- end getClassHierarchyTree() function -->
+
+.. end raw html for treeView
+
+

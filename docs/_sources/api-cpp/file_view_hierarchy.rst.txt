@@ -1,0 +1,19 @@
+
+File Hierarchy
+--------------
+
+
+.. raw:: html
+
+   <div id="file-treeView"></div>
+   <script type="text/javascript">
+     function getFileHierarchyTree() {
+        return [
+         {text:"<span class=\"text-muted\">Directory</span> src",href:"dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src.html#dir-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src",selectable:false,tags:['7'],nodes:[{text:"<span class=\"text-muted\">File</span> PolynomialRoots-1-Quadratic.cc",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-1-Quadratic.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-1-Quadratic.cc",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots-2-Cubic.cc",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-2-Cubic.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-2-Cubic.cc",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots-3-Quartic.cc",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-3-Quartic.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-3-Quartic.cc",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots-Jenkins-Traub.cc",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Jenkins-Traub.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-Jenkins-Traub.cc",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots-Utils.cc",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-Utils.cc",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots-Utils.hh",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.hh.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots-Utils.hh",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots.hh",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots.hh.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-quarticRootsFlocke-src-PolynomialRoots.hh",selectable:false}]},
+        ]
+     }
+   </script><!-- end getFileHierarchyTree() function -->
+
+.. end raw html for treeView
+
+

@@ -1,0 +1,52 @@
+
+.. _namespace_PolynomialRoots:
+
+Namespace PolynomialRoots
+=========================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+Detailed Description
+--------------------
+
+Implementation of Flocke algorithm for roots of 3rd and 4th degree polynomials.
+
+There are 3 classed for 2nd, 3rd and 4th degree polynomial 
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_class_polynomial_roots_1_1_cubic`
+
+- :ref:`exhale_class_class_polynomial_roots_1_1_quadratic`
+
+- :ref:`exhale_class_class_polynomial_roots_1_1_quartic`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespace_polynomial_roots_1ac18c1444f6f1642ac85d6021bf837952`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_namespace_polynomial_roots_1a1ac247f8669dde00caaec7b49131507f`
+
+- :ref:`exhale_typedef_namespace_polynomial_roots_1a976ab354b39108445a212bc362258292`
+
+- :ref:`exhale_typedef_namespace_polynomial_roots_1a644e6dd20e81559412b8b5aef77c0a90`
