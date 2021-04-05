@@ -1,4 +1,4 @@
-.. _exhale_class_class_polynomial_roots_1_1_quadratic:
+.. _exhale_class_a00027:
 
 Class Quadratic
 ===============

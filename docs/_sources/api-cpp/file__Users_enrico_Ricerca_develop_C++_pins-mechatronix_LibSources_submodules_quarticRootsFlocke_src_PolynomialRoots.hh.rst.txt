@@ -39,6 +39,20 @@ Includes
 
 
 
+Included By
+-----------
+
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-1-Quadratic.cc`
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-2-Cubic.cc`
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-3-Quartic.cc`
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Jenkins-Traub.cc`
+
+- :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.cc`
+
 
 
 
@@ -53,9 +67,9 @@ Classes
 -------
 
 
-- :ref:`exhale_class_class_polynomial_roots_1_1_cubic`
+- :ref:`exhale_class_a00031`
 
-- :ref:`exhale_class_class_polynomial_roots_1_1_quadratic`
+- :ref:`exhale_class_a00027`
 
-- :ref:`exhale_class_class_polynomial_roots_1_1_quartic`
+- :ref:`exhale_class_a00035`
 

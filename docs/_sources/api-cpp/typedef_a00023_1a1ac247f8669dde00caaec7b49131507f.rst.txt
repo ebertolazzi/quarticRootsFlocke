@@ -1,4 +1,4 @@
-.. _exhale_typedef_namespace_polynomial_roots_1a1ac247f8669dde00caaec7b49131507f:
+.. _exhale_typedef_a00023_1a1ac247f8669dde00caaec7b49131507f:
 
 Typedef PolynomialRoots::complexType
 ====================================

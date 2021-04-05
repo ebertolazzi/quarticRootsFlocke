@@ -1,4 +1,4 @@
-.. _exhale_function_namespace_polynomial_roots_1ac18c1444f6f1642ac85d6021bf837952:
+.. _exhale_function_a00023_1ac18c1444f6f1642ac85d6021bf837952:
 
 Function PolynomialRoots::roots
 ===============================

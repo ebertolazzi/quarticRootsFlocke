@@ -38,6 +38,7 @@ exhale_args = {
         INPUT               = ../../src
         GENERATE_TREEVIEW   = YES
         XML_OUTPUT          = xml-cpp
+        SHORT_NAMES         = YES
 
         XML_PROGRAMLISTING    = YES
         RECURSIVE             = YES

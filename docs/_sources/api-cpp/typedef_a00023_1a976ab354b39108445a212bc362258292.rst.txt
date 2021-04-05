@@ -1,6 +1,6 @@
-.. _exhale_typedef_namespace_polynomial_roots_1a644e6dd20e81559412b8b5aef77c0a90:
+.. _exhale_typedef_a00023_1a976ab354b39108445a212bc362258292:
 
-Typedef PolynomialRoots::valueType
+Typedef PolynomialRoots::indexType
 ==================================
 
 - Defined in :ref:`file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.hh`
@@ -10,4 +10,4 @@ Typedef Documentation
 ---------------------
 
 
-.. doxygentypedef:: PolynomialRoots::valueType
+.. doxygentypedef:: PolynomialRoots::indexType
