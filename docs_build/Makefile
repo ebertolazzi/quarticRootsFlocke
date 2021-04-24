@@ -10,6 +10,5 @@ install:
 
 clean:
 	@rm -rf xml-cpp
-	@rm -rf sphinx*/api-*
 	@rm -rf sphinx*/_build
 	@cd sphinx; make clean; cd ..

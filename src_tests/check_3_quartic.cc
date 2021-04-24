@@ -41,12 +41,12 @@ static double rootQuarticReal6[] = { 1.0e+7, -1.0e+6, 1, 1 };
 static double rootQuarticImag6[] = { 0, 0, 1, -1 };
 static double quartic6[]         = { 1,-9.000002e+6,-0.9999981999998e+13,+1.9999982e+13,-2.e+13 };
 
-static double rootQuarticReal7[] = { -4.0, -7.0, -1.0e+6, -1.0e+6 };
-static double rootQuarticImag7[] = { 0, 0, 1.0e+5, -1.0e+5 };
+static double rootQuarticReal7[] = { -1.0e+6, -1.0e+6, -7, -4 };
+static double rootQuarticImag7[] = { 1.0e+5, -1.0e+5, 0, 0 };
 static double quartic7[]         = { 1,+2.000011e+6,+1.010022000028e+12,+1.1110056e+13,+2.828e+13 };
 
-static double rootQuarticReal8[] = { 1.0e+3, 1.0e+3, 11.0, 1.0e+8 };
-static double rootQuarticImag8[] = {      1,     -1,    0,    0   };
+static double rootQuarticReal8[] = { 1000, 1000, 11.0, 1.0e+8 };
+static double rootQuarticImag8[] = {    1,   -1,    0,      0 };
 static double quartic8[]         = { 1, -1.00002011e8, +2.01101022001e11, -1.02200111000011e14, 1.1000011e15 };
 // 1,-1.00002011e+8,+2.01101022001e+11,-1.02200111000011e+14,+1.1000011e+15};
 
@@ -91,8 +91,12 @@ static double rootQuarticImag16[] = { 0, 0, 0, 0 };
 static double quartic16[]         = { 1, 3*r, 6, 2*r, 0 };
 //double quartic16[]         = { 0, 1, 3*r, 6, 2*r };
 
-static double rootQuarticReal17[] = { 19.01804207, 3.926187087, 0.5001001646e-3, 3.336516286 };
-static double rootQuarticImag17[] = { 0, 0, 0, 0 };
+static double rootQuarticReal17[] = { 19.02897754136850147151903,
+                                      19.02897754136850147151903,
+                                      0.5103896497990552414378477e-1,
+                                      3.264106471395880584257508 };
+static double rootQuarticImag17[] = { 3.948839665289545498594455,
+                                     -3.948839665289545498594455, 0, 0 };
 static double quartic17[]         = { 0.000158925, -0.00657522, 0.0801029, -0.2, 0.01 };
 
 static double rootQuarticReal18[] = { -8.767990511, -8.767990511, 0.7679905093, 0.7679905118 };
@@ -126,9 +130,21 @@ static double quartic20[] = {
   1.0 * ( -8.9469482641160880e+00 )
 };
 
+static double rootQuarticReal21[] = { 50.29261772409999764477107,  50.29261772409999764477107, -109.5695612171199968543078, -32.79238302114399772335673 };
+static double rootQuarticImag21[] = { 3.050397502900299873118684, -3.050397502900299873118684, 0, 0 };
+static double quartic21[] = {
+  -1.27321767367025728318135329174e-09,
+  -5.31908439792814016019367533931e-08,
+  1.04248648319060507416809052694e-05,
+  0,
+  -0.0116136513934813456055961111701
+};
+
 #define DO_TEST( N ) \
   cout << "\n\nText N." << N << '\n'; \
   do_test( quartic##N, rootQuarticReal##N, rootQuarticImag##N )
+
+static Quartic qsolve;
 
 static
 void
@@ -137,7 +153,7 @@ do_test(
   double const re[4],
   double const im[4]
 ) {
-  Quartic qsolve( p[0], p[1], p[2], p[3], p[4] );
+  qsolve.setup( p[0], p[1], p[2], p[3], p[4] );
   qsolve.info( cout );
   if ( !qsolve.check( cout ) ) {
     cout << "\n\nFailed!\n\nExpected\n"
@@ -153,30 +169,31 @@ do_test(
 
 int
 main() {
-  cout.precision(14);
+  cout.precision(25);
   #if 1
   DO_TEST(0);
   DO_TEST(1);
   DO_TEST(2);
-  DO_TEST(3);
+  DO_TEST(3); // fail
   DO_TEST(4);
   DO_TEST(5);
   DO_TEST(6);
-  DO_TEST(7);
-  DO_TEST(8);
+  DO_TEST(7);  // quasi-fail
+  DO_TEST(8);  // ok-fail
   DO_TEST(9);
-  DO_TEST(10);
+  DO_TEST(10); // ????
   DO_TEST(11);
   DO_TEST(12);
-  DO_TEST(13);
+  DO_TEST(13); // ?????
   DO_TEST(14);
   DO_TEST(15);
   DO_TEST(16);
   DO_TEST(17);
   DO_TEST(18);
   DO_TEST(19);
-  #endif
   DO_TEST(20);
+  #endif
+  DO_TEST(21);
   cout << "\n\nALL DONE!\n";
   return 0;
 }

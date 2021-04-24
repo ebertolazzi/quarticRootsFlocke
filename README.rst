@@ -13,7 +13,7 @@ but is experimental for the moment.
 Usage
 -----
 
-.. code:: cpp
+.. code-block:: cpp
 
      #include "PolynomialRoots.hh"
 
@@ -32,7 +32,7 @@ Usage
 
 To solve quadratic, cubic or quartic use specialized classes
 
-.. code:: cpp
+.. code-block:: cpp
 
      Quadratic qsolve(a,b,c);
      qsolve.info(cout);
@@ -68,12 +68,10 @@ References
 Author
 ------
 
-::
-
-   Enrico Bertolazzi
-   Dipartimento di Ingegneria Industriale
-   Universita` degli Studi di Trento
-   email: enrico.bertolazzi@unitn.it
+  | Enrico Bertolazzi
+  | Dipartimento di Ingegneria Industriale
+  | Universita` degli Studi di Trento
+  | email: enrico.bertolazzi@unitn.it
 
 .. |Build Status| image:: https://travis-ci.org/ebertolazzi/quarticRootsFlocke.svg?branch=master
    :target: https://travis-ci.org/ebertolazzi/quarticRootsFlocke
