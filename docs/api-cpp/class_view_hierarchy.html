@@ -12,14 +12,15 @@
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-treeview/bootstrap-treeview.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
     
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
 
     
     
@@ -68,14 +69,23 @@
   <div class="section" id="class-hierarchy">
 <h1>Class Hierarchy<a class="headerlink" href="#class-hierarchy" title="Permalink to this headline">¶</a>
 </h1>
-<div id="class-treeView"></div>
-<script type="text/javascript">
-  function getClassHierarchyTree() {
-     return [
-      {text:"<span class=\"text-muted\">Namespace</span> PolynomialRoots",href:"namespace_PolynomialRoots.html#namespace-PolynomialRoots",selectable:false,tags:['3'],nodes:[{text:"<span class=\"text-muted\">Class</span> Cubic",href:"class_a00031.html#exhale-class-a00031",selectable:false},{text:"<span class=\"text-muted\">Class</span> Quadratic",href:"class_a00027.html#exhale-class-a00027",selectable:false},{text:"<span class=\"text-muted\">Class</span> Quartic",href:"class_a00035.html#exhale-class-a00035",selectable:false}]},
-     ]
-  }
-</script><!-- end getClassHierarchyTree() function -->
+<ul class="treeView" id="class-treeView">
+  <li>
+    <ul class="collapsibleList">
+      <li class="lastChild">Namespace <a href="namespace_PolynomialRoots.html#namespace-PolynomialRoots">PolynomialRoots</a><ul>
+<li>Class <a href="class_a00031.html#exhale-class-a00031">Cubic</a>
+</li>
+<li>Class <a href="class_a00027.html#exhale-class-a00027">Quadratic</a>
+</li>
+<li class="lastChild">Class <a href="class_a00035.html#exhale-class-a00035">Quartic</a>
+</li>
+</ul>
+</li>
+    </ul>
+  </li>
+<!-- only tree view element -->
+</ul>
+<!-- /treeView class-treeView -->
 </div>
 
 
@@ -103,7 +113,7 @@
 <h3><a href="../index.html">Table of Contents</a></h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">Quartic Roots Solver</a></li>
-<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
 </ul>
 </div>
         </div>
@@ -147,7 +157,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Enrico Bertolazzi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

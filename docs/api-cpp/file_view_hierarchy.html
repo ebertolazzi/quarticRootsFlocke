@@ -12,14 +12,15 @@
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-treeview/bootstrap-treeview.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
     
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
 
     
     
@@ -68,14 +69,28 @@
   <div class="section" id="file-hierarchy">
 <h1>File Hierarchy<a class="headerlink" href="#file-hierarchy" title="Permalink to this headline">¶</a>
 </h1>
-<div id="file-treeView"></div>
-<script type="text/javascript">
-  function getFileHierarchyTree() {
-     return [
-      {text:"<span class=\"text-muted\">Directory</span> src",href:"dir__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src.html#dir-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Splines-submodules-quarticRootsFlocke-src",selectable:false,tags:['7'],nodes:[{text:"<span class=\"text-muted\">File</span> PolynomialRoots-1-Quadratic.cc",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src_PolynomialRoots-1-Quadratic.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Splines-submodules-quarticRootsFlocke-src-PolynomialRoots-1-Quadratic.cc",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots-2-Cubic.cc",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src_PolynomialRoots-2-Cubic.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Splines-submodules-quarticRootsFlocke-src-PolynomialRoots-2-Cubic.cc",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots-3-Quartic.cc",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src_PolynomialRoots-3-Quartic.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Splines-submodules-quarticRootsFlocke-src-PolynomialRoots-3-Quartic.cc",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots-Jenkins-Traub.cc",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src_PolynomialRoots-Jenkins-Traub.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Splines-submodules-quarticRootsFlocke-src-PolynomialRoots-Jenkins-Traub.cc",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots-Utils.cc",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.cc.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Splines-submodules-quarticRootsFlocke-src-PolynomialRoots-Utils.cc",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots-Utils.hh",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.hh.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Splines-submodules-quarticRootsFlocke-src-PolynomialRoots-Utils.hh",selectable:false},{text:"<span class=\"text-muted\">File</span> PolynomialRoots.hh",href:"file__Users_enrico_Ricerca_develop_C++_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src_PolynomialRoots.hh.html#file-Users-enrico-Ricerca-develop-C++-pins-mechatronix-LibSources-submodules-Splines-submodules-quarticRootsFlocke-src-PolynomialRoots.hh",selectable:false}]},
-     ]
-  }
-</script><!-- end getFileHierarchyTree() function -->
+<ul class="treeView" id="file-treeView">
+  <li>
+    <ul class="collapsibleList">
+      <li>File <a href="file_PolynomialRoots-1-Quadratic.cc.html#file-PolynomialRoots-1-Quadratic.cc">PolynomialRoots-1-Quadratic.cc</a>
+</li>
+<li>File <a href="file_PolynomialRoots-2-Cubic.cc.html#file-PolynomialRoots-2-Cubic.cc">PolynomialRoots-2-Cubic.cc</a>
+</li>
+<li>File <a href="file_PolynomialRoots-3-Quartic.cc.html#file-PolynomialRoots-3-Quartic.cc">PolynomialRoots-3-Quartic.cc</a>
+</li>
+<li>File <a href="file_PolynomialRoots-Jenkins-Traub.cc.html#file-PolynomialRoots-Jenkins-Traub.cc">PolynomialRoots-Jenkins-Traub.cc</a>
+</li>
+<li>File <a href="file_PolynomialRoots-Utils.cc.html#file-PolynomialRoots-Utils.cc">PolynomialRoots-Utils.cc</a>
+</li>
+<li>File <a href="file_PolynomialRoots-Utils.hh.html#file-PolynomialRoots-Utils.hh">PolynomialRoots-Utils.hh</a>
+</li>
+<li class="lastChild">File <a href="file_PolynomialRoots.hh.html#file-PolynomialRoots.hh">PolynomialRoots.hh</a>
+</li>
+    </ul>
+  </li>
+<!-- only tree view element -->
+</ul>
+<!-- /treeView file-treeView -->
 </div>
 
 
@@ -103,7 +118,7 @@
 <h3><a href="../index.html">Table of Contents</a></h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">Quartic Roots Solver</a></li>
-<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
 </ul>
 </div>
         </div>
@@ -147,7 +162,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Enrico Bertolazzi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

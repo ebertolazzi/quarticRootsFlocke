@@ -1,14 +1,15 @@
-INDEX = ./sphinx/_build/html/genindex.html
-
 build:
 	make clean
-	@cd sphinx; make html; cd ..
+	@cd sphinx; make html; ruby filter.rb; cd ..
 	@make install
 
 install:
-	@cd sphinx; rm -rf ../../docs/*; cp -a _build/html/. ../../docs; cd ..
+	@rm -rf ../docs/*; cp -a sphinx/_build/html/. ../docs
 
 clean:
+	@rm -rf xml
 	@rm -rf xml-cpp
+	@rm -rf xml-matlab
+	@rm -rf sphinx*/api-*
 	@rm -rf sphinx*/_build
 	@cd sphinx; make clean; cd ..

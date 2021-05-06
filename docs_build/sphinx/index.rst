@@ -10,14 +10,8 @@ Quartic Roots
    :maxdepth: 2
 
    readme.rst
-   api-cpp/library_root.rst
+   api-cpp/root.rst
 
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
 License
 -------

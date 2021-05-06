@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Function PolynomialRoots::roots &#8212; Quartic Roots v1.0.0
+    <title>Define MAX_ITER_SAFETY &#8212; Quartic Roots v1.0.0
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
@@ -40,8 +40,8 @@
 
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Define MAX_ITER_SAFETY" href="define_a00005_1ac870907a5180fe2ac17cb719f65585e9.html" />
-    <link rel="prev" title="Class Quartic" href="class_a00035.html" /> 
+    <link rel="next" title="Typedef PolynomialRoots::complexType" href="typedef_a00023_1a1ac247f8669dde00caaec7b49131507f.html" />
+    <link rel="prev" title="Define MAX_ITER_SAFETY" href="define_a00005_1ac870907a5180fe2ac17cb719f65585e9.html" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head><body>
     <div class="relbar-top">
@@ -56,15 +56,15 @@
           <a href="../index.html" title="Table Of Contents"
              accesskey="C">toc</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="define_a00005_1ac870907a5180fe2ac17cb719f65585e9.html" title="Define MAX_ITER_SAFETY"
+          <a href="typedef_a00023_1a1ac247f8669dde00caaec7b49131507f.html" title="Typedef PolynomialRoots::complexType"
              accesskey="N">next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="class_a00035.html" title="Class Quartic"
+          <a href="define_a00005_1ac870907a5180fe2ac17cb719f65585e9.html" title="Define MAX_ITER_SAFETY"
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
     <li><a href="../index.html">Quartic Roots</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="root.html" accesskey="U">C++ API</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Function PolynomialRoots::roots</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Define MAX_ITER_SAFETY</a></li> 
       </ul>
     </div>
     </div>
@@ -75,39 +75,19 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="function-polynomialroots-roots">
-<span id="exhale-function-a00023-1ac18c1444f6f1642ac85d6021bf837952"></span><h1>Function PolynomialRoots::roots<a class="headerlink" href="#function-polynomialroots-roots" title="Permalink to this headline">¶</a>
+  <div class="section" id="define-max-iter-safety">
+<span id="exhale-define-a00008-1ac870907a5180fe2ac17cb719f65585e9"></span><h1>Define MAX_ITER_SAFETY<a class="headerlink" href="#define-max-iter-safety" title="Permalink to this headline">¶</a>
 </h1>
 <ul class="simple">
-<li><p>Defined in <a class="reference internal" href="file_PolynomialRoots-Jenkins-Traub.cc.html#file-polynomialroots-jenkins-traub-cc"><span class="std std-ref">File PolynomialRoots-Jenkins-Traub.cc</span></a></p></li>
+<li><p>Defined in <a class="reference internal" href="file_PolynomialRoots-3-Quartic.cc.html#file-polynomialroots-3-quartic-cc"><span class="std std-ref">File PolynomialRoots-3-Quartic.cc</span></a></p></li>
 </ul>
-<div class="section" id="function-documentation">
-<h2>Function Documentation<a class="headerlink" href="#function-documentation" title="Permalink to this headline">¶</a>
+<div class="section" id="define-documentation">
+<h2>Define Documentation<a class="headerlink" href="#define-documentation" title="Permalink to this headline">¶</a>
 </h2>
-<dl class="cpp function">
-<dt id="_CPPv4N15PolynomialRoots5rootsEPK9valueType9indexTypeP9valueTypeP9valueType">
-<span id="_CPPv3N15PolynomialRoots5rootsEPK9valueType9indexTypeP9valueTypeP9valueType"></span><span id="_CPPv2N15PolynomialRoots5rootsEPK9valueType9indexTypeP9valueTypeP9valueType"></span><span id="PolynomialRoots::roots__valueTypeCP.indexType.valueTypeP.valueTypeP"></span><span class="target" id="a00023_1ac18c1444f6f1642ac85d6021bf837952"></span><span class="pre">int</span> <code class="sig-prename descclassname"><span class="pre">PolynomialRoots</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">roots</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">*</span><em><span class="pre">op</span></em>, <a class="reference internal" href="typedef_a00023_1a976ab354b39108445a212bc362258292.html#_CPPv4N15PolynomialRoots9indexTypeE" title="PolynomialRoots::indexType"><span class="pre">indexType</span></a> <em><span class="pre">Degree</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">*</span><em><span class="pre">zeror</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">*</span><em><span class="pre">zeroi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15PolynomialRoots5rootsEPK9valueType9indexTypeP9valueTypeP9valueType" title="Permalink to this definition">¶</a><br>
-</dt>
-<dd>
-<p>find roots of a generic polynomial using Jenkins-Traub method </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd">
-<ul class="simple">
-<li><p><strong>op</strong> – <strong>[in]</strong> the coefficients of the polynomial </p></li>
-<li><p><strong>Degree</strong> – <strong>[in]</strong> degree of the polynomial </p></li>
-<li><p><strong>zeror</strong> – <strong>[out]</strong> real part of the roots </p></li>
-<li><p><strong>zeroi</strong> – <strong>[out]</strong> imaginary part of the roots</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even">
-<p>error code, 0 OK </p>
-</dd>
-</dl>
-</dd>
-</dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygendefine: Cannot find define “MAX_ITER_SAFETY” in doxygen xml output for project “doc_cpp” from directory: _doxygen/doc_cpp/xml-cpp</p>
+</div>
 </div>
 </div>
 
@@ -172,15 +152,15 @@
           <a href="../index.html" title="Table Of Contents"
              >toc</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="define_a00005_1ac870907a5180fe2ac17cb719f65585e9.html" title="Define MAX_ITER_SAFETY"
+          <a href="typedef_a00023_1a1ac247f8669dde00caaec7b49131507f.html" title="Typedef PolynomialRoots::complexType"
              >next</a> &nbsp; &nbsp;</li>
         <li class="right" >
-          <a href="class_a00035.html" title="Class Quartic"
+          <a href="define_a00005_1ac870907a5180fe2ac17cb719f65585e9.html" title="Define MAX_ITER_SAFETY"
              >previous</a> &nbsp; &nbsp;</li>
     <li><a href="../index.html">Quartic Roots</a> &#187;</li>
 
           <li class="nav-item nav-item-1"><a href="root.html" >C++ API</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Function PolynomialRoots::roots</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Define MAX_ITER_SAFETY</a></li> 
       </ul>
     </div>
     </div>

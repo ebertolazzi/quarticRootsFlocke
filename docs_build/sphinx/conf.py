@@ -1,31 +1,32 @@
 # -*- coding: utf-8 -*-
 import os
+from pathlib import Path
 
 # -- Project information -----------------------------------------------------
 exec(open("../project_common.py").read())
 
-# Setup the breathe extension
-breathe_projects = { project+"_cpp": "../xml-cpp" }
-breathe_default_project = project+"_cpp"
 
-extensions.append('exhale');
+rst_prolog = ".. |xml| replace:: %s\n" % (project)
+
 extensions.append('breathe');
+extensions.append('exhale');
 
-# Setup the exhale extension
-exhale_args = {
-  # These arguments are required
-  "containmentFolder":     "./api-cpp",
-  "rootFileName":          "library_root.rst",
-  "rootFileTitle":         "C++ API",
-  "doxygenStripFromPath":  "..",
-  # Suggested optional arguments
-  "createTreeView":        True,
-  # TIP: if using the sphinx-bootstrap-theme, you need
-  "treeViewIsBootstrap": True,
-  "exhaleExecutesDoxygen": True,
-  #"exhaleDoxygenStdin":    "INPUT = ../../src"
-  "exhaleDoxygenStdin":
-'''
+breathe_projects = {
+  "doc_cpp":  "_doxygen/"+"doc_cpp/xml-cpp",
+}
+
+breathe_default_project = "doc_cpp"
+
+dir_path_c   = os.path.dirname(os.path.realpath(__file__))+"../../../src"
+dir_path_c   = Path(dir_path_c).resolve()
+
+dir_path_cpp = os.path.dirname(os.path.realpath(__file__))+"../../../src"
+dir_path_cpp = Path(dir_path_cpp).resolve()
+
+dir_path_json = os.path.dirname(os.path.realpath(__file__))+"../../../src_json_interface"
+dir_path_json = Path(dir_path_json).resolve()
+
+doxygen_common_stdin = """
         EXTRACT_ALL         = YES
         SOURCE_BROWSER      = YES
         EXTRACT_STATIC      = YES
@@ -34,13 +35,12 @@ exhale_args = {
         GRAPHICAL_HIERARCHY = YES
         HAVE_DOT            = YES
         QUIET               = NO
-        INPUT               = ../../src
         GENERATE_TREEVIEW   = YES
-        XML_OUTPUT          = xml-cpp
         SHORT_NAMES         = YES
+        IMAGE_PATH          = ../images
 
         XML_PROGRAMLISTING    = YES
-        RECURSIVE             = YES
+        RECURSIVE             = NO
         FULL_PATH_NAMES       = YES
         ENABLE_PREPROCESSING  = YES
         MACRO_EXPANSION       = YES
@@ -50,9 +50,31 @@ exhale_args = {
         INLINE_INHERITED_MEMB = YES
         EXTRACT_PRIVATE       = YES
         PREDEFINED           += protected=private
-        EXCLUDE_PATTERNS      = GenericContainerCinterface.*
         GENERATE_HTML         = NO
-''',
+"""
+
+exhale_projects_args = {
+   "doc_cpp": {
+    'verboseBuild':          True,
+    "rootFileName":          "root.rst",
+    "createTreeView":        True,
+    "exhaleExecutesDoxygen": True,
+    "doxygenStripFromPath":  str(dir_path_cpp),
+    "exhaleDoxygenStdin":   '''
+        INPUT               = ../../src
+        PREDEFINED         += protected=private
+        XML_OUTPUT          = xml-cpp
+        EXCLUDE_PATTERNS    = GenericContainerCinterface.*
+'''+doxygen_common_stdin,
+    "containmentFolder":    os.path.realpath('./api-cpp'),
+    "rootFileTitle":        "C++ API",
+  },
 }
 
 cpp_index_common_prefix = ['PolynomialRoots::']
+
+# If false, no module index is generated.
+html_domain_indices = True
+
+# If false, no index is generated.
+html_use_index = True

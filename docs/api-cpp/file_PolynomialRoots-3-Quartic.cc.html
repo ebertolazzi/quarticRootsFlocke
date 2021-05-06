@@ -7,19 +7,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>File PolynomialRoots-Utils.cc &#8212; Quartic Roots v1.0.0
+    <title>File PolynomialRoots-3-Quartic.cc &#8212; Quartic Roots v1.0.0
 </title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-treeview/bootstrap-treeview.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
     
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
 
     
     
@@ -54,7 +55,7 @@
              accesskey="C">toc</a> &nbsp; &nbsp;</li>
     <li><a href="../index.html">Quartic Roots</a> &#187;</li>
 
-        <li class="nav-item nav-item-this"><a href="">File PolynomialRoots-Utils.cc</a></li> 
+        <li class="nav-item nav-item-this"><a href="">File PolynomialRoots-3-Quartic.cc</a></li> 
       </ul>
     </div>
     </div>
@@ -65,23 +66,23 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="file-polynomialroots-utils-cc">
-<span id="file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-splines-submodules-quarticrootsflocke-src-polynomialroots-utils-cc"></span><h1>File PolynomialRoots-Utils.cc<a class="headerlink" href="#file-polynomialroots-utils-cc" title="Permalink to this headline">¶</a>
+  <div class="section" id="file-polynomialroots-3-quartic-cc">
+<span id="id1"></span><h1>File PolynomialRoots-3-Quartic.cc<a class="headerlink" href="#file-polynomialroots-3-quartic-cc" title="Permalink to this headline">¶</a>
 </h1>
-<p>↰ <a class="reference internal" href="dir__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src.html#dir-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-splines-submodules-quarticrootsflocke-src"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Splines/submodules/quarticRootsFlocke/src</span></code>)</p>
 <div class="contents local topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#definition-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-splines-submodules-quarticrootsflocke-src-polynomialroots-utils-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Splines/submodules/quarticRootsFlocke/src/PolynomialRoots-Utils.cc</span></code>)</a></p></li>
-<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#definition-polynomialroots-3-quartic-cc" id="id2">Definition (<code class="docutils literal notranslate"><span class="pre">PolynomialRoots-3-Quartic.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id3">Includes</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id4">Defines</a></p></li>
 </ul>
 </div>
-<div class="section" id="definition-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-splines-submodules-quarticrootsflocke-src-polynomialroots-utils-cc">
-<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/Users/enrico/Ricerca/develop/C++/pins-mechatronix/LibSources/submodules/Splines/submodules/quarticRootsFlocke/src/PolynomialRoots-Utils.cc</span></code>)<a class="headerlink" href="#definition-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-splines-submodules-quarticrootsflocke-src-polynomialroots-utils-cc" title="Permalink to this headline">¶</a>
+<div class="section" id="definition-polynomialroots-3-quartic-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">PolynomialRoots-3-Quartic.cc</span></code>)<a class="headerlink" href="#definition-polynomialroots-3-quartic-cc" title="Permalink to this headline">¶</a>
 </h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="program_listing_file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.cc.html">Program Listing for File PolynomialRoots-Utils.cc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file_PolynomialRoots-3-Quartic.cc.html">Program Listing for File PolynomialRoots-3-Quartic.cc</a></li>
 </ul>
 </div>
 </div>
@@ -89,8 +90,18 @@
 <h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a>
 </h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">PolynomialRoots-Utils.hh</span></code> (<a class="reference internal" href="file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src_PolynomialRoots-Utils.hh.html#file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-splines-submodules-quarticrootsflocke-src-polynomialroots-utils-hh"><span class="std std-ref">File PolynomialRoots-Utils.hh</span></a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">PolynomialRoots.hh</span></code> (<a class="reference internal" href="file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src_PolynomialRoots.hh.html#file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-splines-submodules-quarticrootsflocke-src-polynomialroots-hh"><span class="std std-ref">File PolynomialRoots.hh</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PolynomialRoots.hh</span></code> (<a class="reference internal" href="file_PolynomialRoots.hh.html#file-polynomialroots-hh"><span class="std std-ref">File PolynomialRoots.hh</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">algorithm</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmath</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iostream</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">limits</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a>
+</h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define_a00008_1ac870907a5180fe2ac17cb719f65585e9.html#exhale-define-a00008-1ac870907a5180fe2ac17cb719f65585e9"><span class="std std-ref">Define MAX_ITER_SAFETY</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -120,7 +131,7 @@
 <h3><a href="../index.html">Table of Contents</a></h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">Quartic Roots Solver</a></li>
-<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
 </ul>
 </div>
         </div>
@@ -157,14 +168,14 @@
              >toc</a> &nbsp; &nbsp;</li>
     <li><a href="../index.html">Quartic Roots</a> &#187;</li>
 
-        <li class="nav-item nav-item-this"><a href="">File PolynomialRoots-Utils.cc</a></li> 
+        <li class="nav-item nav-item-this"><a href="">File PolynomialRoots-3-Quartic.cc</a></li> 
       </ul>
     </div>
     </div>
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Enrico Bertolazzi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

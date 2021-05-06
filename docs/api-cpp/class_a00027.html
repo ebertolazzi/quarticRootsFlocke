@@ -12,14 +12,15 @@
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/table_styling.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-treeview/bootstrap-treeview.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
     
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
@@ -63,7 +64,7 @@
              accesskey="P">previous</a> &nbsp; &nbsp;</li>
     <li><a href="../index.html">Quartic Roots</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="library_root.html" accesskey="U">C++ API</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="root.html" accesskey="U">C++ API</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Class Quadratic</a></li> 
       </ul>
     </div>
@@ -79,7 +80,7 @@
 <span id="exhale-class-a00027"></span><h1>Class Quadratic<a class="headerlink" href="#class-quadratic" title="Permalink to this headline">¶</a>
 </h1>
 <ul class="simple">
-<li><p>Defined in <a class="reference internal" href="file__Users_enrico_Ricerca_develop_C%2B%2B_pins-mechatronix_LibSources_submodules_Splines_submodules_quarticRootsFlocke_src_PolynomialRoots.hh.html#file-users-enrico-ricerca-develop-c-pins-mechatronix-libsources-submodules-splines-submodules-quarticrootsflocke-src-polynomialroots-hh"><span class="std std-ref">File PolynomialRoots.hh</span></a></p></li>
+<li><p>Defined in <a class="reference internal" href="file_PolynomialRoots.hh.html#file-polynomialroots-hh"><span class="std std-ref">File PolynomialRoots.hh</span></a></p></li>
 </ul>
 <div class="section" id="class-documentation">
 <h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a>
@@ -165,18 +166,16 @@
 <div class="math notranslate nohighlight">
 \[ q(x) = a x^2 + b x + c \]</div>
 
-<p></p>
-<dl class="simple">
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">a</span></code>: leading coefficient of <span class="math notranslate nohighlight">\( q(x) \)</span> </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">b</span></code>: coefficient of <span class="math notranslate nohighlight">\( x \)</span> </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">c</span></code>: coefficient of <span class="math notranslate nohighlight">\( x^0 \)</span> </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>a</strong> – <strong>[in]</strong> leading coefficient of <span class="math notranslate nohighlight">\( q(x) \)</span> </p></li>
+<li><p><strong>b</strong> – <strong>[in]</strong> coefficient of <span class="math notranslate nohighlight">\( x \)</span> </p></li>
+<li><p><strong>c</strong> – <strong>[in]</strong> coefficient of <span class="math notranslate nohighlight">\( x^0 \)</span> </p></li>
 </ul>
 </dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -189,18 +188,16 @@
 <div class="math notranslate nohighlight">
 \[ q(x) = a x^2 + b x + c \]</div>
 
-<p></p>
-<dl class="simple">
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">a</span></code>: leading coefficient of <span class="math notranslate nohighlight">\( q(x) \)</span> </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">b</span></code>: coefficient of <span class="math notranslate nohighlight">\( x \)</span> </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">c</span></code>: coefficient of <span class="math notranslate nohighlight">\( x^0 \)</span> </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>a</strong> – <strong>[in]</strong> leading coefficient of <span class="math notranslate nohighlight">\( q(x) \)</span> </p></li>
+<li><p><strong>b</strong> – <strong>[in]</strong> coefficient of <span class="math notranslate nohighlight">\( x \)</span> </p></li>
+<li><p><strong>c</strong> – <strong>[in]</strong> coefficient of <span class="math notranslate nohighlight">\( x^0 \)</span> </p></li>
 </ul>
 </dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -213,14 +210,12 @@
 <div class="math notranslate nohighlight">
 \[ q(x) = a x^2 + b x + c \]</div>
  Normally return 2 but if e.g. <span class="math notranslate nohighlight">\( a = 0 \)</span> return 1 or less depending on the values of <span class="math notranslate nohighlight">\( a, b, c \)</span>
-<p></p>
-<dl class="simple">
-<dt><strong>Return</strong></dt>
-<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd">
 <p>number of computed roots </p>
 </dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -248,20 +243,16 @@
 </dt>
 <dd>
 <p>get the real roots </p>
-<p></p>
-<dl class="simple">
-<dt><strong>Return</strong></dt>
-<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<p><strong>r</strong> – <strong>[out]</strong> vector that will be filled with the real roots </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
 <p>the total number of real roots, 0, 1 or 2 </p>
 </dd>
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">r</span></code>: vector that will be filled with the real roots </p></li>
-</ul>
-</dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -271,20 +262,16 @@
 </dt>
 <dd>
 <p>get positive real roots </p>
-<p></p>
-<dl class="simple">
-<dt><strong>Return</strong></dt>
-<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<p><strong>r</strong> – <strong>[out]</strong> vector that will be filled with the real roots </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
 <p>the total number of positive real roots, 0, 1 or 2 </p>
 </dd>
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">r</span></code>: vector that will be filled with the real roots </p></li>
-</ul>
-</dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -294,20 +281,16 @@
 </dt>
 <dd>
 <p>get negative real roots </p>
-<p></p>
-<dl class="simple">
-<dt><strong>Return</strong></dt>
-<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<p><strong>r</strong> – <strong>[out]</strong> vector that will be filled with the real roots </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
 <p>the total number of negative real roots, 0, 1 or 2 </p>
 </dd>
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">r</span></code>: vector that will be filled with the real roots </p></li>
-</ul>
-</dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -317,22 +300,20 @@
 </dt>
 <dd>
 <p>get real roots in a range </p>
-<p></p>
-<dl class="simple">
-<dt><strong>Return</strong></dt>
-<dd>
-<p>the total number of real roots in the range <span class="math notranslate nohighlight">\( [a,b] \)</span> </p>
-</dd>
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">a</span></code>: left side of the range </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">b</span></code>: right side of the range </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">r</span></code>: vector that will be filled with the real roots </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>a</strong> – <strong>[in]</strong> left side of the range </p></li>
+<li><p><strong>b</strong> – <strong>[in]</strong> right side of the range </p></li>
+<li><p><strong>r</strong> – <strong>[out]</strong> vector that will be filled with the real roots </p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
+<p>the total number of real roots in the range <span class="math notranslate nohighlight">\( [a,b] \)</span> </p>
+</dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -341,22 +322,20 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic19getRootsInOpenRangeE9valueType9valueTypeA_9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic19getRootsInOpenRangeE9valueType9valueTypeA_9valueType"></span><span id="PolynomialRoots::Quadratic::getRootsInOpenRange__valueType.valueType.valueTypeAC"></span><span class="target" id="a00027_1aae3a9189fc093b48e1756ecd4995228e"></span><a class="reference internal" href="typedef_a00023_1a976ab354b39108445a212bc362258292.html#_CPPv4N15PolynomialRoots9indexTypeE" title="PolynomialRoots::indexType"><span class="pre">indexType</span></a> <code class="sig-name descname"><span class="pre">getRootsInOpenRange</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">a</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">b</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">r</span></em><span class="pre">[</span><span class="pre">]</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic19getRootsInOpenRangeE9valueType9valueTypeA_9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p></p>
-<dl class="simple">
-<dt><strong>Return</strong></dt>
-<dd>
-<p>the total number of real roots in the open range <span class="math notranslate nohighlight">\( (a,b) \)</span> </p>
-</dd>
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">a</span></code>: left side of the range </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">b</span></code>: right side of the range </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">r</span></code>: vector that will be filled with the real roots </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>a</strong> – <strong>[in]</strong> left side of the range </p></li>
+<li><p><strong>b</strong> – <strong>[in]</strong> right side of the range </p></li>
+<li><p><strong>r</strong> – <strong>[out]</strong> vector that will be filled with the real roots </p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
+<p>the total number of real roots in the open range <span class="math notranslate nohighlight">\( (a,b) \)</span> </p>
+</dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -401,17 +380,15 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic8getRoot0ER9valueTypeR9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic8getRoot0ER9valueTypeR9valueType"></span><span id="PolynomialRoots::Quadratic::getRoot0__valueTypeR.valueTypeRC"></span><span class="target" id="a00027_1a7d7a177720d667a51ae83280dc6e9ea5"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">getRoot0</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">&amp;</span><em><span class="pre">re</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">&amp;</span><em><span class="pre">im</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic8getRoot0ER9valueTypeR9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p></p>
-<dl class="simple">
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">re</span></code>: the first complex root, real part </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">im</span></code>: the first complex root, imaginary part </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>re</strong> – <strong>[out]</strong> the first complex root, real part </p></li>
+<li><p><strong>im</strong> – <strong>[out]</strong> the first complex root, imaginary part </p></li>
 </ul>
 </dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -420,16 +397,12 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic8getRoot0ER11complexType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic8getRoot0ER11complexType"></span><span id="PolynomialRoots::Quadratic::getRoot0__complexTypeRC"></span><span class="target" id="a00027_1aedccb3aa14b14d9112acf1231ff9e368"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">getRoot0</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a1ac247f8669dde00caaec7b49131507f.html#_CPPv4N15PolynomialRoots11complexTypeE" title="PolynomialRoots::complexType"><span class="pre">complexType</span></a> <span class="pre">&amp;</span><em><span class="pre">r</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic8getRoot0ER11complexType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p></p>
-<dl class="simple">
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">r</span></code>: the first complex root </p></li>
-</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<p><strong>r</strong> – <strong>[out]</strong> the first complex root </p>
 </dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -438,17 +411,15 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic8getRoot1ER9valueTypeR9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic8getRoot1ER9valueTypeR9valueType"></span><span id="PolynomialRoots::Quadratic::getRoot1__valueTypeR.valueTypeRC"></span><span class="target" id="a00027_1aace5c12bf41f157114868a583a3623eb"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">getRoot1</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">&amp;</span><em><span class="pre">re</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">&amp;</span><em><span class="pre">im</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic8getRoot1ER9valueTypeR9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p></p>
-<dl class="simple">
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">re</span></code>: the second complex root, real part </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">im</span></code>: the second complex root, imaginary part </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>re</strong> – <strong>[out]</strong> the second complex root, real part </p></li>
+<li><p><strong>im</strong> – <strong>[out]</strong> the second complex root, imaginary part </p></li>
 </ul>
 </dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -457,16 +428,12 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic8getRoot1ER11complexType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic8getRoot1ER11complexType"></span><span id="PolynomialRoots::Quadratic::getRoot1__complexTypeRC"></span><span class="target" id="a00027_1a80ecdc096459778774a756f59b366b13"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">getRoot1</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a1ac247f8669dde00caaec7b49131507f.html#_CPPv4N15PolynomialRoots11complexTypeE" title="PolynomialRoots::complexType"><span class="pre">complexType</span></a> <span class="pre">&amp;</span><em><span class="pre">r</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic8getRoot1ER11complexType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p></p>
-<dl class="simple">
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">r</span></code>: the second complex root </p></li>
-</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<p><strong>r</strong> – <strong>[out]</strong> the second complex root </p>
 </dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -476,20 +443,16 @@
 </dt>
 <dd>
 <p>evalute the quadratic polynomial </p>
-<p></p>
-<dl class="simple">
-<dt><strong>Return</strong></dt>
-<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<p><strong>x</strong> – value where compute <span class="math notranslate nohighlight">\( p(x) \)</span> </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
 <p>the value <span class="math notranslate nohighlight">\( p(x) \)</span> </p>
 </dd>
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: value where compute <span class="math notranslate nohighlight">\( p(x) \)</span> </p></li>
-</ul>
-</dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -499,20 +462,16 @@
 </dt>
 <dd>
 <p>evalute the quadratic polynomial </p>
-<p></p>
-<dl class="simple">
-<dt><strong>Return</strong></dt>
-<dd>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<p><strong>x</strong> – <strong>[in]</strong> value where compute <span class="math notranslate nohighlight">\( p(x)=ax^2+bx+c \)</span> </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even">
 <p>the value <span class="math notranslate nohighlight">\( p(x) \)</span> </p>
 </dd>
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">x</span></code>: value where compute <span class="math notranslate nohighlight">\( p(x)=ax^2+bx+c \)</span> </p></li>
-</ul>
-</dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -522,18 +481,16 @@
 </dt>
 <dd>
 <p>evalute the polynomial with its derivative </p>
-<p></p>
-<dl class="simple">
-<dt><strong>Parameters</strong></dt>
-<dd>
-<ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[in]</span> <span class="pre">x</span></code>: value where compute <span class="math notranslate nohighlight">\( p(x) \)</span> </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">p</span></code>: value <span class="math notranslate nohighlight">\( p(x) \)</span> </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[out]</span> <span class="pre">dp</span></code>: value <span class="math notranslate nohighlight">\( p'(x) \)</span> </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd">
+<ul class="simple">
+<li><p><strong>x</strong> – <strong>[in]</strong> value where compute <span class="math notranslate nohighlight">\( p(x) \)</span> </p></li>
+<li><p><strong>p</strong> – <strong>[out]</strong> value <span class="math notranslate nohighlight">\( p(x) \)</span> </p></li>
+<li><p><strong>dp</strong> – <strong>[out]</strong> value <span class="math notranslate nohighlight">\( p'(x) \)</span> </p></li>
 </ul>
 </dd>
 </dl>
-
 </dd>
 </dl>
 
@@ -587,7 +544,7 @@
 <h3><a href="../index.html">Table of Contents</a></h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">Quartic Roots Solver</a></li>
-<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">C++ API</a></li>
 </ul>
 </div>
         </div>
@@ -630,7 +587,7 @@
              >previous</a> &nbsp; &nbsp;</li>
     <li><a href="../index.html">Quartic Roots</a> &#187;</li>
 
-          <li class="nav-item nav-item-1"><a href="library_root.html" >C++ API</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="root.html" >C++ API</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Class Quadratic</a></li> 
       </ul>
     </div>
@@ -638,7 +595,7 @@
 
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Enrico Bertolazzi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
