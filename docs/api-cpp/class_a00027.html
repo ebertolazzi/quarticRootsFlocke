@@ -91,62 +91,89 @@
 </dt>
 <dd>
 <p><a class="reference internal" href="#a00027"><span class="std std-ref">Quadratic</span></a> polynomial class</p>
-<p><strong>Constructor</strong> </p>
+<p><strong>Constructor</strong></p>
+<p></p>
+<p></p>
 <div class="highlight-cpp notranslate">
-<div class="highlight"><pre><span></span> <span class="kt">double</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
- <span class="kt">double</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
- <span class="kt">double</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
- <span class="n">Quadratic</span> <span class="nf">q</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">);</span> <span class="c1">// build an solve ``a x^2 + b x + c = 0``</span>
+<div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="n">Quadratic</span> <span class="nf">q</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">);</span> <span class="c1">// build an solve `a x^2 + b x + c = 0`</span>
+
+<span class="n">Quadratic</span> <span class="n">q</span><span class="p">;</span>
+<span class="n">q</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">);</span> <span class="c1">// build an solve `a x^2 + b x + c = 0`</span>
+</pre></div>
+</div>
 
 
- <span class="n">Quadratic</span> <span class="n">q</span><span class="p">;</span>
- <span class="n">q</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">);</span> <span class="c1">// build an solve ``a x^2 + b x + c = 0``</span>
+<p><strong>Get kind of solution</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-cpp notranslate">
+<div class="highlight"><pre><span></span><span class="kt">int</span>  <span class="n">nroots</span>            <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">numRoots</span><span class="p">();</span> 
+<span class="kt">bool</span> <span class="n">has_complex_roots</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">complexRoots</span><span class="p">();</span>
+<span class="kt">bool</span> <span class="n">has_a_double_root</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">doubleRoot</span><span class="p">();</span>
 </pre></div>
 </div>
- <strong>Get kind of solution</strong> <div class="highlight-cpp notranslate">
-<div class="highlight"><pre><span></span> <span class="kt">int</span>  <span class="n">nroots</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">numRoots</span><span class="p">();</span> 
- <span class="kt">bool</span> <span class="n">has_complex_roots</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">complexRoots</span><span class="p">();</span>
- <span class="kt">bool</span> <span class="n">has_a_double_root</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">doubleRoot</span><span class="p">();</span>
-</pre></div>
-</div>
- <strong>Get real roots</strong> <div class="highlight-cpp notranslate">
-<div class="highlight"><pre><span></span> <span class="kt">double</span> <span class="n">r_min</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
- <span class="kt">double</span> <span class="n">r_max</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
- <span class="kt">double</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
- <span class="kt">int</span> <span class="n">nroots</span><span class="p">;</span>
- <span class="n">nroots</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">getRealRoots</span><span class="p">(</span> <span class="n">r</span> <span class="p">);</span>
- <span class="n">nroots</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">getPositiveRoots</span><span class="p">(</span> <span class="n">r</span> <span class="p">);</span>
- <span class="n">nroots</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">getNegativeRoots</span><span class="p">(</span> <span class="n">r</span> <span class="p">);</span>
- <span class="n">nroots</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">getRootsInRange</span><span class="p">(</span> <span class="n">r_min</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">r</span> <span class="p">);</span>
- <span class="n">nroots</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">getRootsInOpenRange</span><span class="p">(</span> <span class="n">r_min</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">r</span> <span class="p">);</span>
-</pre></div>
-</div>
- <strong>Get roots</strong> <div class="highlight-cpp notranslate">
-<div class="highlight"><pre><span></span> <span class="kt">double</span> <span class="n">r0</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">real_root0</span><span class="p">();</span> 
- <span class="kt">double</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">real_root1</span><span class="p">();</span>
- <span class="n">complexType</span> <span class="n">r0</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">root0</span><span class="p">();</span>
- <span class="n">complexType</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">root1</span><span class="p">();</span>
 
- <span class="n">complexType</span> <span class="n">r</span><span class="p">;</span>
- <span class="kt">double</span> <span class="n">re</span><span class="p">,</span> <span class="n">im</span><span class="p">;</span>
- <span class="n">p</span><span class="p">.</span><span class="n">getRoot0</span><span class="p">(</span> <span class="n">re</span><span class="p">,</span> <span class="n">im</span> <span class="p">);</span>
- <span class="n">p</span><span class="p">.</span><span class="n">getRoot0</span><span class="p">(</span> <span class="n">r</span> <span class="p">);</span>
- <span class="n">p</span><span class="p">.</span><span class="n">getRoot1</span><span class="p">(</span> <span class="n">re</span><span class="p">,</span> <span class="n">im</span> <span class="p">);</span>
- <span class="n">p</span><span class="p">.</span><span class="n">getRoot1</span><span class="p">(</span> <span class="n">r</span> <span class="p">);</span>
-</pre></div>
-</div>
- <strong>Evaluate polynomial</strong> <div class="highlight-cpp notranslate">
-<div class="highlight"><pre><span></span> <span class="p">{</span><span class="kt">double</span> <span class="n">or</span> <span class="n">complex</span><span class="p">}</span> <span class="n">v</span><span class="p">,</span> <span class="n">x</span><span class="p">;</span> 
- <span class="n">v</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span> <span class="n">x</span> <span class="p">);</span>
 
- <span class="n">p</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">dp</span> <span class="p">);</span>
+<p><strong>Get real roots</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-cpp notranslate">
+<div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">r_min</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">r_max</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">nroots</span><span class="p">;</span>
+<span class="n">nroots</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">getRealRoots</span><span class="p">(</span> <span class="n">r</span> <span class="p">);</span>
+<span class="n">nroots</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">getPositiveRoots</span><span class="p">(</span> <span class="n">r</span> <span class="p">);</span>
+<span class="n">nroots</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">getNegativeRoots</span><span class="p">(</span> <span class="n">r</span> <span class="p">);</span>
+<span class="n">nroots</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">getRootsInRange</span><span class="p">(</span> <span class="n">r_min</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">r</span> <span class="p">);</span>
+<span class="n">nroots</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">getRootsInOpenRange</span><span class="p">(</span> <span class="n">r_min</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">r</span> <span class="p">);</span>
 </pre></div>
 </div>
- <strong>Information</strong> <div class="highlight-cpp notranslate">
-<div class="highlight"><pre><span></span> <span class="n">p</span><span class="p">.</span><span class="n">info</span><span class="p">(</span> <span class="n">cout</span> <span class="p">);</span>
- <span class="kt">bool</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">check</span><span class="p">(</span> <span class="n">cout</span> <span class="p">);</span>
+
+
+<p><strong>Get roots</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-cpp notranslate">
+<div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">r0</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">real_root0</span><span class="p">();</span> 
+<span class="kt">double</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">real_root1</span><span class="p">();</span>
+<span class="n">complexType</span> <span class="n">r0</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">root0</span><span class="p">();</span>
+<span class="n">complexType</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">root1</span><span class="p">();</span>
+
+<span class="n">complexType</span> <span class="n">r</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">re</span><span class="p">,</span> <span class="n">im</span><span class="p">;</span>
+<span class="n">p</span><span class="p">.</span><span class="n">getRoot0</span><span class="p">(</span> <span class="n">re</span><span class="p">,</span> <span class="n">im</span> <span class="p">);</span>
+<span class="n">p</span><span class="p">.</span><span class="n">getRoot0</span><span class="p">(</span> <span class="n">r</span> <span class="p">);</span>
+<span class="n">p</span><span class="p">.</span><span class="n">getRoot1</span><span class="p">(</span> <span class="n">re</span><span class="p">,</span> <span class="n">im</span> <span class="p">);</span>
+<span class="n">p</span><span class="p">.</span><span class="n">getRoot1</span><span class="p">(</span> <span class="n">r</span> <span class="p">);</span>
 </pre></div>
 </div>
+
+
+<p><strong>Evaluate polynomial</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-cpp notranslate">
+<div class="highlight"><pre><span></span><span class="p">{</span><span class="kt">double</span> <span class="n">or</span> <span class="n">complex</span><span class="p">}</span> <span class="n">v</span><span class="p">,</span> <span class="n">x</span><span class="p">;</span> 
+<span class="n">v</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span> <span class="n">x</span> <span class="p">);</span>
+
+<span class="n">p</span><span class="p">.</span><span class="n">eval</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">dp</span> <span class="p">);</span>
+</pre></div>
+</div>
+
+
+<p><strong>Information</strong></p>
+<p></p>
+<p></p>
+<div class="highlight-cpp notranslate">
+<div class="highlight"><pre><span></span><span class="n">p</span><span class="p">.</span><span class="n">info</span><span class="p">(</span> <span class="n">cout</span> <span class="p">);</span>
+<span class="kt">bool</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">check</span><span class="p">(</span> <span class="n">cout</span> <span class="p">);</span>
+</pre></div>
+</div>
+
  
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
@@ -162,7 +189,8 @@
 <span id="_CPPv3N15PolynomialRoots9Quadratic9QuadraticE9valueType9valueType9valueType"></span><span id="_CPPv2N15PolynomialRoots9Quadratic9QuadraticE9valueType9valueType9valueType"></span><span id="PolynomialRoots::Quadratic::Quadratic__valueType.valueType.valueType"></span><span class="target" id="a00027_1a1518e93f485e40473cb92ebf6ae91755"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">Quadratic</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">a</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">b</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">c</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15PolynomialRoots9Quadratic9QuadraticE9valueType9valueType9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>Build the object that store the roots of the quadratic polynomial </p>
+<p>Build the object that store the roots of the quadratic polynomial</p>
+<p></p>
 <div class="math notranslate nohighlight">
 \[ q(x) = a x^2 + b x + c \]</div>
 
@@ -184,7 +212,8 @@
 <span id="_CPPv3N15PolynomialRoots9Quadratic5setupE9valueType9valueType9valueType"></span><span id="_CPPv2N15PolynomialRoots9Quadratic5setupE9valueType9valueType9valueType"></span><span id="PolynomialRoots::Quadratic::setup__valueType.valueType.valueType"></span><span class="target" id="a00027_1aa4d9b6f83e4f9d84b95b8bfb8d25b90e"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">setup</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">a</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">b</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">c</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15PolynomialRoots9Quadratic5setupE9valueType9valueType9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>Setup the object that store the roots of the quadratic polynomial </p>
+<p>Setup the object that store the roots of the quadratic polynomial</p>
+<p></p>
 <div class="math notranslate nohighlight">
 \[ q(x) = a x^2 + b x + c \]</div>
 
@@ -206,10 +235,12 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic8numRootsEv"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic8numRootsEv"></span><span id="PolynomialRoots::Quadratic::numRootsC"></span><span class="target" id="a00027_1a0acee845244aae9f51add7dd478cc30d"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="typedef_a00023_1a976ab354b39108445a212bc362258292.html#_CPPv4N15PolynomialRoots9indexTypeE" title="PolynomialRoots::indexType"><span class="pre">indexType</span></a> <code class="sig-name descname"><span class="pre">numRoots</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic8numRootsEv" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>Return the number of computed roots of </p>
+<p>Return the number of computed roots of</p>
+<p></p>
 <div class="math notranslate nohighlight">
 \[ q(x) = a x^2 + b x + c \]</div>
- Normally return 2 but if e.g. <span class="math notranslate nohighlight">\( a = 0 \)</span> return 1 or less depending on the values of <span class="math notranslate nohighlight">\( a, b, c \)</span>
+
+<p>Normally return 2 but if e.g. <span class="math notranslate nohighlight">\( a = 0 \)</span> return 1 or less depending on the values of <span class="math notranslate nohighlight">\( a, b, c \)</span></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd">
@@ -242,7 +273,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic12getRealRootsEA_9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic12getRealRootsEA_9valueType"></span><span id="PolynomialRoots::Quadratic::getRealRoots__valueTypeAC"></span><span class="target" id="a00027_1a0870508a9856a9562500a4b9eb771e63"></span><a class="reference internal" href="typedef_a00023_1a976ab354b39108445a212bc362258292.html#_CPPv4N15PolynomialRoots9indexTypeE" title="PolynomialRoots::indexType"><span class="pre">indexType</span></a> <code class="sig-name descname"><span class="pre">getRealRoots</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">r</span></em><span class="pre">[</span><span class="pre">]</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic12getRealRootsEA_9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>get the real roots </p>
+<p>Get the real roots</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -261,7 +292,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic16getPositiveRootsEA_9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic16getPositiveRootsEA_9valueType"></span><span id="PolynomialRoots::Quadratic::getPositiveRoots__valueTypeAC"></span><span class="target" id="a00027_1ad53b8fdc5f6b4d517e450f115348053d"></span><a class="reference internal" href="typedef_a00023_1a976ab354b39108445a212bc362258292.html#_CPPv4N15PolynomialRoots9indexTypeE" title="PolynomialRoots::indexType"><span class="pre">indexType</span></a> <code class="sig-name descname"><span class="pre">getPositiveRoots</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">r</span></em><span class="pre">[</span><span class="pre">]</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic16getPositiveRootsEA_9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>get positive real roots </p>
+<p>Get positive real roots</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -280,7 +311,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic16getNegativeRootsEA_9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic16getNegativeRootsEA_9valueType"></span><span id="PolynomialRoots::Quadratic::getNegativeRoots__valueTypeAC"></span><span class="target" id="a00027_1a58ddfc6317dad86057d6161f1c498317"></span><a class="reference internal" href="typedef_a00023_1a976ab354b39108445a212bc362258292.html#_CPPv4N15PolynomialRoots9indexTypeE" title="PolynomialRoots::indexType"><span class="pre">indexType</span></a> <code class="sig-name descname"><span class="pre">getNegativeRoots</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">r</span></em><span class="pre">[</span><span class="pre">]</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic16getNegativeRootsEA_9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>get negative real roots </p>
+<p>Get negative real roots</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -299,7 +330,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic15getRootsInRangeE9valueType9valueTypeA_9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic15getRootsInRangeE9valueType9valueTypeA_9valueType"></span><span id="PolynomialRoots::Quadratic::getRootsInRange__valueType.valueType.valueTypeAC"></span><span class="target" id="a00027_1aaffc8a1f1aa2d383c397b06bd89bcd70"></span><a class="reference internal" href="typedef_a00023_1a976ab354b39108445a212bc362258292.html#_CPPv4N15PolynomialRoots9indexTypeE" title="PolynomialRoots::indexType"><span class="pre">indexType</span></a> <code class="sig-name descname"><span class="pre">getRootsInRange</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">a</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">b</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">r</span></em><span class="pre">[</span><span class="pre">]</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic15getRootsInRangeE9valueType9valueTypeA_9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>get real roots in a range </p>
+<p>Get real roots in a closed range</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -322,6 +353,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic19getRootsInOpenRangeE9valueType9valueTypeA_9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic19getRootsInOpenRangeE9valueType9valueTypeA_9valueType"></span><span id="PolynomialRoots::Quadratic::getRootsInOpenRange__valueType.valueType.valueTypeAC"></span><span class="target" id="a00027_1aae3a9189fc093b48e1756ecd4995228e"></span><a class="reference internal" href="typedef_a00023_1a976ab354b39108445a212bc362258292.html#_CPPv4N15PolynomialRoots9indexTypeE" title="PolynomialRoots::indexType"><span class="pre">indexType</span></a> <code class="sig-name descname"><span class="pre">getRootsInOpenRange</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">a</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">b</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">r</span></em><span class="pre">[</span><span class="pre">]</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic19getRootsInOpenRangeE9valueType9valueTypeA_9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
+<p>Get real roots in an open range</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -344,7 +376,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic10real_root0Ev"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic10real_root0Ev"></span><span id="PolynomialRoots::Quadratic::real_root0C"></span><span class="target" id="a00027_1afbe2175aa53d7e9edaaf26a3af7f9eb2"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <code class="sig-name descname"><span class="pre">real_root0</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic10real_root0Ev" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>the first real root </p>
+<p>The first real root </p>
 </dd>
 </dl>
 
@@ -353,7 +385,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic10real_root1Ev"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic10real_root1Ev"></span><span id="PolynomialRoots::Quadratic::real_root1C"></span><span class="target" id="a00027_1ac37348dfcf03d23ed5257a431e0fda0a"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <code class="sig-name descname"><span class="pre">real_root1</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic10real_root1Ev" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>the second real root </p>
+<p>The second real root </p>
 </dd>
 </dl>
 
@@ -362,7 +394,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic5root0Ev"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic5root0Ev"></span><span id="PolynomialRoots::Quadratic::root0C"></span><span class="target" id="a00027_1a67eb830b9ef28ac5d8aa87782cbd376b"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="typedef_a00023_1a1ac247f8669dde00caaec7b49131507f.html#_CPPv4N15PolynomialRoots11complexTypeE" title="PolynomialRoots::complexType"><span class="pre">complexType</span></a> <code class="sig-name descname"><span class="pre">root0</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic5root0Ev" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>the first complex root </p>
+<p>The first complex root </p>
 </dd>
 </dl>
 
@@ -371,7 +403,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic5root1Ev"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic5root1Ev"></span><span id="PolynomialRoots::Quadratic::root1C"></span><span class="target" id="a00027_1aa6a3a8da5f8c97cd8f70b8761d33f911"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="typedef_a00023_1a1ac247f8669dde00caaec7b49131507f.html#_CPPv4N15PolynomialRoots11complexTypeE" title="PolynomialRoots::complexType"><span class="pre">complexType</span></a> <code class="sig-name descname"><span class="pre">root1</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic5root1Ev" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>the second complex root </p>
+<p>The second complex root </p>
 </dd>
 </dl>
 
@@ -380,6 +412,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic8getRoot0ER9valueTypeR9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic8getRoot0ER9valueTypeR9valueType"></span><span id="PolynomialRoots::Quadratic::getRoot0__valueTypeR.valueTypeRC"></span><span class="target" id="a00027_1a7d7a177720d667a51ae83280dc6e9ea5"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">getRoot0</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">&amp;</span><em><span class="pre">re</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">&amp;</span><em><span class="pre">im</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic8getRoot0ER9valueTypeR9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
+<p>Get the first root (complex or real)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -397,6 +430,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic8getRoot0ER11complexType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic8getRoot0ER11complexType"></span><span id="PolynomialRoots::Quadratic::getRoot0__complexTypeRC"></span><span class="target" id="a00027_1aedccb3aa14b14d9112acf1231ff9e368"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">getRoot0</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a1ac247f8669dde00caaec7b49131507f.html#_CPPv4N15PolynomialRoots11complexTypeE" title="PolynomialRoots::complexType"><span class="pre">complexType</span></a> <span class="pre">&amp;</span><em><span class="pre">r</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic8getRoot0ER11complexType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
+<p>Get the first root (complex or real)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -411,6 +445,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic8getRoot1ER9valueTypeR9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic8getRoot1ER9valueTypeR9valueType"></span><span id="PolynomialRoots::Quadratic::getRoot1__valueTypeR.valueTypeRC"></span><span class="target" id="a00027_1aace5c12bf41f157114868a583a3623eb"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">getRoot1</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">&amp;</span><em><span class="pre">re</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">&amp;</span><em><span class="pre">im</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic8getRoot1ER9valueTypeR9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
+<p>Get the second root (complex or real)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -428,6 +463,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic8getRoot1ER11complexType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic8getRoot1ER11complexType"></span><span id="PolynomialRoots::Quadratic::getRoot1__complexTypeRC"></span><span class="target" id="a00027_1a80ecdc096459778774a756f59b366b13"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">getRoot1</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a1ac247f8669dde00caaec7b49131507f.html#_CPPv4N15PolynomialRoots11complexTypeE" title="PolynomialRoots::complexType"><span class="pre">complexType</span></a> <span class="pre">&amp;</span><em><span class="pre">r</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic8getRoot1ER11complexType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
+<p>Get the second root (complex or real)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -442,7 +478,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic4evalE9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic4evalE9valueType"></span><span id="PolynomialRoots::Quadratic::eval__valueTypeC"></span><span class="target" id="a00027_1afa60634784c14e22bddab37301513eb9"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <code class="sig-name descname"><span class="pre">eval</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">x</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic4evalE9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>evalute the quadratic polynomial </p>
+<p>Evaluate the quadratic polynomial</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -461,7 +497,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic4evalERK11complexType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic4evalERK11complexType"></span><span id="PolynomialRoots::Quadratic::eval__complexTypeCRC"></span><span class="target" id="a00027_1a601bddea30473f330824752748c11e0c"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="typedef_a00023_1a1ac247f8669dde00caaec7b49131507f.html#_CPPv4N15PolynomialRoots11complexTypeE" title="PolynomialRoots::complexType"><span class="pre">complexType</span></a> <code class="sig-name descname"><span class="pre">eval</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a1ac247f8669dde00caaec7b49131507f.html#_CPPv4N15PolynomialRoots11complexTypeE" title="PolynomialRoots::complexType"><span class="pre">complexType</span></a> <em class="property"><span class="pre">const</span></em> <span class="pre">&amp;</span><em><span class="pre">x</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic4evalERK11complexType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>evalute the quadratic polynomial </p>
+<p>Evalute the quadratic polynomial</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -480,7 +516,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic4evalE9valueTypeR9valueTypeR9valueType"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic4evalE9valueTypeR9valueTypeR9valueType"></span><span id="PolynomialRoots::Quadratic::eval__valueType.valueTypeR.valueTypeRC"></span><span class="target" id="a00027_1a92300761f92b2ecc3029f3a36e317727"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">eval</span></code><span class="sig-paren">(</span><a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <em><span class="pre">x</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">&amp;</span><em><span class="pre">p</span></em>, <a class="reference internal" href="typedef_a00023_1a644e6dd20e81559412b8b5aef77c0a90.html#_CPPv4N15PolynomialRoots9valueTypeE" title="PolynomialRoots::valueType"><span class="pre">valueType</span></a> <span class="pre">&amp;</span><em><span class="pre">dp</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic4evalE9valueTypeR9valueTypeR9valueType" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>evalute the polynomial with its derivative </p>
+<p>Evaluate the polynomial with its derivative</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd">
@@ -499,7 +535,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic4infoERNSt7ostreamE"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic4infoERNSt7ostreamE"></span><span id="PolynomialRoots::Quadratic::info__osRC"></span><span class="target" id="a00027_1ade27a47e7fedd85e1c6c6594a9129785"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">info</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">ostream</span> <span class="pre">&amp;</span><em><span class="pre">s</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic4infoERNSt7ostreamE" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>print info of the roots of the polynomial </p>
+<p>Print info of the roots of the polynomial. </p>
 </dd>
 </dl>
 
@@ -508,7 +544,7 @@
 <span id="_CPPv3NK15PolynomialRoots9Quadratic5checkERNSt7ostreamE"></span><span id="_CPPv2NK15PolynomialRoots9Quadratic5checkERNSt7ostreamE"></span><span id="PolynomialRoots::Quadratic::check__osRC"></span><span class="target" id="a00027_1a2f7bd0230325302ee7e3504185acdc7b"></span><span class="pre">bool</span> <code class="sig-name descname"><span class="pre">check</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">ostream</span> <span class="pre">&amp;</span><em><span class="pre">s</span></em><span class="sig-paren">)</span> <em class="property"><span class="pre">const</span></em><a class="headerlink" href="#_CPPv4NK15PolynomialRoots9Quadratic5checkERNSt7ostreamE" title="Permalink to this definition">¶</a><br>
 </dt>
 <dd>
-<p>check tolerance and quality of the computed roots </p>
+<p>Check tolerance and quality of the computed roots </p>
 </dd>
 </dl>
 
@@ -528,7 +564,7 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
         <p class="logo"><a href="../index.html" title="index">
-          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+          <img class="logo" src="../_static/1609691.png" alt="Logo"/>
         </a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>

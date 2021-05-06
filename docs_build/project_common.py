@@ -113,7 +113,7 @@ primary_domain = 'cpp'
 highlight_language = 'cpp'
 
 html_theme = 'cloud'
-html_logo  = '../logo.png'
+html_logo  = '../1609691.png' # http://clipart-library.com/clipart/1609691.htm
 
 email_automode       = True
 autodoc_member_order = 'bysource'

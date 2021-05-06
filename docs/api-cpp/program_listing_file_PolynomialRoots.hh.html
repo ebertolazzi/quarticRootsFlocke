@@ -260,16 +260,13 @@
     <span class="nf">getRoot1</span><span class="p">(</span> <span class="n">complexType</span> <span class="o">&amp;</span> <span class="n">r</span> <span class="p">)</span> <span class="k">const</span>
     <span class="p">{</span> <span class="n">r</span> <span class="o">=</span> <span class="n">cplx</span> <span class="o">?</span> <span class="n">complexType</span><span class="p">(</span><span class="n">r0</span><span class="p">,</span><span class="o">-</span><span class="n">r1</span><span class="p">)</span> <span class="o">:</span> <span class="n">complexType</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span> <span class="p">}</span>
 
-
     <span class="n">valueType</span>
     <span class="nf">eval</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">x</span> <span class="p">)</span> <span class="k">const</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">evalPoly</span><span class="p">(</span> <span class="n">ABC</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span> <span class="p">);</span> <span class="p">}</span>
 
-
     <span class="n">complexType</span>
     <span class="nf">eval</span><span class="p">(</span> <span class="n">complexType</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">x</span> <span class="p">)</span> <span class="k">const</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">evalPolyC</span><span class="p">(</span> <span class="n">ABC</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span> <span class="p">);</span> <span class="p">}</span>
-
 
     <span class="kt">void</span> <span class="nf">eval</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">x</span><span class="p">,</span> <span class="n">valueType</span> <span class="o">&amp;</span> <span class="n">p</span><span class="p">,</span> <span class="n">valueType</span> <span class="o">&amp;</span> <span class="n">dp</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
@@ -314,7 +311,6 @@
       <span class="n">findRoots</span><span class="p">();</span>
     <span class="p">}</span>
 
-
     <span class="kt">void</span>
     <span class="n">setup</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">a</span><span class="p">,</span> <span class="n">valueType</span> <span class="n">b</span><span class="p">,</span> <span class="n">valueType</span> <span class="n">c</span><span class="p">,</span> <span class="n">valueType</span> <span class="n">d</span> <span class="p">)</span> <span class="p">{</span>
       <span class="n">valueType</span> <span class="o">&amp;</span> <span class="n">A</span> <span class="o">=</span> <span class="n">ABCD</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
@@ -326,26 +322,27 @@
     <span class="p">}</span>
 
     <span class="n">indexType</span> <span class="n">numRoots</span><span class="p">()</span>     <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">nrts</span><span class="p">;</span> <span class="p">}</span>
-    <span class="kt">bool</span>      <span class="n">complexRoots</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cplx</span><span class="p">;</span> <span class="p">}</span>
-    <span class="kt">bool</span>      <span class="n">doubleRoot</span><span class="p">()</span>   <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">dblx</span><span class="p">;</span> <span class="p">}</span>
-    <span class="kt">bool</span>      <span class="n">tripleRoot</span><span class="p">()</span>   <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">trpx</span><span class="p">;</span> <span class="p">}</span>
 
+    <span class="kt">bool</span> <span class="n">complexRoots</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cplx</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">doubleRoot</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">dblx</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">tripleRoot</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">trpx</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="n">indexType</span> <span class="n">getRealRoots</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">r</span><span class="p">[]</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
-
     <span class="n">indexType</span> <span class="nf">getPositiveRoots</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">r</span><span class="p">[]</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
-
     <span class="n">indexType</span> <span class="nf">getNegativeRoots</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">r</span><span class="p">[]</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
 
     <span class="n">indexType</span> <span class="nf">getRootsInRange</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">a</span><span class="p">,</span> <span class="n">valueType</span> <span class="n">b</span><span class="p">,</span> <span class="n">valueType</span> <span class="n">r</span><span class="p">[]</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
     <span class="n">indexType</span> <span class="nf">getRootsInOpenRange</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">a</span><span class="p">,</span> <span class="n">valueType</span> <span class="n">b</span><span class="p">,</span> <span class="n">valueType</span> <span class="n">r</span><span class="p">[]</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
     <span class="n">valueType</span> <span class="nf">real_root0</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">r0</span><span class="p">;</span> <span class="p">}</span>
+
     <span class="n">valueType</span> <span class="nf">real_root1</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">r1</span><span class="p">;</span> <span class="p">}</span>
+
     <span class="n">valueType</span> <span class="nf">real_root2</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">r2</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="n">complexType</span>
@@ -388,16 +385,13 @@
     <span class="nf">getRoot2</span><span class="p">(</span> <span class="n">complexType</span> <span class="o">&amp;</span> <span class="n">r</span> <span class="p">)</span> <span class="k">const</span>
     <span class="p">{</span> <span class="n">r</span> <span class="o">=</span> <span class="n">complexType</span><span class="p">(</span><span class="n">r2</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span> <span class="p">}</span>
 
-
     <span class="n">valueType</span>
     <span class="nf">eval</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">x</span> <span class="p">)</span> <span class="k">const</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">evalPoly</span><span class="p">(</span> <span class="n">ABCD</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">x</span> <span class="p">);</span> <span class="p">}</span>
 
-
     <span class="n">complexType</span>
     <span class="nf">eval</span><span class="p">(</span> <span class="n">complexType</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">x</span> <span class="p">)</span> <span class="k">const</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">evalPolyC</span><span class="p">(</span> <span class="n">ABCD</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">x</span> <span class="p">);</span> <span class="p">}</span>
-
 
     <span class="kt">void</span> <span class="nf">eval</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">x</span><span class="p">,</span> <span class="n">valueType</span> <span class="o">&amp;</span> <span class="n">p</span><span class="p">,</span> <span class="n">valueType</span> <span class="o">&amp;</span> <span class="n">dp</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
@@ -451,7 +445,6 @@
       <span class="n">findRoots</span><span class="p">();</span>
     <span class="p">}</span>
 
-
     <span class="kt">void</span>
     <span class="n">setup</span><span class="p">(</span>
       <span class="n">valueType</span> <span class="n">a</span><span class="p">,</span>
@@ -469,27 +462,28 @@
       <span class="n">findRoots</span><span class="p">();</span>
     <span class="p">}</span>
 
-    <span class="n">indexType</span> <span class="n">numRoots</span><span class="p">()</span>        <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">nreal</span><span class="o">+</span><span class="n">ncplx</span><span class="p">;</span> <span class="p">}</span>
-    <span class="n">indexType</span> <span class="n">numRealRoots</span><span class="p">()</span>    <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">nreal</span><span class="p">;</span> <span class="p">}</span>
-    <span class="n">indexType</span> <span class="n">numComplexRoots</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ncplx</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">indexType</span> <span class="n">numRoots</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">nreal</span><span class="o">+</span><span class="n">ncplx</span><span class="p">;</span> <span class="p">}</span>
 
+    <span class="n">indexType</span> <span class="n">numRealRoots</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">nreal</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="n">indexType</span> <span class="n">numComplexRoots</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ncplx</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="n">indexType</span> <span class="n">getRealRoots</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">r</span><span class="p">[]</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
-
     <span class="n">indexType</span> <span class="nf">getPositiveRoots</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">r</span><span class="p">[]</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
-
     <span class="n">indexType</span> <span class="nf">getNegativeRoots</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">r</span><span class="p">[]</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
 
     <span class="n">indexType</span> <span class="nf">getRootsInRange</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">a</span><span class="p">,</span> <span class="n">valueType</span> <span class="n">b</span><span class="p">,</span> <span class="n">valueType</span> <span class="n">r</span><span class="p">[]</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
     <span class="n">indexType</span> <span class="nf">getRootsInOpenRange</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">a</span><span class="p">,</span> <span class="n">valueType</span> <span class="n">b</span><span class="p">,</span> <span class="n">valueType</span> <span class="n">r</span><span class="p">[]</span> <span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 
     <span class="n">valueType</span> <span class="nf">real_root0</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">r0</span><span class="p">;</span> <span class="p">}</span>
+
     <span class="n">valueType</span> <span class="nf">real_root1</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">r1</span><span class="p">;</span> <span class="p">}</span>
+
     <span class="n">valueType</span> <span class="nf">real_root2</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">r2</span><span class="p">;</span> <span class="p">}</span>
+
     <span class="n">valueType</span> <span class="nf">real_root3</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">r3</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="n">complexType</span>
@@ -556,11 +550,9 @@
       <span class="k">else</span>           <span class="n">r</span> <span class="o">=</span> <span class="n">complexType</span><span class="p">(</span><span class="n">r3</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
     <span class="p">}</span>
 
-
     <span class="n">valueType</span>
     <span class="nf">eval</span><span class="p">(</span> <span class="n">valueType</span> <span class="n">x</span> <span class="p">)</span> <span class="k">const</span>
     <span class="p">{</span> <span class="k">return</span> <span class="n">evalPoly</span><span class="p">(</span> <span class="n">ABCDE</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">x</span> <span class="p">);</span> <span class="p">}</span>
-
 
     <span class="n">complexType</span>
     <span class="nf">eval</span><span class="p">(</span> <span class="n">complexType</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="n">x</span> <span class="p">)</span> <span class="k">const</span>
@@ -732,7 +724,7 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
         <p class="logo"><a href="../index.html" title="index">
-          <img class="logo" src="../_static/logo.png" alt="Logo"/>
+          <img class="logo" src="../_static/1609691.png" alt="Logo"/>
         </a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
