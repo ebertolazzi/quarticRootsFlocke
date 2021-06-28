@@ -7,7 +7,21 @@
 .. for Physical Applications
 .. ACM TOMS, Vol. 41, No. 4, 2015.
 .. DOI: http://dx.doi.org/10.1145/2699468
+..
+.. Added other 5 cubic polinoamials
+..
 */
+
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wglobal-constructors"
+#pragma clang diagnostic ignored "-Wvla-extension"
+#pragma clang diagnostic ignored "-Wvla"
+#pragma clang diagnostic ignored "-Wunused-function"
+#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
+#endif
 
 #include "PolynomialRoots.hh"
 #include <iostream>

@@ -3,6 +3,17 @@
 .. the cubic and quartic solvers as described in the manuscript.
 */
 
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wglobal-constructors"
+#pragma clang diagnostic ignored "-Wvla-extension"
+#pragma clang diagnostic ignored "-Wvla"
+#pragma clang diagnostic ignored "-Wunused-function"
+#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
+#endif
+
 #include "PolynomialRoots.hh"
 #include <iostream>
 #include <iomanip>
@@ -48,7 +59,7 @@ do_test( double const p[3] ) {
 int
 main() {
   cout.precision(20);
-  for ( int k = 0; k < sizeof(qq)/sizeof(qq[0]); ++k ) {
+  for ( unsigned k = 0; k < unsigned(sizeof(qq)/sizeof(qq[0])); ++k ) {
     cout << "\n\nExample N." << k << '\n';
     do_test(qq[k]);
   }
