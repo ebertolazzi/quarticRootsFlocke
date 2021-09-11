@@ -35,7 +35,7 @@ endif
 ifneq (,$(findstring Darwin, $(OS)))
   WARN        = -Wall -Weverything -Wno-sign-compare -Wno-global-constructors -Wno-padded -Wno-documentation-unknown-command -Wno-poison-system-directories
   LIBS        = -L./lib -lQuartic
-  CXXFLAGS    = $(WARN) -O3 -fPIC
+  CXXFLAGS    = $(WARN) -O3 -fPIC -std=c++11
   AR          = libtool -static -o
   LDCONFIG    =
   DYNAMIC_EXT = .dylib

@@ -151,6 +151,17 @@ static double quartic21[] = {
   -0.0116136513934813456055961111701
 };
 
+// Emanuele Siego example #3
+static double rootQuarticReal22[] = { -1.5226962261856962e-08, 1.5226962261856962e-08, 0.0029426967763176593, 0.0029426967763176593 };
+static double rootQuarticImag22[] = { 0, 0, 0, 0 };
+static double quartic22[] = {
+  86594.643180459301,
+  -509.64355468067714,
+  0.74986322275510664,
+  0.0000000000000000,
+  -1.7386537088520670e-16
+};
+
 #define DO_TEST( N ) \
   cout << "\n\nText N." << N << '\n'; \
   do_test( quartic##N, rootQuarticReal##N, rootQuarticImag##N )
@@ -203,8 +214,9 @@ main() {
   DO_TEST(18);
   DO_TEST(19);
   DO_TEST(20);
-  #endif
   DO_TEST(21);
+  #endif
+  DO_TEST(22);
   cout << "\n\nALL DONE!\n";
   return 0;
 }
