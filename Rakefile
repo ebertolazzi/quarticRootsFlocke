@@ -9,6 +9,8 @@ end
 
 require_relative "./Rakefile_common.rb"
 
+file_base = File.expand_path(File.dirname(__FILE__)).to_s+'/lib'
+
 task :default => [:build]
 
 TESTS = [
@@ -62,12 +64,13 @@ task :build_win, [:year, :bits] do |t, args|
   FileUtils.mkdir_p dir
   FileUtils.cd      dir
 
-  cmake_cmd = win_vs(args.bits,args.year)
+  cmd_cmake = win_vs(args.bits,args.year)
   if COMPILE_EXECUTABLE then
-    cmake_cmd += ' -DBUILD_EXECUTABLE:VAR=true '
+    cmd_cmake += ' -DBUILD_EXECUTABLE:VAR=true '
   else
-    cmake_cmd += ' -DBUILD_EXECUTABLE:VAR=false '
+    cmd_cmake += ' -DBUILD_EXECUTABLE:VAR=false '
   end
+  cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
 
   FileUtils.mkdir_p "../lib/lib"
   FileUtils.mkdir_p "../lib/bin"
@@ -76,10 +79,10 @@ task :build_win, [:year, :bits] do |t, args|
   FileUtils.mkdir_p "../lib/include"
 
   if COMPILE_DEBUG then
-    sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING ..'
+    sh cmd_cmake + ' -DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING ..'
     sh 'cmake --build . --config Debug --target install '+PARALLEL+QUIET
   else
-    sh cmake_cmd + ' -DCMAKE_BUILD_TYPE:VAR=Release --loglevel=WARNING ..'
+    sh cmd_cmake + ' -DCMAKE_BUILD_TYPE:VAR=Release --loglevel=WARNING ..'
     sh 'cmake  --build . --config Release  --target install '+PARALLEL+QUIET
   end
 
@@ -102,6 +105,7 @@ task :build_osx do |t, args|
   else
     cmd_cmake += 'false '
   end
+  cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
 
   if COMPILE_DEBUG then
     sh cmd_cmake + '-DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING ..'
@@ -129,6 +133,7 @@ task :build_linux do |t, args|
   else
     cmd_cmake += 'false '
   end
+  cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
 
   if COMPILE_DEBUG then
     sh cmd_cmake + '-DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING ..'
