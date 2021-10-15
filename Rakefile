@@ -70,7 +70,8 @@ task :build_win, [:year, :bits] do |t, args|
   else
     cmd_cmake += ' -DBUILD_EXECUTABLE:VAR=false '
   end
-  cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
+  cmd_cmake += " -DINSTALL_HERE:VAR=true "
+  #cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
 
   FileUtils.mkdir_p "../lib/lib"
   FileUtils.mkdir_p "../lib/bin"
@@ -105,7 +106,8 @@ task :build_osx do |t, args|
   else
     cmd_cmake += 'false '
   end
-  cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
+  cmd_cmake += " -DINSTALL_HERE:VAR=true "
+  #cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
 
   if COMPILE_DEBUG then
     sh cmd_cmake + '-DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING ..'
@@ -133,7 +135,8 @@ task :build_linux do |t, args|
   else
     cmd_cmake += 'false '
   end
-  cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
+  cmd_cmake += " -DINSTALL_HERE:VAR=true "
+  #cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
 
   if COMPILE_DEBUG then
     sh cmd_cmake + '-DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING ..'

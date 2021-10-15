@@ -18,9 +18,15 @@ if(ENABLE_CTEST)
   enable_testing()
 endif()
 
-project(Quartic
-  VERSION 1.0.0
-  HOMEPAGE_URL "https://ebertolazzi.github.io/quarticRootsFlocke/")
+# get version from the git tag
+execute_process(COMMAND git describe --tags --abbrev=0 OUTPUT_VARIABLE VERSION)
+string(REGEX REPLACE "\n$" "" VERSION "${VERSION}")
+
+project(
+  Quartic
+  VERSION ${VERSION}
+  HOMEPAGE_URL "https://ebertolazzi.github.io/quarticRootsFlocke/"
+)
 
 # NOTE: Predictable target name
 set(STATIC_PROJECT "${PROJECT_NAME}Static")
@@ -53,39 +59,51 @@ set(SOURCES
 file(GLOB HEADERS "${SOURCES_DIR}/*.hh")
 
 add_library(${STATIC_PROJECT} STATIC ${SOURCES})
-target_include_directories(${STATIC_PROJECT} PUBLIC 
+target_include_directories(
+  ${STATIC_PROJECT} PUBLIC 
   "$<BUILD_INTERFACE:${SOURCES_DIR}>"
-  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
-set_target_properties(${STATIC_PROJECT} PROPERTIES 
+  "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
+)
+set_target_properties(
+  ${STATIC_PROJECT} PROPERTIES 
   OUTPUT_NAME "${PROJECT_NAME}${ARTIFACTS_STATIC_SUFFIX}"
   PUBLIC_HEADER "${HEADERS}"
-  POSITION_INDEPENDENT_CODE ON)
+  POSITION_INDEPENDENT_CODE ON
+)
 
 if(BUILD_SHARED)
   add_library(${DYNAMIC_PROJECT} SHARED ${SOURCES})
   target_include_directories(${DYNAMIC_PROJECT} PUBLIC "${SOURCES_DIR}")
-  set_target_properties(${DYNAMIC_PROJECT} PROPERTIES 
+  set_target_properties(
+    ${DYNAMIC_PROJECT} PROPERTIES 
     OUTPUT_NAME "${PROJECT_NAME}${ARTIFACTS_STATIC_SUFFIX}"
     PUBLIC_HEADER "${HEADERS}"
-    POSITION_INDEPENDENT_CODE ON)
+    POSITION_INDEPENDENT_CODE ON
+  )
   if(WIN32)
-    set_target_properties(${DYNAMIC_PROJECT} PROPERTIES 
-      WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+    set_target_properties(
+      ${DYNAMIC_PROJECT} PROPERTIES 
+      WINDOWS_EXPORT_ALL_SYMBOLS TRUE
+    )
   endif()
 endif()
 
-if(BUILD_EXECUTABLE)
+if(BUILD_EXECUTABLE OR ENABLE_CTEST)
   set(TEST_OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bin")
   file(MAKE_DIRECTORY "${TEST_OUTPUT_PATH}")
   set(EXECUTABLES check_1_quadratic  check_2_cubic check_3_quartic)
   foreach(EXE ${EXECUTABLES})
     add_executable(${EXE} "${CMAKE_CURRENT_SOURCE_DIR}/src_tests/${EXE}.cc")
     target_link_libraries(${EXE} PRIVATE ${STATIC_PROJECT})
-    set_target_properties(${EXE} PROPERTIES
-      RUNTIME_OUTPUT_DIRECTORY "${TEST_OUTPUT_PATH}")
-    add_test(NAME ${EXE}
+    set_target_properties(
+      ${EXE} PROPERTIES
+      RUNTIME_OUTPUT_DIRECTORY "${TEST_OUTPUT_PATH}"
+    )
+    add_test(
+      NAME ${EXE}
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-      COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/bin/${EXE}")
+      COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/bin/${EXE}"
+    )
   endforeach()
 endif()
 
@@ -104,11 +122,13 @@ set(INSTALL_TARGETS ${STATIC_PROJECT})
 if(BUILD_SHARED)
   set(INSTALL_TARGETS ${INSTALL_TARGETS} ${DYNAMIC_PROJECT})
 endif()
-install(TARGETS ${INSTALL_TARGETS}
+install(
+  TARGETS ${INSTALL_TARGETS}
   RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin"
   ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/lib"
   LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/dll"
-  PUBLIC_HEADER DESTINATION "${PROJECT_PUBLIC_HEADER_DESTINATION}")
+  PUBLIC_HEADER DESTINATION "${PROJECT_PUBLIC_HEADER_DESTINATION}"
+)
 
 message(STATUS "Using ${SSE_FLAGS} extensions")
 message(STATUS "C compiler                  = ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER}")
