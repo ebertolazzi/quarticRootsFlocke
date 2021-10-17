@@ -11,6 +11,24 @@ require_relative "./Rakefile_common.rb"
 
 file_base = File.expand_path(File.dirname(__FILE__)).to_s+'/lib'
 
+cmd_cmake_build = ""
+if COMPILE_EXECUTABLE then
+  cmd_cmake_build += ' -DBUILD_EXECUTABLE:VAR=true '
+else
+  cmd_cmake_build += ' -DBUILD_EXECUTABLE:VAR=false '
+end
+if COMPILE_DYNAMIC then
+  cmd_cmake_build += ' -DBUILD_SHARED:VAR=true '
+else
+  cmd_cmake_build += ' -DBUILD_SHARED:VAR=false '
+end
+if COMPILE_DEBUG then
+  cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING '
+else
+  cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Release --loglevel=WARNING '
+end
+cmd_cmake_build += " -DINSTALL_HERE:VAR=true "
+
 task :default => [:build]
 
 TESTS = [
@@ -64,26 +82,20 @@ task :build_win, [:year, :bits] do |t, args|
   FileUtils.mkdir_p dir
   FileUtils.cd      dir
 
-  cmd_cmake = win_vs(args.bits,args.year)
-  if COMPILE_EXECUTABLE then
-    cmd_cmake += ' -DBUILD_EXECUTABLE:VAR=true '
-  else
-    cmd_cmake += ' -DBUILD_EXECUTABLE:VAR=false '
-  end
-  cmd_cmake += " -DINSTALL_HERE:VAR=true "
-  #cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
-
   FileUtils.mkdir_p "../lib/lib"
   FileUtils.mkdir_p "../lib/bin"
   FileUtils.mkdir_p "../lib/bin/"+args.bits
   FileUtils.mkdir_p "../lib/dll"
   FileUtils.mkdir_p "../lib/include"
 
+  cmd_cmake = win_vs(args.bits,args.year) + cmd_cmake_build
+
+  puts "run CMAKE for ROOTS".yellow
+  sh cmd_cmake + ' ..'
+  puts "compile with CMAKE for UTILS".yellow
   if COMPILE_DEBUG then
-    sh cmd_cmake + ' -DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING ..'
     sh 'cmake --build . --config Debug --target install '+PARALLEL+QUIET
   else
-    sh cmd_cmake + ' -DCMAKE_BUILD_TYPE:VAR=Release --loglevel=WARNING ..'
     sh 'cmake  --build . --config Release  --target install '+PARALLEL+QUIET
   end
 
@@ -100,22 +112,17 @@ task :build_osx do |t, args|
   FileUtils.mkdir_p dir
   FileUtils.cd      dir
 
-  cmd_cmake = 'cmake -DBUILD_EXECUTABLE:VAR='
-  if COMPILE_EXECUTABLE then
-    cmd_cmake += 'true '
-  else
-    cmd_cmake += 'false '
-  end
-  cmd_cmake += " -DINSTALL_HERE:VAR=true "
-  #cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
+  cmd_cmake = "cmake " + cmd_cmake_build
 
+  puts "run CMAKE for ROOTS".yellow
+  sh cmd_cmake + ' ..'
+  puts "compile with CMAKE for UTILS".yellow
   if COMPILE_DEBUG then
-    sh cmd_cmake + '-DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING ..'
     sh 'cmake --build . --config Debug --target install '+PARALLEL+QUIET
   else
-    sh cmd_cmake + ' -DCMAKE_BUILD_TYPE:VAR=Release --loglevel=WARNING ..'
-    sh 'cmake --build . --config Release --target install '+PARALLEL+QUIET
+    sh 'cmake  --build . --config Release  --target install '+PARALLEL+QUIET
   end
+
   FileUtils.cd '..'
 end
 
@@ -129,22 +136,15 @@ task :build_linux do |t, args|
   FileUtils.mkdir_p dir
   FileUtils.cd      dir
 
-  cmd_cmake = 'cmake -DBUILD_EXECUTABLE:VAR='
-  if COMPILE_EXECUTABLE then
-    cmd_cmake += 'true '
-  else
-    cmd_cmake += 'false '
-  end
-  cmd_cmake += " -DINSTALL_HERE:VAR=true "
-  #cmd_cmake += " -DCMAKE_INSTALL_PREFIX=\"#{file_base}\" "
-
+  puts "run CMAKE for ROOTS".yellow
+  sh cmd_cmake + ' ..'
+  puts "compile with CMAKE for UTILS".yellow
   if COMPILE_DEBUG then
-    sh cmd_cmake + '-DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING ..'
     sh 'cmake --build . --config Debug --target install '+PARALLEL+QUIET
   else
-    sh cmd_cmake + ' -DCMAKE_BUILD_TYPE:VAR=Release --loglevel=WARNING ..'
-    sh 'cmake --build . --config Release --target install '+PARALLEL+QUIET
+    sh 'cmake  --build . --config Release  --target install '+PARALLEL+QUIET
   end
+
   FileUtils.cd '..'
 end
 

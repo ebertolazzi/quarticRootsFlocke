@@ -55,7 +55,8 @@ set(SOURCES
   "${SOURCES_DIR}/PolynomialRoots-2-Cubic.cc"
   "${SOURCES_DIR}/PolynomialRoots-3-Quartic.cc"
   "${SOURCES_DIR}/PolynomialRoots-Jenkins-Traub.cc"
-  "${SOURCES_DIR}/PolynomialRoots-Utils.cc")
+  "${SOURCES_DIR}/PolynomialRoots-Utils.cc"
+)
 file(GLOB HEADERS "${SOURCES_DIR}/*.hh")
 
 add_library(${STATIC_PROJECT} STATIC ${SOURCES})
@@ -91,7 +92,7 @@ endif()
 if(BUILD_EXECUTABLE OR ENABLE_CTEST)
   set(TEST_OUTPUT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bin")
   file(MAKE_DIRECTORY "${TEST_OUTPUT_PATH}")
-  set(EXECUTABLES check_1_quadratic  check_2_cubic check_3_quartic)
+  set(EXECUTABLES check_1_quadratic check_2_cubic check_3_quartic)
   foreach(EXE ${EXECUTABLES})
     add_executable(${EXE} "${CMAKE_CURRENT_SOURCE_DIR}/src_tests/${EXE}.cc")
     target_link_libraries(${EXE} PRIVATE ${STATIC_PROJECT})
@@ -109,34 +110,7 @@ endif()
 
 # INSTALL TARGETS
 
-# FIXME: CMakeLists should not override CMAKE_INSTALL_PREFIX
-# ref: https://gitlab.kitware.com/cmake/cmake/-/issues/19322
-if(INSTALL_HERE)
-  set(INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/lib")
-  set(PROJECT_PUBLIC_HEADER_DESTINATION "${INSTALL_PREFIX}/include")
-else()
-  set(INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/lib")
-  set(PROJECT_PUBLIC_HEADER_DESTINATION "${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME}")
-endif()
-
-set(INSTALL_TARGETS ${STATIC_PROJECT})
-if(BUILD_SHARED)
-  set(INSTALL_TARGETS ${INSTALL_TARGETS} ${DYNAMIC_PROJECT})
-endif()
-install(
-  TARGETS ${INSTALL_TARGETS}
-  RUNTIME DESTINATION "${INSTALL_PREFIX}/bin"
-  ARCHIVE DESTINATION "${INSTALL_PREFIX}/lib"
-  LIBRARY DESTINATION "${INSTALL_PREFIX}/dll"
-  PUBLIC_HEADER DESTINATION "${PROJECT_PUBLIC_HEADER_DESTINATION}"
-)
-
-if(INSTALL_HERE)
-  add_custom_command(
-    TARGET ${STATIC_PROJECT} POST_BUILD
-    COMMAND cmake  --build . --config Release  --target install
-  )
-endif()
+include(./CMakeInstall.txt)
 
 message(STATUS "Using ${SSE_FLAGS} extensions")
 message(STATUS "C compiler                  = ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER}")
