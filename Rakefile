@@ -88,15 +88,16 @@ task :build_win, [:year, :bits] do |t, args|
   FileUtils.mkdir_p "../lib/dll"
   FileUtils.mkdir_p "../lib/include"
 
-  cmd_cmake = win_vs(args.bits,args.year) + cmd_cmake_build
+  #cmd_cmake = win_vs(args.bits,args.year) + cmd_cmake_build
+  cmd_cmake = 'cmake -G "NMake Makefiles" ' + cmd_cmake_build
 
   puts "run CMAKE for ROOTS".yellow
   sh cmd_cmake + ' ..'
-  puts "compile with CMAKE for UTILS".yellow
+  puts "compile with CMAKE for ROOTS".yellow
   if COMPILE_DEBUG then
     sh 'cmake --build . --config Debug --target install '+PARALLEL+QUIET
   else
-    sh 'cmake  --build . --config Release  --target install '+PARALLEL+QUIET
+    sh 'cmake --build . --config Release --target install '+PARALLEL+QUIET
   end
 
   FileUtils.cd '..'
@@ -116,11 +117,11 @@ task :build_osx do |t, args|
 
   puts "run CMAKE for ROOTS".yellow
   sh cmd_cmake + ' ..'
-  puts "compile with CMAKE for UTILS".yellow
+  puts "compile with CMAKE for ROOTS".yellow
   if COMPILE_DEBUG then
     sh 'cmake --build . --config Debug --target install '+PARALLEL+QUIET
   else
-    sh 'cmake  --build . --config Release  --target install '+PARALLEL+QUIET
+    sh 'cmake --build . --config Release --target install '+PARALLEL+QUIET
   end
 
   FileUtils.cd '..'
@@ -138,11 +139,11 @@ task :build_linux do |t, args|
 
   puts "run CMAKE for ROOTS".yellow
   sh cmd_cmake + ' ..'
-  puts "compile with CMAKE for UTILS".yellow
+  puts "compile with CMAKE for ROOTS".yellow
   if COMPILE_DEBUG then
     sh 'cmake --build . --config Debug --target install '+PARALLEL+QUIET
   else
-    sh 'cmake  --build . --config Release  --target install '+PARALLEL+QUIET
+    sh 'cmake --build . --config Release --target install '+PARALLEL+QUIET
   end
 
   FileUtils.cd '..'
