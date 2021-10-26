@@ -13,3 +13,4 @@ docs_build/xml
 docs_build/sphinx/api-cpp
 docs_build/xml-cpp
 docs_build/sphinx/_doxygen
+vs_2017_x64/
