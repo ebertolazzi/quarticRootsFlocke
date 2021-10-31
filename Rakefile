@@ -136,6 +136,8 @@ task :build_linux do |t, args|
   FileUtils.mkdir_p dir
   FileUtils.cd      dir
 
+  cmd_cmake = "cmake " + cmd_cmake_build
+
   puts "run CMAKE for ROOTS".yellow
   sh cmd_cmake + ' ..'
   puts "compile with CMAKE for ROOTS".yellow
