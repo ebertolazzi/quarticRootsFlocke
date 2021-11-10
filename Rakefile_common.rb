@@ -12,17 +12,6 @@ end
 
 require_relative "./Rakefile_conf.rb"
 
-if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil then
-  #linux
-  task :default => [:install_linux]
-elsif (/darwin/ =~ RUBY_PLATFORM) != nil then
-  #osx
-  task :default => [:install_osx]
-else
-  #windows
-  task :default => [:install_windows]
-end
-
 #
 # https://stackoverflow.com/questions/6934185/ruby-net-http-following-redirects/6934503
 #
@@ -111,6 +100,8 @@ def extract_tgz( tar_gz_archive, destination = '.' )
         FileUtils.chmod entry.header.mode, dest, :verbose => false
       elsif entry.header.typeflag == '2' #Symlink!
         File.symlink entry.header.linkname, dest
+      elsif entry.header.typeflag == 'g' && entry.full_name == "pax_global_header"
+        puts "Skip entry: #{entry.full_name} type: #{entry.header.typeflag}."
       else
         puts "Unkown tar entry: #{entry.full_name} type: #{entry.header.typeflag}."
       end
@@ -136,6 +127,8 @@ def extract_zip( filename, destination_path='.' )
     end
   end
 end
+
+
 
 
 def win_vs( bits, year )

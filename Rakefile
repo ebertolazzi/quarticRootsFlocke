@@ -7,6 +7,15 @@
   end
 end
 
+case RUBY_PLATFORM
+when /darwin/
+  OS = :mac
+when /linux/
+  OS = :linux
+when /cygwin|mswin|mingw|bccwin|wince|emx/
+  OS = :win
+end
+
 require_relative "./Rakefile_common.rb"
 
 file_base = File.expand_path(File.dirname(__FILE__)).to_s+'/lib'
@@ -29,7 +38,7 @@ else
 end
 cmd_cmake_build += " -DINSTALL_HERE:VAR=true "
 
-task :default => [:build]
+task :default => :build
 
 TESTS = [
   "check_1_quadratic",
@@ -37,36 +46,38 @@ TESTS = [
   "check_3_quartic"
 ]
 
-desc "run tests on linux/osx"
+desc "run tests"
 task :run do
-  TESTS.each do |cmd|
-    sh "./bin/#{cmd}"
-  end
-end
-
-desc "run tests (Release) on windows"
-task :run_win do
-  TESTS.each do |cmd|
-    sh "bin\\Release\\#{cmd}.exe"
-  end
-end
-
-desc "run tests (Debug) on windows"
-task :run_win_debug do
-  TESTS.each do |cmd|
-    sh "bin\\Debug\\#{cmd}.exe"
+  puts "UTILS run tests".green
+  case OS
+  when :mac,:linux
+    TESTS.each do |cmd|
+      exe = "./bin/#{cmd}"
+      next unless File.exist?(exe)
+      puts "execute #{exe}".yellow
+      sh exe
+    end
+  when :win
+    TESTS.each do |cmd|
+      exe = "bin\\#{cmd}.exe"
+      next unless File.exist?(exe)
+      puts "execute #{exe}".yellow
+      sh exe
+    end
   end
 end
 
 desc "build lib"
 task :build do
-  sh "make config"
-  sh "make --jobs=8 install_local"
-end
-
-def ChangeOnFile( file, text_to_replace, text_to_put_in_place )
-  text = File.read file
-  File.open(file, 'w+'){|f| f << text.gsub(text_to_replace, text_to_put_in_place)}
+  puts "UTILS build".green
+  case OS
+  when :mac
+    Rake::Task[:build_osx].invoke
+  when :linux
+    Rake::Task[:build_linux].invoke
+  when :win
+    Rake::Task[:build_win].invoke
+  end
 end
 
 desc "compile for Visual Studio [default year=2017, bits=x64]"
@@ -157,10 +168,7 @@ task :clean_osx do
 end
 
 desc "clean for LINUX"
-task :clean_linux do
-  FileUtils.rm_rf 'lib'
-  sh "make clean"
-end
+task :clean_linux => :clean_osx
 
 desc "clean for WINDOWS"
 task :clean_win do
