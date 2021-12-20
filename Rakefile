@@ -67,6 +67,13 @@ task :run do
   end
 end
 
+desc "run tests"
+task :test do
+  FileUtils.cd "build"
+  sh 'ctest --output-on-failure'
+  FileUtils.cd '..'
+end
+
 desc "build lib"
 task :build do
   puts "UTILS build".green
@@ -159,6 +166,15 @@ task :build_linux do |t, args|
   end
 
   FileUtils.cd '..'
+end
+
+desc 'pack for OSX/LINUX/WINDOWS'
+task :cpack do
+  FileUtils.cd "build"
+  puts "run CPACK for ROOTS".yellow
+  sh 'cpack -C CPackConfig.cmake'
+  sh 'cpack -C CPackSourceConfig.cmake'
+  FileUtils.cd ".."
 end
 
 desc "clean for OSX"
