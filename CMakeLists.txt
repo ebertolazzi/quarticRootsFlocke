@@ -11,10 +11,12 @@
 
 cmake_minimum_required(VERSION 3.14)
 
+# must setup project name before include
+project( quarticRootsFlocke )
 include(./cmake/CMakeLists-common.txt)
 
 project(
-  quarticRootsFlocke
+  ${PROJECT_NAME}
   VERSION ${EB_PROJECT_VERSION}
   HOMEPAGE_URL "https://ebertolazzi.github.io/quarticRootsFlocke/"
 )

@@ -36,7 +36,6 @@ if COMPILE_DEBUG then
 else
   cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Release --loglevel=WARNING '
 end
-cmd_cmake_build += " -DINSTALL_LOCAL=ON "
 
 task :default => :build
 
