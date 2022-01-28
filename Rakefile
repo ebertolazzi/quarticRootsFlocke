@@ -116,6 +116,12 @@ task :build_win, [:year, :bits] do |t, args|
     sh 'cmake --build . --config Release --target install '+PARALLEL+QUIET
   end
 
+  if RUN_CPACK then
+    puts "run CPACK for ROOTS".yellow
+    sh 'cpack -C CPackConfig.cmake'
+    sh 'cpack -C CPackSourceConfig.cmake'
+  end
+
   FileUtils.cd '..'
 end
 
@@ -140,6 +146,12 @@ task :build_osx do |t, args|
     sh 'cmake --build . --config Release --target install '+PARALLEL+QUIET
   end
 
+  if RUN_CPACK then
+    puts "run CPACK for ROOTS".yellow
+    sh 'cpack -C CPackConfig.cmake'
+    sh 'cpack -C CPackSourceConfig.cmake'
+  end
+
   FileUtils.cd '..'
 end
 
@@ -162,6 +174,12 @@ task :build_linux do |t, args|
     sh 'cmake --build . --config Debug --target install '+PARALLEL+QUIET
   else
     sh 'cmake --build . --config Release --target install '+PARALLEL+QUIET
+  end
+
+  if RUN_CPACK then
+    puts "run CPACK for ROOTS".yellow
+    sh 'cpack -C CPackConfig.cmake'
+    sh 'cpack -C CPackSourceConfig.cmake'
   end
 
   FileUtils.cd '..'
