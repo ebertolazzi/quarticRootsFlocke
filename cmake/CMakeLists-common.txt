@@ -21,9 +21,9 @@ set( TARGETS_TO_BE_INSTALLED )
 #
 # DEFAULT SETTINGS
 #
-set( CMAKE_INSTALL_MESSAGE         NEVER )
-set( CMAKE_EXPORT_COMPILE_COMMANDS TRUE )
-set( CMAKE_VERBOSE_MAKEFILE        HIGH )
+set( CMAKE_INSTALL_MESSAGE         NEVER CACHE STRING "Show information about copied/unchanged files during install")
+set( CMAKE_EXPORT_COMPILE_COMMANDS TRUE CACHE BOOL "Export JSON file containing compilation commands for tools" )
+set( CMAKE_VERBOSE_MAKEFILE        HIGH CACHE STRING "Verbosity level for makefiles" )
 
 # Always export compile commands in json file
 # (this is quite useful for tools like Sourcetrail)
