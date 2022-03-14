@@ -28,7 +28,6 @@ set( CMAKE_VERBOSE_MAKEFILE        HIGH CACHE STRING "Verbosity level for makefi
 # Always export compile commands in json file
 # (this is quite useful for tools like Sourcetrail)
 set( CMAKE_EXPORT_COMPILE_COMMANDS     ON )
-set( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
 
 #
 # C++ compiler
