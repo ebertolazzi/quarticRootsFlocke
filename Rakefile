@@ -106,7 +106,7 @@ task :build_win, [:year, :bits] do |t, args|
   FileUtils.mkdir_p "../lib/include"
 
   cmd_cmake = win_vs(args.bits,args.year) + cmd_cmake_build
-  
+
   puts "run CMAKE for ROOTS".yellow
   sh cmd_cmake + ' ..'
   puts "compile with CMAKE for ROOTS".yellow
@@ -197,7 +197,7 @@ end
 desc "clean for OSX"
 task :clean_osx do
   FileUtils.rm_rf 'lib'
-  sh "make clean"
+  sh "rm -rf build"
 end
 
 desc "clean for LINUX"
