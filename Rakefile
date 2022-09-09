@@ -7,6 +7,10 @@
   end
 end
 
+require 'rake/clean'
+
+CLEAN.clear_exclude.exclude { |fn| fn.pathmap("%f").downcase == "core" }
+
 case RUBY_PLATFORM
 when /darwin/
   OS = :mac
@@ -14,11 +18,13 @@ when /linux/
   OS = :linux
 when /cygwin|mswin|mingw|bccwin|wince|emx/
   OS = :win
+when /msys/
+  OS = :win
 end
 
 require_relative "./Rakefile_common.rb"
 
-file_base = File.expand_path(File.dirname(__FILE__)).to_s+'/lib'
+file_base = File.expand_path(File.dirname(__FILE__)).to_s
 
 cmd_cmake_build = ""
 if COMPILE_EXECUTABLE then
@@ -32,37 +38,45 @@ else
   cmd_cmake_build += ' -DEB_BUILD_SHARED:VAR=OFF '
 end
 if COMPILE_DEBUG then
-  cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=WARNING '
+  cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Debug --loglevel=STATUS '
 else
-  cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Release --loglevel=WARNING '
+  cmd_cmake_build += ' -DCMAKE_BUILD_TYPE:VAR=Release --loglevel=STATUS '
 end
 
+desc "default task --> build"
 task :default => :build
-
-TESTS = [
-  "check_1_quadratic",
-  "check_2_cubic",
-  "check_3_quartic"
-]
 
 desc "run tests"
 task :run do
   puts "UTILS run tests".green
   case OS
   when :mac,:linux
-    TESTS.each do |cmd|
-      exe = "./bin/#{cmd}"
+    Dir.glob('./bin/check_*').each do |exe|
       next unless File.exist?(exe)
       puts "execute #{exe}".yellow
       sh exe
     end
   when :win
-    TESTS.each do |cmd|
-      exe = "bin\\#{cmd}.exe"
+    Dir.glob('./bin/check_*.exe').each do |exe|
       next unless File.exist?(exe)
       puts "execute #{exe}".yellow
-      sh exe
+      system(exe)
     end
+  end
+end
+
+desc "build UTILS"
+task :build do
+  case OS
+  when :mac
+    puts "UTILS build (osx)".green
+    Rake::Task[:build_osx].invoke
+  when :linux
+    puts "UTILS build (linux)".green
+    Rake::Task[:build_linux].invoke
+  when :win
+    puts "UTILS build (windows)".green
+    Rake::Task[:build_win].invoke
   end
 end
 
@@ -71,19 +85,6 @@ task :test do
   FileUtils.cd "build"
   sh 'ctest --output-on-failure'
   FileUtils.cd '..'
-end
-
-desc "build lib"
-task :build do
-  puts "UTILS build".green
-  case OS
-  when :mac
-    Rake::Task[:build_osx].invoke
-  when :linux
-    Rake::Task[:build_linux].invoke
-  when :win
-    Rake::Task[:build_win].invoke
-  end
 end
 
 desc "compile for Visual Studio [default year=2017, bits=x64]"

@@ -117,19 +117,8 @@ if ( EB_ENABLE_TESTS )
 
   enable_testing()
 
-  if(APPLE OR UNIX)
-    find_package( ZLIB REQUIRED )
-  else()
-    if ( CMAKE_BUILD_TYPE STREQUAL "Debug" )
-      find_library( ZLIB_LIBRARIES zlibstaticd HINTS ./ThirdParties/zlib/lib )
-    else()
-      find_library( ZLIB_LIBRARIES zlibstatic HINTS ./ThirdParties/zlib/lib )
-    endif()
-    set( ZLIB_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/ThirdParties/zlib/include ")
-  endif()
-
   set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin )
-  set( LIBS ${EB_NAMESPACE}_${PROJECT_NAME}_Static ${ZLIB_LIBRARIES} ${CMAKE_DL_LIBS} )
+  set( LIBS ${EB_NAMESPACE}_${PROJECT_NAME}_Static ${CMAKE_DL_LIBS} )
 
   if( UNIX AND NOT APPLE )
     set( THREADS_PREFER_PTHREAD_FLAG ON )
