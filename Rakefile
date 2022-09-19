@@ -1,7 +1,7 @@
 require_relative "./cmake_utils/Rakefile_common.rb"
 
 task :build_common, [:bits] do |t, args|
-  args.with_defaults( :bits => "x64" )
+  args.with_defaults( :bits => "" )
 
   puts "UTILS build (osx/linux/mingw/windows)".green
 
@@ -11,7 +11,11 @@ task :build_common, [:bits] do |t, args|
   FileUtils.cd      'build'
 
   puts "run CMAKE for UTILS".yellow
-  sh "cmake -G Ninja -DBITS:VAR=#{args.bits} " + cmd_cmake_build() + ' ..'
+  if args.bits == "" then
+    sh "cmake -G Ninja " + cmd_cmake_build() + ' ..'
+  else
+    sh "cmake -G Ninja -DBITS:VAR=#{args.bits} " + cmd_cmake_build() + ' ..'
+  end
   puts "compile with CMAKE for UTILS".yellow
   if COMPILE_DEBUG then
     sh 'cmake --build . --config Debug --target install '+PARALLEL
@@ -22,16 +26,9 @@ task :build_common, [:bits] do |t, args|
   FileUtils.cd '..'
 end
 
-desc 'compile for OSX'
-task :build_osx => :build_common do end
-
-desc 'compile for LINUX'
+task :build_osx   => :build_common do end
 task :build_linux => :build_common do end
-
-desc 'compile for MINGW'
 task :build_mingw => :build_common do end
-
-desc 'compile for WINDOWS'
 task :build_win do
   # check architecture
   case `where cl.exe`.chop
@@ -44,24 +41,17 @@ task :build_win do
   else
     raise RuntimeError, "Cannot determine architecture for Visual Studio".red
   end
-  Rake::Task[:build].invoke(VS_ARCH)
+  Rake::Task[:build_common].invoke(VS_ARCH)
 end
 
 task :clean do
   FileUtils.rm_rf 'lib'
 end
 
-desc "clean for OSX"
-task :clean_osx => :clean
-
-desc "clean for LINUX"
-task :clean_linux => :clean
-
-desc "clean for MINGW"
-task :clean_mingw => :clean
-
-desc "clean for WINDOWS"
-task :clean_win => :clean
+task :clean_osx   => :clean do end
+task :clean_linux => :clean do end
+task :clean_mingw => :clean do end
+task :clean_win   => :clean do end
 
 desc 'pack for OSX/LINUX/MINGW/WINDOWS'
 task :cpack do
