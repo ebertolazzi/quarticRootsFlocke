@@ -59,7 +59,8 @@ do_test( double const p[3] ) {
 int
 main() {
   cout.precision(20);
-  for ( unsigned k = 0; k < unsigned(sizeof(qq)/sizeof(qq[0])); ++k ) {
+  integer const N = integer(sizeof(qq)/sizeof(qq[0]));
+  for ( integer k = 0; k < N; ++k ) {
     cout << "\n\nExample N." << k << '\n';
     do_test(qq[k]);
   }
