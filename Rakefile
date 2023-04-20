@@ -26,6 +26,13 @@ task :build_common, [:bits] do |t, args|
   FileUtils.cd '..'
 end
 
+task :mingw_pacman do
+  sh 'pacman -S development'
+  sh 'pacman -S mingw-w64-x86_64-toolchain'
+  sh 'pacman -S mingw-w64-x86_64-cmake'
+  sh 'pacman -S mingw-w64-x86_64-ninja'
+end
+
 task :build_osx   => :build_common do end
 task :build_linux => :build_common do end
 task :build_mingw => :build_common do end
