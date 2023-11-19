@@ -32,8 +32,11 @@ endif()
 message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}" )
 message( STATUS "BASE SUFFIXES = ${ARTIFACTS_STATIC_SUFFIX} ${ARTIFACTS_DYNAMIC_SUFFIX}" )
 
+if( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../CMakeLists-customize.txt" )
+  include(../CMakeLists-customize.txt)
+endif()
+
 if(APPLE)
-  set( CMAKE_OSX_ARCHITECTURES arm64;x86_64 )
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DLUA_USE_MACOSX")
 elseif(LINUX OR UNIX)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DLUA_USE_LINUX")
