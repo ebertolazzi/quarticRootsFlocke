@@ -1,0 +1,14 @@
+.. meta::353df9ce0b29697552d2c504f1fe6e8fa9a9a6b017c9696a3c27c78552e4856df7de145832e7264d64ba43cacdb87b2ab7746de1462dbceea4232ca949d46011
+
+:orphan:
+
+.. title:: Splines: Member List
+
+Member List
+===========
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_polynomial_roots_1_1_quartic-members.html

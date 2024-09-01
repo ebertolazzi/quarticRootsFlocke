@@ -1,0 +1,14 @@
+.. meta::1ac1d2d14afc501369a5f0f5f061f2c7a8bd89346b9234d326bb2f6fef8a34e166b7c2e10077ad29824d392746af9dee3d688328ab44bf9f234d987e6024bd13
+
+:orphan:
+
+.. title:: Splines: PolynomialRoots::Quartic Class Reference
+
+Quartic Class Reference
+=======================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_polynomial_roots_1_1_quartic.html

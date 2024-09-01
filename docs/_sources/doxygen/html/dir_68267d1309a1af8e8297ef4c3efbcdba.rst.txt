@@ -1,0 +1,14 @@
+.. meta::0dd505f815c424e5e47b0ee03f77576210d9863a37a043543ced6365ab8983d05378f47b5c3af23f3acf493481b5dc23da851dd532bf58fcb965dbb9b34be781
+
+:orphan:
+
+.. title:: Splines: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/quarticRootsFlocke/src Directory Reference
+
+/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/quarticRootsFlocke/src Directory Reference
+====================================================================================================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: dir_68267d1309a1af8e8297ef4c3efbcdba.html

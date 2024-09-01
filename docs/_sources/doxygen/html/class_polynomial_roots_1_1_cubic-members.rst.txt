@@ -1,0 +1,14 @@
+.. meta::ca1ea5f76a34f0e03e73b4c7e9b23bbee4dd002e56d6117ed4a33a80ee1ddd90dcc2e22625129f57cd51859966f59dbba612473ec0b6ce995031090af8decf86
+
+:orphan:
+
+.. title:: Splines: Member List
+
+Member List
+===========
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_polynomial_roots_1_1_cubic-members.html
