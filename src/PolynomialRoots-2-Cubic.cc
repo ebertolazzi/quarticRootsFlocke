@@ -562,25 +562,14 @@ namespace PolynomialRoots {
         << '\n';
       ok = std::abs(z0) < epsi && std::abs(z1) < epsi;
     } else if ( m_nrts == 3 ) {
-      if ( m_cplx ) {
-        complex_type z0{eval( root0() )};
-        complex_type z1{eval( root1() )};
-        complex_type z2{eval( root2() )};
-        s << "p(r0) = " << z0
-          << "\np(r1) = " << z1
-          << "\np(r2) = " << z2
-          << '\n';
-        ok = std::abs(z0) < epsi && std::abs(z1) < epsi && std::abs(z2) < epsi;
-      } else {
-        real_type z0 = eval( real_root0() );
-        real_type z1 = eval( real_root1() );
-        real_type z2 = eval( real_root2() );
-        s << "p(r0) = " << z0
-          << "\np(r1) = " << z1
-          << "\np(r2) = " << z2
-          << '\n';
-        ok = std::abs(z0) < epsi && std::abs(z1) < epsi && std::abs(z2) < epsi;
-      }
+      real_type z0 = eval( real_root0() );
+      real_type z1 = eval( real_root1() );
+      real_type z2 = eval( real_root2() );
+      s << "p(r0) = " << z0
+        << "\np(r1) = " << z1
+        << "\np(r2) = " << z2
+        << '\n';
+      ok = std::abs(z0) < epsi && std::abs(z1) < epsi && std::abs(z2) < epsi;
     }
     return ok;
   }

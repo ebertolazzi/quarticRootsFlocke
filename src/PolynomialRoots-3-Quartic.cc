@@ -650,7 +650,7 @@ namespace PolynomialRoots {
         minimum = 4 * q0 > q2 * q2; // H''(-q3/4) > 0 -> minimum
       }
 
-      bool iterate = notZero || (!notZero && minimum);
+      bool iterate = notZero || minimum;
 
       real_type a, b, c, d;
       if ( iterate ) {
