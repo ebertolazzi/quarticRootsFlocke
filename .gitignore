@@ -16,3 +16,4 @@ docs_build/sphinx/_doxygen
 vs_2017_x64/
 .idea
 Xcode
+cmake-build-debug

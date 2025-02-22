@@ -93,7 +93,7 @@ do_test(
   double const im[3]
 ) {
   //Cubic csolve( p[3], p[2], p[1], p[0] );
-  Cubic csolve( p[0], p[1], p[2], p[3] );
+  Cubic const csolve( p[0], p[1], p[2], p[3] );
   csolve.info( cout );
   if ( !csolve.check( cout ) ) {
     cout

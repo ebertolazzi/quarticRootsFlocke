@@ -47,7 +47,7 @@ static double qq[][3] = {
 static
 void
 do_test( double const p[3] ) {
-  Quadratic qsolve(p[0],p[1],p[2]);
+  Quadratic const qsolve(p[0],p[1],p[2]);
   cout.precision(8);
   qsolve.info(cout);
   if ( !qsolve.check(cout) ) {
@@ -59,8 +59,8 @@ do_test( double const p[3] ) {
 int
 main() {
   cout.precision(20);
-  integer const N = integer(sizeof(qq)/sizeof(qq[0]));
-  for ( integer k = 0; k < N; ++k ) {
+  constexpr integer N{static_cast<integer>(sizeof(qq) / sizeof(qq[0]))};
+  for ( integer k{0}; k < N; ++k ) {
     cout << "\n\nExample N." << k << '\n';
     do_test(qq[k]);
   }
