@@ -691,7 +691,9 @@ namespace PolynomialRoots {
     #else
     real_type K[Degree+1];
     real_type p[Degree+1];
-#endif
+    real_type qp[Degree+1];
+    real_type temp[Degree+1];
+    #endif
 
     int N{Degree};
     real_type xx{ std::sqrt(0.5) }; //= 0.70710678
@@ -702,7 +704,6 @@ namespace PolynomialRoots {
     std::copy( op, op+N+1, p ); // Make a copy of the coefficients
 
     while ( N > 0 ) {
-      real_type temp[Degree+1];
       // Main loop
       // Start the algorithm for one zero
       if ( N < 4 ) { roots3( p, N, zeror+Degree-N, zeroi+Degree-N ); break; }
@@ -743,7 +744,6 @@ namespace PolynomialRoots {
       // Loop to select the quadratic corresponding to each new shift
       bool ok{false};
       for ( integer iter{0}; iter < 20 && !ok; ++iter ) {
-        real_type qp[Degree+1];
         // Quadratic corresponds to a double shift to a non-real point and its
         // complex conjugate. The point has modulus BND and amplitude rotated
         // by 94 degrees from the previous shift.
