@@ -63,5 +63,5 @@ look at the class definition to see how to access the computed roots.
 
 Enrico Bertolazzi  
 Dipartimento di Ingegneria Industriale  
-Universita` degli Studi di Trento  
+Università degli Studi di Trento   
 email: enrico.bertolazzi@unitn.it
