@@ -15,11 +15,13 @@
 #endif
 
 #include "PolynomialRoots.hh"
-#include <iostream>
-#include <iomanip>
+#include "TestReporter.hh"
 
-using namespace std;
-using namespace PolynomialRoots;
+#include <iomanip>
+#include <iostream>
+
+using PolynomialRoots::Quadratic;
+using PolynomialRoots::integer;
 
 // Set the polynomial coefficients corresponding and the exact roots.
 
@@ -45,25 +47,30 @@ static double qq[][3] = {
 };
 
 static
-void
+bool
 do_test( double const p[3] ) {
   Quadratic const qsolve(p[0],p[1],p[2]);
-  cout.precision(8);
-  qsolve.info(cout);
-  if ( !qsolve.check(cout) ) {
-    cout << "\nFailed!\n\n\n";
-    std::exit(0);
-  }
+  std::cout.precision(8);
+  qsolve.info(std::cout);
+  return qsolve.check(std::cout);
 }
 
 int
 main() {
-  cout.precision(20);
+  std::cout.precision(20);
+  TestReporter::Summary summary(
+    std::cout,
+    "Quadratic solver regression suite"
+  );
   constexpr integer N{static_cast<integer>(sizeof(qq) / sizeof(qq[0]))};
   for ( integer k{0}; k < N; ++k ) {
-    cout << "\n\nExample N." << k << '\n';
-    do_test(qq[k]);
+    summary.case_header(
+      static_cast<int>(k+1),
+      "scaled quadratic coefficients",
+      "Flocke-style regression set"
+    );
+    if ( do_test(qq[k]) ) summary.pass();
+    else                  summary.fail();
   }
-  cout << "\n\nALL DONE!\n";
-  return 0;
+  return summary.finish();
 }

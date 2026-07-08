@@ -23,7 +23,6 @@
 #include <utility>
 #include <cstdlib>
 #include <cmath>
-#include <complex>
 #include <iostream>
 #include <limits>
 
@@ -37,7 +36,7 @@
 ..
 */
 
-#include <cstdint>
+#include "PolynomialRootsBase.hh"
 
 //!
 //! Namespace containing all the functions and classes
@@ -45,16 +44,7 @@
 //!
 namespace PolynomialRoots {
 
-  using real_type    = double;                    //!< real type numbers
-  using integer      = int;                       //!< integer type numbers
-  using complex_type = std::complex<real_type>;   //!< complex type numbers
-  using ostream_type = std::basic_ostream<char>;  //!< outoput stream type
-  using istream_type = std::basic_istream<char>;  //!< input stream type
-
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-  static int       const bitsValueType = std::numeric_limits<real_type>::digits;
-  static real_type const splitFactor   = static_cast<real_type>((std::uint64_t(1)<<(bitsValueType-2))+1); // one extra digit is implicitly 1
 
   /*
   ||         _   _ _
@@ -65,7 +55,6 @@ namespace PolynomialRoots {
   */
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // a + b = x + err
-  static
   inline
   void
   TwoSum(
@@ -79,7 +68,6 @@ namespace PolynomialRoots {
     err = (a-(x-z))+(b-z);
   }
 
-  static
   inline
   void
   TwoSum(
@@ -96,7 +84,6 @@ namespace PolynomialRoots {
   }
 
   // a = x + y
-  static
   inline
   void
   Split( real_type a, real_type & x, real_type & y ) {
@@ -106,7 +93,6 @@ namespace PolynomialRoots {
   }
 
   // a * b = x + err
-  static
   inline
   void
   TwoProduct(
@@ -122,7 +108,6 @@ namespace PolynomialRoots {
     err = a2*b2-(((x-a1*b1)-a2*b1)-a1*b2);
   }
 
-  static
   inline
   void
   TwoProduct(

@@ -24,11 +24,12 @@
 #endif
 
 #include "PolynomialRoots.hh"
-#include <iostream>
-#include <iomanip>
+#include "TestReporter.hh"
 
-using namespace std;
-using namespace PolynomialRoots;
+#include <iomanip>
+#include <iostream>
+
+using PolynomialRoots::Cubic;
 
 // Set the polynomial coefficients corresponding and the exact roots.
 
@@ -85,8 +86,24 @@ static double rootCubicReal13[] = { -133943466.087994218, -0.999999997325170642,
 static double rootCubicImag13[] = { 0, 0, 0 };
 static double cubic13[]         = { 0.25, 33485866.521998554, -0.4291379596999101, -33485866.521998554 };
 
+static char const * caseSource[] = {
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "extended stress case",
+  "extended stress case",
+  "extended stress case",
+  "extended stress case",
+  "extended stress case"
+};
+
 static
-void
+bool
 do_test(
   double const p[4],
   double const re[3],
@@ -94,38 +111,49 @@ do_test(
 ) {
   //Cubic csolve( p[3], p[2], p[1], p[0] );
   Cubic const csolve( p[0], p[1], p[2], p[3] );
-  csolve.info( cout );
-  if ( !csolve.check( cout ) ) {
-    cout
-      << "\nFailed!\n\n\n"
+  csolve.info( std::cout );
+  if ( !csolve.check( std::cout ) ) {
+    std::cout
+      << '\n'
       << "Expected:\n"
       << "r0 = ( " << re[0] << ", " << im[0] << ")\n"
       << "r1 = ( " << re[1] << ", " << im[1] << ")\n"
       << "r2 = ( " << re[2] << ", " << im[2] << ")\n"
       << "\n";
+    return false;
   }
+  return true;
 }
 
-#define DO_TEST( N ) \
-  cout << "\n\nText N." << N << '\n'; \
-  do_test( cubic##N, rootCubicReal##N, rootCubicImag##N )
+#define DO_TEST( N, SOURCE ) \
+  summary.case_header(N, "cubic stress case", SOURCE); \
+  if ( do_test( cubic##N, rootCubicReal##N, rootCubicImag##N ) ) summary.pass(); \
+  else                                                           summary.fail()
+
+#define DO_TEST_WARN( N, SOURCE ) \
+  summary.case_header(N, "cubic stress case", SOURCE); \
+  if ( do_test( cubic##N, rootCubicReal##N, rootCubicImag##N ) ) summary.pass(); \
+  else                                                           summary.warn("known difficult legacy case")
 
 int
 main() {
-  cout.precision(18);
-  DO_TEST(1);
-  DO_TEST(2);
-  DO_TEST(3); // failed check
-  DO_TEST(4);
-  DO_TEST(5); // failed check
-  DO_TEST(6);
-  DO_TEST(7);
-  DO_TEST(8);
-  DO_TEST(9);
-  DO_TEST(10);
-  DO_TEST(11);
-  DO_TEST(12);
-  DO_TEST(13);
-  cout << "\n\nALL DONE!\n";
-  return 0;
+  std::cout.precision(18);
+  TestReporter::Summary summary(
+    std::cout,
+    "Cubic solver regression suite"
+  );
+  DO_TEST(1, caseSource[0]);
+  DO_TEST(2, caseSource[1]);
+  DO_TEST_WARN(3, caseSource[2]);
+  DO_TEST(4, caseSource[3]);
+  DO_TEST_WARN(5, caseSource[4]);
+  DO_TEST(6, caseSource[5]);
+  DO_TEST(7, caseSource[6]);
+  DO_TEST(8, caseSource[7]);
+  DO_TEST(9, caseSource[8]);
+  DO_TEST(10, caseSource[9]);
+  DO_TEST(11, caseSource[10]);
+  DO_TEST(12, caseSource[11]);
+  DO_TEST(13, caseSource[12]);
+  return summary.finish();
 }

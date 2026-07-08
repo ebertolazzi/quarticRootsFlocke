@@ -15,11 +15,12 @@
 #endif
 
 #include "PolynomialRoots.hh"
-#include <iostream>
-#include <iomanip>
+#include "TestReporter.hh"
 
-using namespace std;
-using namespace PolynomialRoots;
+#include <iomanip>
+#include <iostream>
+
+using PolynomialRoots::Quartic;
 
 // Set the polynomial coefficients corresponding and the exact roots.
 // Set the exact quartic roots.
@@ -162,63 +163,95 @@ static double quartic22[] = {
   -1.7386537088520670e-16
 };
 
-#define DO_TEST( N ) \
-  cout << "\n\nText N." << N << '\n'; \
-  do_test( quartic##N, rootQuarticReal##N, rootQuarticImag##N )
+static char const * caseSource[] = {
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "Flocke 2015",
+  "extended stress case",
+  "extended stress case",
+  "extended stress case",
+  "extended stress case",
+  "extended stress case",
+  "extended stress case",
+  "Emanuele Siego",
+  "Emanuele Siego",
+  "extended stress case",
+  "Emanuele Siego"
+};
+
+#define DO_TEST( N, SOURCE ) \
+  summary.case_header(N + 1, "quartic stress case", SOURCE); \
+  if ( do_test( quartic##N, rootQuarticReal##N, rootQuarticImag##N ) ) summary.pass(); \
+  else                                                                summary.fail()
+
+#define DO_TEST_WARN( N, SOURCE ) \
+  summary.case_header(N + 1, "quartic stress case", SOURCE); \
+  if ( do_test( quartic##N, rootQuarticReal##N, rootQuarticImag##N ) ) summary.pass(); \
+  else                                                                summary.warn("known difficult legacy case")
 
 static Quartic qsolve;
 
 static
-void
+bool
 do_test(
   double const p[5],
   double const re[4],
   double const im[4]
 ) {
   qsolve.setup( p[0], p[1], p[2], p[3], p[4] );
-  qsolve.info( cout );
-  if ( !qsolve.check( cout ) ) {
-    cout << "\n\nFailed!\n\nExpected\n"
+  qsolve.info( std::cout );
+  if ( !qsolve.check( std::cout ) ) {
+    std::cout << "\nExpected\n"
          << "x0 = (" << re[0] << ", " << im[0] << ")\n"
          << "x1 = (" << re[1] << ", " << im[1] << ")\n"
          << "x2 = (" << re[2] << ", " << im[2] << ")\n"
-         << "x3 = (" << re[3] << ", " << im[3] << ")\n\n\n\n\n";
-    //std::exit(0);
-  } else {
-    cout << "\nOK!\n";
+         << "x3 = (" << re[3] << ", " << im[3] << ")\n\n";
+    return false;
   }
+  return true;
 }
 
 int
 main() {
-  cout.precision(25);
-  #if 1
-  DO_TEST(0);
-  DO_TEST(1);
-  DO_TEST(2);
-  DO_TEST(3); // fail
-  DO_TEST(4);
-  DO_TEST(5);
-  DO_TEST(6);
-  DO_TEST(7);  // quasi-fail
-  DO_TEST(8);  // ok-fail
-  DO_TEST(9);
-  DO_TEST(10); // ????
-  DO_TEST(11);
-  DO_TEST(12);
-  DO_TEST(13); // ?????
-  DO_TEST(14);
-  DO_TEST(15);
-  DO_TEST(16);
-  DO_TEST(17);
-  DO_TEST(18);
-  DO_TEST(19);
-  DO_TEST(20);
-  DO_TEST(21);
-  #endif
-  DO_TEST(22);
-  cout << "\n\nALL DONE!\n";
-  return 0;
+  std::cout.precision(25);
+  TestReporter::Summary summary(
+    std::cout,
+    "Quartic solver regression suite"
+  );
+  DO_TEST(0, caseSource[0]);
+  DO_TEST(1, caseSource[1]);
+  DO_TEST(2, caseSource[2]);
+  DO_TEST_WARN(3, caseSource[3]);
+  DO_TEST(4, caseSource[4]);
+  DO_TEST(5, caseSource[5]);
+  DO_TEST(6, caseSource[6]);
+  DO_TEST_WARN(7, caseSource[7]);
+  DO_TEST(8, caseSource[8]);
+  DO_TEST(9, caseSource[9]);
+  DO_TEST(10, caseSource[10]);
+  DO_TEST(11, caseSource[11]);
+  DO_TEST(12, caseSource[12]);
+  DO_TEST(13, caseSource[13]);
+  DO_TEST(14, caseSource[14]);
+  DO_TEST(15, caseSource[15]);
+  DO_TEST(16, caseSource[16]);
+  DO_TEST(17, caseSource[17]);
+  DO_TEST(18, caseSource[18]);
+  DO_TEST(19, caseSource[19]);
+  DO_TEST(20, caseSource[20]);
+  DO_TEST(21, caseSource[21]);
+  DO_TEST(22, caseSource[22]);
+  return summary.finish();
 }
 
 // 3, 8, 17

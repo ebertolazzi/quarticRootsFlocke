@@ -22,8 +22,9 @@
 
 #include <cmath>
 #include <cfloat>
-#include <complex>
 #include <iostream>
+
+#include "PolynomialRootsBase.hh"
 
 //!
 //! Implementation of Flocke algorithm for roots
@@ -47,16 +48,9 @@
 //!
 namespace PolynomialRoots {
 
-  using real_type    = double;
-  using integer      = int;
-  using complex_type = std::complex<real_type>;
-  using ostream_type = std::basic_ostream<char>;
-  using istream_type = std::basic_istream<char>;
-
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   //! check if cloating point number `x` is zero
-  static
   inline
   bool
   isZero( real_type x )
@@ -106,7 +100,7 @@ namespace PolynomialRoots {
   //!
   //! \return error code, 0 OK
   //!
-  int
+  [[nodiscard]] int
   roots(
     real_type const * op,
     integer           Degree,
@@ -458,7 +452,7 @@ namespace PolynomialRoots {
     //!
     //! Check tolerance and quality of the computed roots
     //!
-    bool
+    [[nodiscard]] bool
     check( ostream_type & s ) const;
   };
 
@@ -855,7 +849,7 @@ namespace PolynomialRoots {
     //!
     //! Check tolerenace and quality of the computed roots.
     //!
-    bool
+    [[nodiscard]] bool
     check( ostream_type & s ) const;
   };
 
@@ -1284,7 +1278,7 @@ namespace PolynomialRoots {
     //!
     //! Check tolerenace and quality of the computed roots.
     //!
-    bool
+    [[nodiscard]] bool
     check( ostream_type & s ) const;
 
   };
@@ -1300,7 +1294,6 @@ namespace PolynomialRoots {
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   // x^3 + a*x^2 + b*x + c
-  static
   inline
   real_type
   evalMonicCubic(
@@ -1316,7 +1309,6 @@ namespace PolynomialRoots {
     return p;
   }
 
-  static
   inline
   void
   evalMonicCubic(
@@ -1336,7 +1328,6 @@ namespace PolynomialRoots {
 
   // 3*x^2 + 2*a*x + b
   // 6*x + 2*a
-  static
   inline
   void
   evalMonicCubic(
@@ -1357,7 +1348,6 @@ namespace PolynomialRoots {
   }
 
   // x^4 + a*x^3 + b*x^2 + c*x + d
-  static
   inline
   real_type
   evalMonicQuartic(
@@ -1375,7 +1365,6 @@ namespace PolynomialRoots {
     return p;
   }
 
-  static
   inline
   void
   evalMonicQuartic(
@@ -1396,7 +1385,6 @@ namespace PolynomialRoots {
     p  = p  * x + d; // x^4+ a*x^3 + b*x^2 + c*x + d
   }
 
-  static
   inline
   void
   evalMonicQuartic(
@@ -1430,7 +1418,6 @@ namespace PolynomialRoots {
   }
 
   // x^3 + a*x^2 + b*x + c
-  static
   inline
   real_type
   eval_monic_cubic(
@@ -1442,7 +1429,6 @@ namespace PolynomialRoots {
     return evalMonicCubic( x, a, b, c );
   }
 
-  static
   inline
   void
   eval_monic_cubic(
@@ -1458,7 +1444,6 @@ namespace PolynomialRoots {
 
   // 3*x^2 + 2*a*x + b
   // 6*x + 2*a
-  static
   inline
   void
   eval_monic_cubic(
@@ -1474,7 +1459,6 @@ namespace PolynomialRoots {
   }
 
   // x^4 + a*x^3 + b*x^2 + c*x + d
-  static
   inline
   real_type
   eval_monic_quartic(
@@ -1487,7 +1471,6 @@ namespace PolynomialRoots {
     return evalMonicQuartic( x, a, b, c, d );
   }
 
-  static
   inline
   void
   eval_monic_quartic(
@@ -1502,7 +1485,6 @@ namespace PolynomialRoots {
     evalMonicQuartic( x, a, b, c, d, p, dp );
   }
 
-  static
   inline
   void
   eval_monic_quartic(

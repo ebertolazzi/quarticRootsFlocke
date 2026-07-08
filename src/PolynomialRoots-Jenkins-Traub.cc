@@ -35,25 +35,17 @@
 #endif
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wglobal-constructors"
-#pragma clang diagnostic ignored "-Wvla-extension"
-#pragma clang diagnostic ignored "-Wvla"
 #pragma clang diagnostic ignored "-Wunused-function"
 #pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
 #endif
 
 #include "PolynomialRoots.hh"
 
-#include <iostream>
-#include <fstream>
-#include <cctype>
 #include <cmath>
 #include <cfloat>
 #include <limits>
 #include <algorithm>
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-using namespace std;
-#endif
+#include <vector>
 
 namespace PolynomialRoots {
     static integer FixedShift(integer const L2, real_type const sr, real_type const v, real_type K[], integer const N, real_type p[], integer const NN, real_type qp[], real_type const u, real_type &lzi, real_type &lzr, real_type &szi, real_type &szr);
@@ -61,20 +53,24 @@ namespace PolynomialRoots {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   using std::abs;
-  using std::pow;
+  using std::copy_n;
+  using std::cos;
+  using std::exp;
   using std::frexp;
-
-  #ifndef M_PI
-  #define M_PI 3.14159265358979323846264338328
-  #endif
+  using std::ldexp;
+  using std::log;
+  using std::pow;
+  using std::sin;
+  using std::sqrt;
 
   //static real_type const maxValue   = std::numeric_limits<real_type>::max();
   //static real_type const minValue   = std::numeric_limits<real_type>::min();
   static constexpr real_type epsilon    { std::numeric_limits<real_type>::epsilon() };
   static constexpr real_type epsilon10  { 10*epsilon };
   static constexpr real_type epsilon100 { 100*epsilon };
+  static constexpr real_type pi         { 3.141592653589793238462643383279502884L };
 
-  static constexpr real_type RADFAC { M_PI / 180 }; // Degrees - to - radians conversion factor = pi / 180
+  static constexpr real_type RADFAC { pi / 180 }; // Degrees - to - radians conversion factor = pi / 180
   static real_type const cosr{ cos(94 * RADFAC)}; //= -0.069756474
   static real_type const sinr{ sin(94 * RADFAC)}; //= 0.99756405
 
@@ -283,7 +279,7 @@ namespace PolynomialRoots {
       // Stop iteration after 10 steps
       if ( ++j > 10 ) break;
       if ( j >= 2 ) {
-        if ( (abs(t) <= 0.001 * std::abs(s-t)) && (mp > omp) ) {
+        if ( (std::abs(t) <= 0.001 * std::abs(s-t)) && (mp > omp) ) {
           // A cluster of zeros near the real axis has been encountered;
           // Return with iFlag set to initiate a quadratic iteration
           iFlag = 1;
@@ -361,17 +357,17 @@ namespace PolynomialRoots {
 
       // Return if roots of the quadratic are real and not close
       // to multiple or nearly equal and of opposite sign.
-      if ( std::abs(abs(szr) - std::abs(lzr)) > 0.01 * std::abs(lzr) ) break;
+      if ( std::abs(std::abs(szr) - std::abs(lzr)) > 0.01 * std::abs(lzr) ) break;
       // Evaluate polynomial by quadratic synthetic division
       QuadraticSyntheticDivision( NN, u, v, p, qp, a, b );
       real_type const mp{ std::abs(a-(szr*b)) + std::abs(szi*b) };
       // Compute a rigorous bound on the rounding error in evaluating p
-      real_type const zm{ std::sqrt(abs(v)) };
+      real_type const zm{ std::sqrt(std::abs(v)) };
       real_type       ee{ 2 * std::abs(qp[0]) };
       real_type const t{ -szr*b };
       for ( integer i{1}; i < N; ++i ) ee = ee * zm + std::abs(qp[i]);
       ee = ee * zm + std::abs(a+t);
-      ee = (9*ee+2*abs(t)-7*(abs(a+t)+zm*abs(b)))*epsilon;
+      ee = (9*ee+2*std::abs(t)-7*(std::abs(a+t)+zm*std::abs(b)))*epsilon;
       // Iteration has converged sufficiently if the polynomial
       // value is less than 20 times this bound
       if ( mp <= 20*ee ) { NZ = 2; break; }
@@ -436,12 +432,9 @@ namespace PolynomialRoots {
     real_type &     szr
   ) {
 
-    #ifdef _MSC_VER
-    real_type * qk  = (real_type*)alloca( 2*(N+1)*sizeof(real_type) );
-	  real_type * svk = qk+N+1;
-    #else
-    real_type	qk[N+1], svk[N+1];
-	  #endif
+    std::vector<real_type> qk_storage( static_cast<std::size_t>(2 * (N + 1)) );
+    real_type * qk  = qk_storage.data();
+    real_type * svk = qk + (N + 1);
 
     integer   iFlag = 1;
     integer   NZ    = 0;
@@ -609,29 +602,25 @@ namespace PolynomialRoots {
   real_type
   lowerBoundZeroPoly( real_type p[], integer const N ) {
 
-    #ifdef _MSC_VER
-    real_type * pt  = (real_type*)alloca( (N+1)*sizeof(real_type) );
-    #else
-    real_type pt[N+1];
-	  #endif
+    std::vector<real_type> pt( static_cast<std::size_t>(N + 1) );
 
-    for ( integer i = 0; i < N; ++i ) pt[i] = std::abs(p[i]);
-    pt[N] = -abs(p[N]);
+    for ( integer i = 0; i < N; ++i ) pt[static_cast<std::size_t>(i)] = std::abs(p[i]);
+    pt[static_cast<std::size_t>(N)] = -std::abs(p[N]);
 
     // Compute upper estimate of bound
-    real_type x{ exp((log(-pt[N]) - log(pt[0]))/N) };
-    if ( !isZero(pt[N-1]) ) { // If Newton step at the origin is better, use it
-      if ( real_type const xm{ -pt[N]/pt[N-1] }; xm < x ) x = xm;
+    real_type x{ std::exp((std::log(-pt[static_cast<std::size_t>(N)]) - std::log(pt[0]))/N) };
+    if ( !isZero(pt[static_cast<std::size_t>(N - 1)]) ) { // If Newton step at the origin is better, use it
+      if ( real_type const xm{ -pt[static_cast<std::size_t>(N)]/pt[static_cast<std::size_t>(N - 1)] }; xm < x ) x = xm;
     }
     // Chop the interval(0, x) until f <= 0
     real_type xm{ x };
-    while ( evalPoly( xm, pt, N ) > 0 ) { x = xm; xm = 0.1 * x; }
+    while ( evalPoly( xm, pt.data(), N ) > 0 ) { x = xm; xm = 0.1 * x; }
 
     // Do Newton iteration until x converges to two decimal places
     real_type dx;
     do {
       real_type f, df;
-      evalPoly( x, pt, N, f, df );
+      evalPoly( x, pt.data(), N, f, df );
       dx = f / df;
       x -= dx;
     } while ( std::abs(dx) > std::abs(x)*0.005 );
@@ -679,23 +668,18 @@ namespace PolynomialRoots {
   ) {
 
     if ( Degree < 1 ) return -1;
+    if ( Degree > MAXDEGREE ) return -3;
 
     // Do a quick check to see if leading coefficient is 0
     // The leading coefficient is zero. No further action taken. Program terminated
     if ( isZero(op[0]) ) return -2;
 
-    #ifdef _MSC_VER
-    real_type * ptr = (real_type*)alloca( 4*(Degree+1)*sizeof(real_type) );
-    real_type * K    = ptr; ptr += Degree+1;
-    real_type * p    = ptr; ptr += Degree+1;
-    real_type * qp   = ptr; ptr += Degree+1;
-    real_type * temp = ptr; ptr += Degree+1;
-    #else
-    real_type K[Degree+1];
-    real_type p[Degree+1];
-    real_type qp[Degree+1];
-    real_type temp[Degree+1];
-    #endif
+    std::vector<real_type> storage( static_cast<std::size_t>(4 * (Degree + 1)) );
+    real_type * ptr  = storage.data();
+    real_type * K    = ptr; ptr += Degree + 1;
+    real_type * p    = ptr; ptr += Degree + 1;
+    real_type * qp   = ptr; ptr += Degree + 1;
+    real_type * temp = ptr; ptr += Degree + 1;
 
     int N{Degree};
     real_type xx{ std::sqrt(0.5) }; //= 0.70710678
