@@ -154,12 +154,12 @@ namespace PolynomialRoots {
       xn *= x;
       p  *= xn;
     } else {
-      p = op[0]*x+op[1];
+      p  = op[0];
+      dp = op[0];
+      p  = p*x + op[1];
       for ( integer i = 2; i <= Degree; ++i ) {
-        p  *= x;
-        p  += op[i];
-        dp *= x;
-        dp += i*op[i];
+        dp = dp*x + p;   // c_i = c_{i-1}*x + b_{i-1}
+        p  = p*x + op[i];
       }
     }
   }

@@ -1,72 +1,147 @@
-if File.exist?(File.expand_path('./cmake_utils/Rakefile_common.rb', File.dirname(__FILE__))) then
-  require_relative "./cmake_utils/Rakefile_common.rb"
-else
-  require_relative "../Rakefile_common.rb"
-end
+# frozen_string_literal: true
 
-task :build_common, [:bits] do |t, args|
-  args.with_defaults( :bits => "" )
+require 'etc'
+require 'fileutils'
+require 'rake/clean'
 
-  puts "UTILS build (osx/linux/mingw/windows)".green
+begin
+  require 'colorize'
+rescue LoadError
+  class String
+    def red
+      self
+    end
 
-  FileUtils.rm_rf   'lib'
-  FileUtils.rm_rf   'build'
-  FileUtils.mkdir_p 'build'
-  FileUtils.cd      'build'
+    def green
+      self
+    end
 
-  puts "run CMAKE for UTILS".yellow
-  if args.bits == "" then
-    sh "cmake -G Ninja " + cmd_cmake_build() + ' ..'
-  else
-    sh "cmake -G Ninja -DBITS:VAR=#{args.bits} " + cmd_cmake_build() + ' ..'
+    def yellow
+      self
+    end
   end
-  puts "compile with CMAKE for UTILS".yellow
-  if COMPILE_DEBUG then
-    sh 'cmake --build . --config Debug --target install '+PARALLEL
+end
+
+config_files = [
+  File.expand_path('../Rakefile_configure.rb', __dir__),
+  File.expand_path('../../Rakefile_configure.rb', __dir__)
+]
+
+if (config = config_files.find { |path| File.exist?(path) })
+  require config
+end
+
+$compile_debug = defined?(COMPILE_DEBUG) ? COMPILE_DEBUG : false
+$compile_dynamic = defined?(COMPILE_DYNAMIC) ? COMPILE_DYNAMIC : false
+$compile_executable = defined?(COMPILE_EXECUTABLE) ? COMPILE_EXECUTABLE : true
+
+$os = case RUBY_PLATFORM
+      when /darwin/       then :mac
+      when /linux|cygwin/ then :linux
+      when /msys/         then :mingw
+      else                     :win
+      end
+
+$build_type = $compile_debug ? 'Debug' : 'Release'
+
+$build_options = [
+  "-DCMAKE_BUILD_TYPE=#{$build_type}",
+  "-DUTILS_ENABLE_TESTS=#{$compile_executable ? 'ON' : 'OFF'}",
+  "-DUTILS_BUILD_SHARED=#{$compile_dynamic ? 'ON' : 'OFF'}"
+].join(' ')
+
+$parallel = if $os == :win
+              ''
+            else
+              "--parallel #{Etc.nprocessors}"
+            end
+
+def in_dir(path)
+  FileUtils.mkdir_p(path)
+  Dir.chdir(path) { yield }
+end
+
+def visual_studio_arch
+  cl = `where cl.exe 2>NUL`.lines.first.to_s.strip
+
+  case cl
+  when /(x64|amd64)\\cl\.exe/i then 'x64'
+  when /(bin|x86|amd32)\\cl\.exe/i then 'x86'
   else
-    sh 'cmake --build . --config Release --target install '+PARALLEL
+    raise 'Cannot determine Visual Studio architecture. Run from a Visual Studio Developer Prompt.'
   end
-
-  FileUtils.cd '..'
 end
 
-task :mingw_pacman do
-  sh 'pacman -S development'
-  sh 'pacman -S mingw-w64-x86_64-toolchain'
-  sh 'pacman -S mingw-w64-x86_64-cmake'
-  sh 'pacman -S mingw-w64-x86_64-ninja'
-end
+def configure_and_build(bits: nil)
+  FileUtils.rm_rf('lib')
+  FileUtils.rm_rf('build')
 
-task :build_osx   => :build_common do end
-task :build_linux => :build_common do end
-task :build_mingw => :build_common do end
-task :build_win do
-  # check architecture
-  case `where cl.exe`.chop
-  when /(x64|amd64)\\cl\.exe/
-    VS_ARCH = 'x64'
-  when /(bin|x86|amd32)\\cl\.exe/
-    VS_ARCH = 'x86'
-  else
-    raise RuntimeError, "Cannot determine architecture for Visual Studio".red
+  in_dir('build') do
+    bits_opt = bits ? "-DBITS=#{bits}" : ''
+    sh "cmake -G Ninja #{bits_opt} #{$build_options} .."
+    sh "cmake --build . --config #{$build_type} --target install #{$parallel}"
   end
-  Rake::Task[:build_common].invoke(VS_ARCH)
 end
 
+desc 'Default task: build'
+task default: :build
+
+desc 'Build with CMake/Ninja'
+task :build do
+  puts "Build (#{$os})".green
+
+  bits = $os == :win ? visual_studio_arch : nil
+  configure_and_build(bits: bits)
+end
+
+desc 'Run CTest from build/'
+task :test do
+  Dir.chdir('build') { sh 'ctest --output-on-failure' }
+end
+
+desc 'Run executables from bin/'
+task :run do
+  exes = if $os == :win || $os == :mingw
+           Dir.glob('bin/*.exe')
+         else
+           Dir.glob('bin/*').select { |path| File.file?(path) && File.executable?(path) }
+         end
+
+  raise 'No executables found in bin/' if exes.empty?
+
+  exes.sort.each do |exe|
+    puts "execute #{exe}".yellow
+    sh exe
+  end
+end
+
+desc 'Clean build artifacts'
 task :clean do
-  FileUtils.rm_rf 'lib'
+  FileUtils.rm_rf(%w[build lib])
 end
 
-task :clean_osx   => :clean do end
-task :clean_linux => :clean do end
-task :clean_mingw => :clean do end
-task :clean_win   => :clean do end
+desc 'Generate compile_commands.json and run cppcheck'
+task :cppcheck do
+  FileUtils.rm_rf('build')
+  in_dir('build') do
+    sh 'cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..'
+    sh 'cppcheck --project=compile_commands.json'
+  end
+end
 
-desc 'pack for OSX/LINUX/MINGW/WINDOWS'
+desc 'Run CPack from build/'
 task :cpack do
-  FileUtils.cd "build"
-  puts "run CPACK for ROOTS".yellow
-  sh 'cpack -C CPackConfig.cmake'
-  sh 'cpack -C CPackSourceConfig.cmake'
-  FileUtils.cd ".."
+  Dir.chdir('build') do
+    sh 'cpack -C CPackConfig.cmake'
+    sh 'cpack -C CPackSourceConfig.cmake'
+  end
 end
+
+task build_osx: :build
+task build_linux: :build
+task build_mingw: :build
+task build_win: :build
+task clean_osx: :clean
+task clean_linux: :clean
+task clean_mingw: :clean
+task clean_win: :clean

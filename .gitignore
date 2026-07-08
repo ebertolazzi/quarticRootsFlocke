@@ -17,3 +17,5 @@ vs_2017_x64/
 .idea
 Xcode
 cmake-build-debug
+.DS_Store
+doxygen/docs
