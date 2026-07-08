@@ -1,13 +1,12 @@
 var searchData=
 [
-  ['real_5froot0_0',['real_root0',['../d5/ded/class_polynomial_roots_1_1_quadratic.html#a49c72be5d154347e5b9fa2a6cda2c72e',1,'PolynomialRoots::Quadratic::real_root0()'],['../d9/df7/class_polynomial_roots_1_1_cubic.html#a2c3af73d18c935750b5a836a9571f75f',1,'PolynomialRoots::Cubic::real_root0()'],['../d8/dec/class_polynomial_roots_1_1_quartic.html#ae31587df7083775a92ee7c2968897c41',1,'PolynomialRoots::Quartic::real_root0()']]],
-  ['real_5froot1_1',['real_root1',['../d5/ded/class_polynomial_roots_1_1_quadratic.html#a5f77be0774b249f7999f2ca699be6813',1,'PolynomialRoots::Quadratic::real_root1()'],['../d9/df7/class_polynomial_roots_1_1_cubic.html#a645aa071c4fc4f917f08ff779095a702',1,'PolynomialRoots::Cubic::real_root1()'],['../d8/dec/class_polynomial_roots_1_1_quartic.html#a018956aea8afa8ce18396edade97256a',1,'PolynomialRoots::Quartic::real_root1()']]],
-  ['real_5froot2_2',['real_root2',['../d9/df7/class_polynomial_roots_1_1_cubic.html#a25c65d1cf572491f3df9eb6ae9915a85',1,'PolynomialRoots::Cubic::real_root2()'],['../d8/dec/class_polynomial_roots_1_1_quartic.html#accf4ee61a3a2f7907f773d42b915d354',1,'PolynomialRoots::Quartic::real_root2() const']]],
-  ['real_5froot3_3',['real_root3',['../d8/dec/class_polynomial_roots_1_1_quartic.html#a5135ba9a62c4acd30ab7e7bd7f2dbdb9',1,'PolynomialRoots::Quartic']]],
-  ['real_5ftype_4',['real_type',['../d5/d44/namespace_polynomial_roots.html#ae73a09b98676809c877ce871374351f3',1,'PolynomialRoots']]],
-  ['root0_5',['root0',['../d5/ded/class_polynomial_roots_1_1_quadratic.html#a4f6f5e18d980edd971ded2a860a880b1',1,'PolynomialRoots::Quadratic::root0()'],['../d9/df7/class_polynomial_roots_1_1_cubic.html#a10ee2b85b33334b08d75044de85b44de',1,'PolynomialRoots::Cubic::root0()'],['../d8/dec/class_polynomial_roots_1_1_quartic.html#a7979f164fbecfad63a92d61a46b8561e',1,'PolynomialRoots::Quartic::root0()']]],
-  ['root1_6',['root1',['../d5/ded/class_polynomial_roots_1_1_quadratic.html#a7a14c2d9cf20a127743641d84ee0a510',1,'PolynomialRoots::Quadratic::root1()'],['../d9/df7/class_polynomial_roots_1_1_cubic.html#a52caddfb379233d415db711b815947ec',1,'PolynomialRoots::Cubic::root1()'],['../d8/dec/class_polynomial_roots_1_1_quartic.html#ae0b7c52c3a4323a7d6db11eb13fe18b4',1,'PolynomialRoots::Quartic::root1()']]],
-  ['root2_7',['root2',['../d9/df7/class_polynomial_roots_1_1_cubic.html#a203d5425d71bce28f01cf0dadc221baf',1,'PolynomialRoots::Cubic::root2()'],['../d8/dec/class_polynomial_roots_1_1_quartic.html#ade4cb3082cd9ff632d53600f21fe694f',1,'PolynomialRoots::Quartic::root2() const']]],
-  ['root3_8',['root3',['../d8/dec/class_polynomial_roots_1_1_quartic.html#ab85a50ac0b790da29d879948fc14c4c9',1,'PolynomialRoots::Quartic']]],
-  ['roots_9',['roots',['../d5/d44/namespace_polynomial_roots.html#a1bd59488d39680d34770c7dcb78e8405',1,'PolynomialRoots']]]
+  ['polynomial_5froots_5fcomplex_5fhxx_0',['POLYNOMIAL_ROOTS_COMPLEX_HXX',['../dc/dce/_polynomial_roots-complex_8hxx.html#acde0a9a1f8efbfa307bd0ea671d15896',1,'PolynomialRoots-complex.hxx']]],
+  ['polynomialroots_1',['PolynomialRoots',['../d5/d44/namespace_polynomial_roots.html',1,'']]],
+  ['polynomialroots_2d1_2dquadratic_2ecc_2',['PolynomialRoots-1-Quadratic.cc',['../d2/d4a/_polynomial_roots-1-_quadratic_8cc.html',1,'']]],
+  ['polynomialroots_2d2_2dcubic_2ecc_3',['PolynomialRoots-2-Cubic.cc',['../d8/dce/_polynomial_roots-2-_cubic_8cc.html',1,'']]],
+  ['polynomialroots_2d3_2dquartic_2ecc_4',['PolynomialRoots-3-Quartic.cc',['../dd/db0/_polynomial_roots-3-_quartic_8cc.html',1,'']]],
+  ['polynomialroots_2dcomplex_2ehxx_5',['PolynomialRoots-complex.hxx',['../dc/dce/_polynomial_roots-complex_8hxx.html',1,'']]],
+  ['polynomialroots_2djenkins_2dtraub_2ecc_6',['PolynomialRoots-Jenkins-Traub.cc',['../d8/d88/_polynomial_roots-_jenkins-_traub_8cc.html',1,'']]],
+  ['polynomialroots_2dutils_2ecc_7',['PolynomialRoots-Utils.cc',['../da/dd9/_polynomial_roots-_utils_8cc.html',1,'']]],
+  ['polynomialroots_2ehh_8',['PolynomialRoots.hh',['../da/d80/_polynomial_roots_8hh.html',1,'']]]
 ];

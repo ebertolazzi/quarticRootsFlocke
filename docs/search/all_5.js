@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['num_5fcomplex_5froots_0',['num_complex_roots',['../d8/dec/class_polynomial_roots_1_1_quartic.html#a392ed09ce13be04b34416ca6e454bccc',1,'PolynomialRoots::Quartic']]],
-  ['num_5freal_5froots_1',['num_real_roots',['../d8/dec/class_polynomial_roots_1_1_quartic.html#ab585ae4c833b95bec5d18c2e71c11713',1,'PolynomialRoots::Quartic']]],
-  ['num_5froots_2',['num_roots',['../d5/ded/class_polynomial_roots_1_1_quadratic.html#a2c7abc9e927e87749fc9c41a6e6e52e7',1,'PolynomialRoots::Quadratic::num_roots()'],['../d9/df7/class_polynomial_roots_1_1_cubic.html#ae8e4150e8cddb881f1d2deb324d8b5b3',1,'PolynomialRoots::Cubic::num_roots()'],['../d8/dec/class_polynomial_roots_1_1_quartic.html#af315e8ce98199fbddc8306497bf566e2',1,'PolynomialRoots::Quartic::num_roots() const']]],
-  ['numcomplexroots_3',['numComplexRoots',['../d8/dec/class_polynomial_roots_1_1_quartic.html#a1be607a65ce7f1bf67a8c1b5a4902095',1,'PolynomialRoots::Quartic']]],
-  ['numrealroots_4',['numRealRoots',['../d8/dec/class_polynomial_roots_1_1_quartic.html#ac5489f84b0b33661ef0f58ecfd5f68b8',1,'PolynomialRoots::Quartic']]],
-  ['numroots_5',['numRoots',['../d5/ded/class_polynomial_roots_1_1_quadratic.html#ae0194470a8757f09e772a97d489cb713',1,'PolynomialRoots::Quadratic::numRoots()'],['../d9/df7/class_polynomial_roots_1_1_cubic.html#a56ca10d8109af778e388788bf9cd000b',1,'PolynomialRoots::Cubic::numRoots()'],['../d8/dec/class_polynomial_roots_1_1_quartic.html#a7f329c6150f056fb98c8b8dd9dac42af',1,'PolynomialRoots::Quartic::numRoots()']]]
+  ['imag_0',['imag',['../de/d18/class_polynomial_roots_1_1real__complex.html#a4b8f0e234aced2c4f61aaa633a5144a1',1,'PolynomialRoots::real_complex']]],
+  ['info_1',['info',['../d0/d4f/class_polynomial_roots_1_1_quadratic_t.html#af99ed2a23261db3059cbb45cf8b4edea',1,'PolynomialRoots::QuadraticT::info()'],['../d4/d21/class_polynomial_roots_1_1_cubic_t.html#aeb9118906691af417b27e85fa68f23cc',1,'PolynomialRoots::CubicT::info()'],['../d9/d54/class_polynomial_roots_1_1_quartic_t.html#af246ca70bad627a0b8a903eb464c2492',1,'PolynomialRoots::QuarticT::info()']]],
+  ['integer_2',['integer',['../d5/d44/namespace_polynomial_roots.html#a44559b8e2d68c7722099875c998a4fa3',1,'PolynomialRoots']]],
+  ['istream_5ftype_3',['istream_type',['../d5/d44/namespace_polynomial_roots.html#ac9a5eaa60802bde63478ea37ab79cd2f',1,'PolynomialRoots']]]
 ];

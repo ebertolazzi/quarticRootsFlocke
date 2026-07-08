@@ -1,8 +1,9 @@
 var annotated_dup =
 [
     [ "PolynomialRoots", "d5/d44/namespace_polynomial_roots.html", [
-      [ "Cubic", "d9/df7/class_polynomial_roots_1_1_cubic.html", "d9/df7/class_polynomial_roots_1_1_cubic" ],
-      [ "Quadratic", "d5/ded/class_polynomial_roots_1_1_quadratic.html", "d5/ded/class_polynomial_roots_1_1_quadratic" ],
-      [ "Quartic", "d8/dec/class_polynomial_roots_1_1_quartic.html", "d8/dec/class_polynomial_roots_1_1_quartic" ]
+      [ "CubicT", "d4/d21/class_polynomial_roots_1_1_cubic_t.html", "d4/d21/class_polynomial_roots_1_1_cubic_t" ],
+      [ "QuadraticT", "d0/d4f/class_polynomial_roots_1_1_quadratic_t.html", "d0/d4f/class_polynomial_roots_1_1_quadratic_t" ],
+      [ "QuarticT", "d9/d54/class_polynomial_roots_1_1_quartic_t.html", "d9/d54/class_polynomial_roots_1_1_quartic_t" ],
+      [ "real_complex", "de/d18/class_polynomial_roots_1_1real__complex.html", "de/d18/class_polynomial_roots_1_1real__complex" ]
     ] ]
 ];

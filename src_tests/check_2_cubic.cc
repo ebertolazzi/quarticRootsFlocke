@@ -12,24 +12,21 @@
 ..
 */
 
-#ifdef __GNUC__
-#pragma GCC diagnostic ignored "-Wunused-function"
-#endif
-#ifdef __clang__
-#pragma clang diagnostic ignored "-Wglobal-constructors"
-#pragma clang diagnostic ignored "-Wvla-extension"
-#pragma clang diagnostic ignored "-Wvla"
-#pragma clang diagnostic ignored "-Wunused-function"
-#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
-#endif
-
 #include "PolynomialRoots.hh"
 #include "TestReporter.hh"
+#include "TestHelpers.hh"
 
 #include <iomanip>
 #include <iostream>
+#include <cmath>
+#include <utility>
+#include <array>
 
 using PolynomialRoots::Cubic;
+#if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
+using PolynomialRoots::CubicHQ;
+#endif
+using std::array;
 
 // Set the polynomial coefficients corresponding and the exact roots.
 
@@ -69,14 +66,14 @@ static double rootCubicReal9[] = { -1.0e+14, 1, 1 };
 static double rootCubicImag9[] = { 0, 1, -1 };
 static double cubic9[]         = { 1, 9.9999999999998e13, -1.99999999999998e14, 2e+14 };
 
-static double r = std::sqrt(2.0);
+static double r                 = std::sqrt( 2.0 );
 static double rootCubicReal10[] = { r, r, r };
 static double rootCubicImag10[] = { 0, 0, 0 };
-static double cubic10[]         = { 1, -3*r, 6, -2*r };
+static double cubic10[]         = { 1, -3 * r, 6, -2 * r };
 
 static double rootCubicReal11[] = { -r, -r, -r };
 static double rootCubicImag11[] = { 0, 0, 0 };
-static double cubic11[]         = { 1, 3*r, 6, 2*r };
+static double cubic11[]         = { 1, 3 * r, 6, 2 * r };
 
 static double rootCubicReal12[] = { -r, -r, -r };
 static double rootCubicImag12[] = { 0, 0, 0 };
@@ -86,74 +83,83 @@ static double rootCubicReal13[] = { -133943466.087994218, -0.999999997325170642,
 static double rootCubicImag13[] = { 0, 0, 0 };
 static double cubic13[]         = { 0.25, 33485866.521998554, -0.4291379596999101, -33485866.521998554 };
 
-static char const * caseSource[] = {
-  "Flocke 2015",
-  "Flocke 2015",
-  "Flocke 2015",
-  "Flocke 2015",
-  "Flocke 2015",
-  "Flocke 2015",
-  "Flocke 2015",
-  "Flocke 2015",
-  "extended stress case",
-  "extended stress case",
-  "extended stress case",
-  "extended stress case",
-  "extended stress case"
-};
+static char const * caseSource[] = { "Flocke 2015",          "Flocke 2015",          "Flocke 2015",
+                                     "Flocke 2015",          "Flocke 2015",          "Flocke 2015",
+                                     "Flocke 2015",          "Flocke 2015",          "extended stress case",
+                                     "extended stress case", "extended stress case", "extended stress case",
+                                     "extended stress case" };
 
-static
-bool
-do_test(
-  double const p[4],
-  double const re[3],
-  double const im[3]
-) {
-  //Cubic csolve( p[3], p[2], p[1], p[0] );
-  Cubic const csolve( p[0], p[1], p[2], p[3] );
+template <typename Solver>
+static std::pair<bool, double> do_test( double const p[4], double const re[3], double const im[3] )
+{
+  Solver const csolve( p[0], p[1], p[2], p[3] );
   csolve.info( std::cout );
-  if ( !csolve.check( std::cout ) ) {
-    std::cout
-      << '\n'
-      << "Expected:\n"
-      << "r0 = ( " << re[0] << ", " << im[0] << ")\n"
-      << "r1 = ( " << re[1] << ", " << im[1] << ")\n"
-      << "r2 = ( " << re[2] << ", " << im[2] << ")\n"
-      << "\n";
-    return false;
+  bool ok = csolve.check( std::cout );
+  if ( !ok )
+  {
+    std::cout << '\n'
+              << "Expected:\n"
+              << "r0 = ( " << re[0] << ", " << im[0] << ")\n"
+              << "r1 = ( " << re[1] << ", " << im[1] << ")\n"
+              << "r2 = ( " << re[2] << ", " << im[2] << ")\n"
+              << "\n";
   }
-  return true;
+  double res = TestHelpers::max_residual( csolve );  // nessun template parameter
+  return { ok, res };
 }
 
-#define DO_TEST( N, SOURCE ) \
-  summary.case_header(N, "cubic stress case", SOURCE); \
-  if ( do_test( cubic##N, rootCubicReal##N, rootCubicImag##N ) ) summary.pass(); \
-  else                                                           summary.fail()
+static void run_case(
+  TestReporter::Summary & summary,
+  int                     index,
+  char const *            source,
+  double const            p[4],
+  double const            re[3],
+  double const            im[3],
+  bool                    known_difficult = false )
+{
+  summary.case_header( index, "cubic stress case", source );
+  auto [ok_double, res_double] = do_test<Cubic>( p, re, im );
+#if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
+  auto [ok_quad, res_quad]     = do_test<CubicHQ>( p, re, im );
+  summary.comparison_table_header();
+  summary.comparison_table_row( "double", ok_double, res_double );
+  summary.comparison_table_row( "quad", ok_quad, res_quad );
+  summary.comparison_table_footer();
+  if ( ok_double && ok_quad ) { summary.pass( "double and quad passed" ); }
+  else if ( known_difficult ) { summary.warn( "known difficult legacy case" ); }
+  else
+  {
+    summary.fail( "double/quad mismatch" );
+  }
+#else
+  summary.comparison_table_header();
+  summary.comparison_table_row( "double", ok_double, res_double );
+  summary.comparison_table_footer();
+  if ( ok_double ) { summary.pass( "double passed" ); }
+  else if ( known_difficult ) { summary.warn( "known difficult legacy case" ); }
+  else
+  {
+    summary.fail( "double failed" );
+  }
+#endif
+}
 
-#define DO_TEST_WARN( N, SOURCE ) \
-  summary.case_header(N, "cubic stress case", SOURCE); \
-  if ( do_test( cubic##N, rootCubicReal##N, rootCubicImag##N ) ) summary.pass(); \
-  else                                                           summary.warn("known difficult legacy case")
-
-int
-main() {
-  std::cout.precision(18);
-  TestReporter::Summary summary(
-    std::cout,
-    "Cubic solver regression suite"
-  );
-  DO_TEST(1, caseSource[0]);
-  DO_TEST(2, caseSource[1]);
-  DO_TEST_WARN(3, caseSource[2]);
-  DO_TEST(4, caseSource[3]);
-  DO_TEST_WARN(5, caseSource[4]);
-  DO_TEST(6, caseSource[5]);
-  DO_TEST(7, caseSource[6]);
-  DO_TEST(8, caseSource[7]);
-  DO_TEST(9, caseSource[8]);
-  DO_TEST(10, caseSource[9]);
-  DO_TEST(11, caseSource[10]);
-  DO_TEST(12, caseSource[11]);
-  DO_TEST(13, caseSource[12]);
+int main()
+{
+  std::cout.precision( 18 );
+  TestReporter::Summary summary( std::cout, "Cubic solver regression suite" );
+  run_case( summary, 1, caseSource[0], cubic1, rootCubicReal1, rootCubicImag1 );
+  run_case( summary, 2, caseSource[1], cubic2, rootCubicReal2, rootCubicImag2 );
+  run_case( summary, 3, caseSource[2], cubic3, rootCubicReal3, rootCubicImag3, true );
+  run_case( summary, 4, caseSource[3], cubic4, rootCubicReal4, rootCubicImag4 );
+  run_case( summary, 5, caseSource[4], cubic5, rootCubicReal5, rootCubicImag5, true );
+  run_case( summary, 6, caseSource[5], cubic6, rootCubicReal6, rootCubicImag6 );
+  run_case( summary, 7, caseSource[6], cubic7, rootCubicReal7, rootCubicImag7 );
+  run_case( summary, 8, caseSource[7], cubic8, rootCubicReal8, rootCubicImag8 );
+  run_case( summary, 9, caseSource[8], cubic9, rootCubicReal9, rootCubicImag9 );
+  run_case( summary, 10, caseSource[9], cubic10, rootCubicReal10, rootCubicImag10 );
+  run_case( summary, 11, caseSource[10], cubic11, rootCubicReal11, rootCubicImag11 );
+  run_case( summary, 12, caseSource[11], cubic12, rootCubicReal12, rootCubicImag12 );
+  run_case( summary, 13, caseSource[12], cubic13, rootCubicReal13, rootCubicImag13 );
   return summary.finish();
 }

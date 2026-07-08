@@ -36,7 +36,27 @@ Quartic q4(a,b,c,d,e);
 q4.info(std::cout);
 ```
 
-See the class interfaces in `src/PolynomialRoots.hh` for the available accessors.
+See the class interfaces in `src/PolynomialRoots.hh` and
+`src/PolynomialRootsHQ.hh` for the available accessors.
+
+The library now exposes separate solver families:
+
+- `Quadratic`, `Cubic`, `Quartic` for the standard `double` implementation
+- `QuadraticHQ`, `CubicHQ`, `QuarticHQ` for the high-quality multiprecision path
+
+```cpp
+Quartic q4(a,b,c,d,e);      // double solver
+QuarticHQ q4hq(a,b,c,d,e);  // high-quality multiprecision solver
+```
+
+The public root interface remains in `double`, while the `HQ` classes use an
+internal multiprecision backend to improve the solve/refinement phase.
+
+Internally the current `HQ` classes use `stillwater-sc/universal` and its
+`sw::universal::quad` type. The dependency is resolved in this order:
+
+- local sibling checkout: `../universal`
+- `FetchContent` fallback from the upstream repository
 
 ## Build And Test
 
@@ -47,9 +67,15 @@ rake test
 
 The test executables now use Unicode markers and `termcolor.hh` for a more
 readable terminal output. When stdout is attached to a terminal, each suite
-prints colored case headers plus a final `✓` / `✗` summary. Legacy
+prints colored case headers plus a final `✓` / `✗` summary. Each regression
+case also prints a small comparison table with the `double` and `HQ` result
+status side by side, including the maximum residual for each class. Legacy
 numerically difficult cases are shown as warnings (`⚠`) instead of being
-silently ignored.
+silently ignored. Every quadratic, cubic and quartic regression case is run
+with separate solver classes:
+
+- standard `double` solver classes
+- `HQ` multiprecision solver classes
 
 Current test programs:
 
@@ -80,6 +106,20 @@ The current regression suite covers:
   - upstream: [ikalnytskyi/termcolor](https://github.com/ikalnytskyi/termcolor)
   - license: BSD 3-Clause
   - local copy: `licenses3rd/LICENSE-termcolor.txt`
+
+- internal high-precision backend
+  - upstream: [stillwater-sc/universal](https://github.com/stillwater-sc/universal)
+  - license: MIT
+  - local copy: `licenses3rd/LICENSE-universal.txt`
+
+## Build Dependencies
+
+- C++20 compiler
+- `stillwater-sc/universal`
+  - used only for the internal high-precision backend
+  - not exposed by the public headers
+  - resolved from `../universal` when available
+  - otherwise downloaded with `FetchContent` during CMake configuration
 
 ## Repository And Online Documentation
 

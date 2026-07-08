@@ -1,7 +1,28 @@
 var _polynomial_roots_8hh =
 [
-    [ "PolynomialRoots::Quadratic", "d5/ded/class_polynomial_roots_1_1_quadratic.html", "d5/ded/class_polynomial_roots_1_1_quadratic" ],
-    [ "PolynomialRoots::Cubic", "d9/df7/class_polynomial_roots_1_1_cubic.html", "d9/df7/class_polynomial_roots_1_1_cubic" ],
-    [ "PolynomialRoots::Quartic", "d8/dec/class_polynomial_roots_1_1_quartic.html", "d8/dec/class_polynomial_roots_1_1_quartic" ],
-    [ "PolynomialRoots::roots", "d5/d44/namespace_polynomial_roots.html#a1bd59488d39680d34770c7dcb78e8405", null ]
+    [ "PolynomialRoots::QuadraticT&lt; T_real, T_complex &gt;", "d0/d4f/class_polynomial_roots_1_1_quadratic_t.html", "d0/d4f/class_polynomial_roots_1_1_quadratic_t" ],
+    [ "PolynomialRoots::CubicT&lt; T_real, T_complex &gt;", "d4/d21/class_polynomial_roots_1_1_cubic_t.html", "d4/d21/class_polynomial_roots_1_1_cubic_t" ],
+    [ "PolynomialRoots::QuarticT&lt; T_real, T_complex &gt;", "d9/d54/class_polynomial_roots_1_1_quartic_t.html", "d9/d54/class_polynomial_roots_1_1_quartic_t" ],
+    [ "PolynomialRoots::Cubic", "d5/d44/namespace_polynomial_roots.html#ac7fd0150bd54e230736c15885774e290", null ],
+    [ "PolynomialRoots::integer", "d5/d44/namespace_polynomial_roots.html#a44559b8e2d68c7722099875c998a4fa3", null ],
+    [ "PolynomialRoots::istream_type", "d5/d44/namespace_polynomial_roots.html#ac9a5eaa60802bde63478ea37ab79cd2f", null ],
+    [ "PolynomialRoots::ostream_type", "d5/d44/namespace_polynomial_roots.html#ab0e7ba2bd5b076ead1a1fcffa6f34c9a", null ],
+    [ "PolynomialRoots::Quadratic", "d5/d44/namespace_polynomial_roots.html#aab6e8a35aacd5cbc3a173d3ed2965d83", null ],
+    [ "PolynomialRoots::Quartic", "d5/d44/namespace_polynomial_roots.html#adb20a2e55b34daf26a2f0c237546db6b", null ],
+    [ "PolynomialRoots::real_type", "d5/d44/namespace_polynomial_roots.html#ae73a09b98676809c877ce871374351f3", null ],
+    [ "PolynomialRoots::eval_poly", "d5/d44/namespace_polynomial_roots.html#a6b9f9316f47e81d4ec57fe184bc05fe6", null ],
+    [ "PolynomialRoots::eval_poly_complex", "d5/d44/namespace_polynomial_roots.html#a2376cbf38a4f59284b10cc588a82e3f3", null ],
+    [ "PolynomialRoots::eval_poly_Dpoly", "d5/d44/namespace_polynomial_roots.html#ac49c59ce6e12864744f772f89a2771ba", null ],
+    [ "PolynomialRoots::evalMonicCubic", "d5/d44/namespace_polynomial_roots.html#ac8e6008bfe3cd33763533e189c2e0fcd", null ],
+    [ "PolynomialRoots::evalMonicCubic", "d5/d44/namespace_polynomial_roots.html#aafcd9ddad302242991173987c663860b", null ],
+    [ "PolynomialRoots::evalMonicCubic", "d5/d44/namespace_polynomial_roots.html#a0d6a4fb76ecfe8c956b8c225506a04e2", null ],
+    [ "PolynomialRoots::evalMonicQuartic", "d5/d44/namespace_polynomial_roots.html#ae038874f5d89b0d0c26d3110507e0b63", null ],
+    [ "PolynomialRoots::evalMonicQuartic", "d5/d44/namespace_polynomial_roots.html#a5cc4ce959a13edfde12baae278e03c71", null ],
+    [ "PolynomialRoots::evalMonicQuartic", "d5/d44/namespace_polynomial_roots.html#ab6961b9dc928154ab491ff655b487555", null ],
+    [ "PolynomialRoots::machepsiT", "d5/d44/namespace_polynomial_roots.html#a99658fed36f0cab118e3111fd7da7607", null ],
+    [ "PolynomialRoots::Newton_step", "d5/d44/namespace_polynomial_roots.html#ac2b5bb76413d8bd4367c3557407e1814", null ],
+    [ "PolynomialRoots::root_assert", "d5/d44/namespace_polynomial_roots.html#a03cab9d79acf9f5dae065954622c0ba9", null ],
+    [ "PolynomialRoots::roots", "d5/d44/namespace_polynomial_roots.html#ae747ac0959883123b975aa558a4dde2c", null ],
+    [ "PolynomialRoots::toleranceT", "d5/d44/namespace_polynomial_roots.html#a4b9c9d3aec264fce8527968798ddcd1b", null ],
+    [ "PolynomialRoots::MAXDEGREE", "d5/d44/namespace_polynomial_roots.html#aab6620d3b25ac86e20d64d7d4d2e0696", null ]
 ];

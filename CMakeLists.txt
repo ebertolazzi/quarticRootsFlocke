@@ -26,6 +26,7 @@ option(UTILS_ENABLE_TESTS "Enable compilation of testing targets" ON)
 option(UTILS_BUILD_SHARED "Enable shared option compilation" OFF)
 option(UTILS_INSTALL_LOCAL "Enable installation on local directory" ON)
 option(UTILS_TWEAK_VERSION_IS_TIMESTAMP "Sets tweak version to timestamp" OFF)
+option(UTILS_ENABLE_ARBITRARY_PRECISION "Enable Boost-based arbitrary precision HQ solvers when Boost is available" OFF)
 
 set(UTILS_NAMESPACE "utils" CACHE STRING "Sets the namespace used for exports")
 set(TARGETS_TO_BE_INSTALLED)
@@ -82,6 +83,7 @@ project(
 
 include(GNUInstallDirs)
 include(CTest)
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/ResolveBoostMultiprecision.cmake")
 
 if(PROJECT_IS_TOP_LEVEL AND (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT OR CMAKE_INSTALL_PREFIX STREQUAL "/usr/local"))
   set(
@@ -173,11 +175,11 @@ set(VS_DEFINE "/D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIME
 set(VS_FLAGS "/nologo /std:c++17 /utf-8 /GS /Gy /GF /EHsc /bigobj")
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-  set(CMAKE_CXX_FLAGS "-std=c++17 ${COMMON_CXX_FLAGS_STR}")
+  set(CMAKE_CXX_FLAGS "-std=c++20 ${COMMON_CXX_FLAGS_STR}")
   set(CMAKE_CXX_FLAGS_RELEASE "-fPIC -O2 -g ")
   set(CMAKE_CXX_FLAGS_DEBUG "-fPIC -O0 -ggdb ")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  set(CMAKE_CXX_FLAGS "-std=c++17 -stdlib=libc++ ${COMMON_CXX_FLAGS_STR}")
+  set(CMAKE_CXX_FLAGS "-std=c++20 -stdlib=libc++ ${COMMON_CXX_FLAGS_STR}")
   set(CMAKE_CXX_FLAGS_RELEASE "-fPIC -Os -g -fcolor-diagnostics ")
   set(CMAKE_CXX_FLAGS_DEBUG "-fPIC -O0 -gfull -fcolor-diagnostics ")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
@@ -191,6 +193,9 @@ endif()
 set(CMAKE_C_FLAGS "")
 set(CMAKE_C_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
 set(CMAKE_C_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/../CMakeLists-customize.txt")
   include("${CMAKE_CURRENT_LIST_DIR}/../CMakeLists-customize.txt")
@@ -230,6 +235,7 @@ file(
   "${SOURCE_DIR}/*.h"
   "${SOURCE_DIR}/*.hh"
   "${SOURCE_DIR}/*.hpp"
+  "${SOURCE_DIR}/*.hxx"
 )
 
 foreach(H IN LISTS PUBLIC_HEADERS)
@@ -238,8 +244,28 @@ endforeach()
 
 set(INCLUDE_DIRS "${SOURCE_DIR}")
 
+set(QRF_ENABLE_ARBITRARY_PRECISION OFF)
+set(QRF_BOOST_INCLUDE_DIR "")
+set(QRF_BOOST_SOURCE "disabled")
+if(UTILS_ENABLE_ARBITRARY_PRECISION)
+  qrf_resolve_boost_multiprecision(QRF_BOOST_INCLUDE_DIR QRF_BOOST_SOURCE)
+  if(QRF_BOOST_INCLUDE_DIR)
+    set(QRF_ENABLE_ARBITRARY_PRECISION ON)
+  else()
+    message(WARNING "UTILS_ENABLE_ARBITRARY_PRECISION=ON but Boost multiprecision was not found. Falling back to double-only build.")
+  endif()
+endif()
+
 function(qrf_configure_target target_name)
-  target_compile_features(${target_name} PUBLIC cxx_std_17)
+  target_compile_features(${target_name} PUBLIC cxx_std_20)
+  if(QRF_ENABLE_ARBITRARY_PRECISION)
+    target_include_directories(${target_name} SYSTEM PRIVATE "${QRF_BOOST_INCLUDE_DIR}")
+  endif()
+  target_compile_definitions(
+    ${target_name}
+    PUBLIC
+      POLYNOMIAL_ROOTS_HAS_MULTIPRECISION=$<BOOL:${QRF_ENABLE_ARBITRARY_PRECISION}>
+  )
   target_include_directories(
     ${target_name}
     PUBLIC
@@ -262,21 +288,31 @@ function(qrf_configure_target target_name)
 endfunction()
 
 function(qrf_add_platform_library_alias target_name base_name library_kind)
+  # The real library keeps the platform/static suffix, e.g.
+  #   libquarticRootsFlocke_osx_static.a
+  # and the unsuffixed name is kept only as a compatibility alias, e.g.
+  #   libquarticRootsFlocke.a -> libquarticRootsFlocke_osx_static.a
   if(library_kind STREQUAL "STATIC")
-    set(target_filename "${CMAKE_STATIC_LIBRARY_PREFIX}${base_name}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+    set(output_name "${base_name}_${UTILS_PLATFORM_SUFFIX}_static")
+    set(alias_filename "${CMAKE_STATIC_LIBRARY_PREFIX}${base_name}${CMAKE_STATIC_LIBRARY_SUFFIX}")
     if(WIN32)
-      set(alias_filename "lib${base_name}_${UTILS_PLATFORM_SUFFIX}_static${CMAKE_STATIC_LIBRARY_SUFFIX}")
+      set(output_name "lib${output_name}")
+      set(real_filename "${output_name}${CMAKE_STATIC_LIBRARY_SUFFIX}")
     else()
-      set(alias_filename "${CMAKE_STATIC_LIBRARY_PREFIX}${base_name}_${UTILS_PLATFORM_SUFFIX}_static${CMAKE_STATIC_LIBRARY_SUFFIX}")
+      set(real_filename "${CMAKE_STATIC_LIBRARY_PREFIX}${output_name}${CMAKE_STATIC_LIBRARY_SUFFIX}")
     endif()
   else()
-    set(target_filename "${CMAKE_SHARED_LIBRARY_PREFIX}${base_name}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+    set(output_name "${base_name}_${UTILS_PLATFORM_SUFFIX}")
+    set(alias_filename "${CMAKE_SHARED_LIBRARY_PREFIX}${base_name}${CMAKE_SHARED_LIBRARY_SUFFIX}")
     if(WIN32)
-      set(alias_filename "lib${base_name}_${UTILS_PLATFORM_SUFFIX}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+      set(output_name "lib${output_name}")
+      set(real_filename "${output_name}${CMAKE_SHARED_LIBRARY_SUFFIX}")
     else()
-      set(alias_filename "${CMAKE_SHARED_LIBRARY_PREFIX}${base_name}_${UTILS_PLATFORM_SUFFIX}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+      set(real_filename "${CMAKE_SHARED_LIBRARY_PREFIX}${output_name}${CMAKE_SHARED_LIBRARY_SUFFIX}")
     endif()
   endif()
+
+  set_target_properties(${target_name} PROPERTIES OUTPUT_NAME "${output_name}")
 
   if(WIN32)
     add_custom_command(
@@ -288,14 +324,15 @@ function(qrf_add_platform_library_alias target_name base_name library_kind)
     )
 
     if(UTILS_INSTALL_LOCAL)
-      install(CODE
+      string(CONCAT _alias_install_code
         "file(MAKE_DIRECTORY \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}\")\n"
         "execute_process(\n"
         "  COMMAND \"${CMAKE_COMMAND}\" -E copy_if_different\n"
-        "          \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${target_filename}\"\n"
+        "          \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${real_filename}\"\n"
         "          \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${alias_filename}\"\n"
-        ")"
+        ")\n"
       )
+      install(CODE "${_alias_install_code}")
     endif()
   else()
     add_custom_command(
@@ -303,13 +340,13 @@ function(qrf_add_platform_library_alias target_name base_name library_kind)
       COMMAND ${CMAKE_COMMAND} -E rm -f
               "$<TARGET_FILE_DIR:${target_name}>/${alias_filename}"
       COMMAND ${CMAKE_COMMAND} -E create_symlink
-              "${target_filename}"
+              "$<TARGET_FILE_NAME:${target_name}>"
               "$<TARGET_FILE_DIR:${target_name}>/${alias_filename}"
       VERBATIM
     )
 
     if(UTILS_INSTALL_LOCAL)
-      install(CODE
+      string(CONCAT _alias_install_code
         "file(MAKE_DIRECTORY \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}\")\n"
         "execute_process(\n"
         "  COMMAND \"${CMAKE_COMMAND}\" -E rm -f\n"
@@ -317,10 +354,11 @@ function(qrf_add_platform_library_alias target_name base_name library_kind)
         ")\n"
         "execute_process(\n"
         "  COMMAND \"${CMAKE_COMMAND}\" -E create_symlink\n"
-        "          \"${target_filename}\"\n"
+        "          \"${real_filename}\"\n"
         "          \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${alias_filename}\"\n"
-        ")"
+        ")\n"
       )
+      install(CODE "${_alias_install_code}")
     endif()
   endif()
 endfunction()
@@ -348,9 +386,12 @@ function(qrf_final_messages)
   message(STATUS "UTILS_GIT_VERSION   = ${UTILS_GIT_VERSION}")
   message(STATUS "UTILS_ENABLE_TESTS  = ${UTILS_ENABLE_TESTS}")
   message(STATUS "UTILS_BUILD_SHARED  = ${UTILS_BUILD_SHARED}")
+  message(STATUS "UTILS_ENABLE_ARBITRARY_PRECISION = ${UTILS_ENABLE_ARBITRARY_PRECISION}")
+  message(STATUS "QRF_ENABLE_ARBITRARY_PRECISION   = ${QRF_ENABLE_ARBITRARY_PRECISION}")
   message(STATUS "UTILS_INSTALL_LOCAL = ${UTILS_INSTALL_LOCAL}")
   message(STATUS "Headers install     = ${CMAKE_INSTALL_INCLUDEDIR}")
   message(STATUS "Libraries install   = ${CMAKE_INSTALL_LIBDIR}")
+  message(STATUS "boost backend       = ${QRF_BOOST_SOURCE}")
 endfunction()
 
 add_library(${UTILS_NAMESPACE}_${PROJECT_NAME}_Static STATIC ${SOURCES} ${PUBLIC_HEADERS})
@@ -399,6 +440,9 @@ if(UTILS_ENABLE_TESTS)
         SUFFIX ".exe"
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin"
     )
+    if(QRF_ENABLE_ARBITRARY_PRECISION)
+      target_include_directories(${TEST_NAME} SYSTEM PRIVATE "${QRF_BOOST_INCLUDE_DIR}")
+    endif()
     target_link_libraries(${TEST_NAME} PRIVATE ${LIBS})
     add_test(NAME "${TEST_NAME}" COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/bin/${TEST_NAME}.exe")
     add_dependencies("${PROJECT_NAME}_all_tests" ${TEST_NAME})
