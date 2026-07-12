@@ -299,7 +299,10 @@ namespace PolynomialRoots
         break;
       }
 
-      // Stop iteration after 10 steps
+      // Preserve the rpoly_ak1/TOMS translation semantics: allow at most
+      // ten K-polynomial update steps.  The convergence test above is
+      // intentionally evaluated before this guard, so a final evaluation can
+      // occur after the tenth update, but no eleventh update is performed.
       if ( ++j > 10 ) break;
       if ( j >= 2 )
       {
@@ -506,20 +509,27 @@ namespace PolynomialRoots
         bool const spass{ tss < betas };
         if ( spass || vpass )
         {
-          integer fflag{ 1 };
           // At least one sequence has passed the convergence test.
           // Store variables before iterating
           for ( integer i{ 0 }; i < N; ++i ) svk[i] = K[i];
           real_type s{ ss };
-          // Choose iteration according to the fastest converging sequence
+          // Choose iteration according to the fastest converging sequence.
+          // The original rpoly_ak1 code used an assignment inside a boolean
+          // expression to consume this first-pass flag.  Keep the same control
+          // flow explicitly: on the first pass only, if the real sequence is
+          // the better convergence candidate, skip the quadratic attempt and
+          // go directly to RealIT below.
+          bool first_iteration{ true };
           integer stry{ 0 };
           integer vtry{ 0 };
           for ( ;; )
           {
-            if ( ( fflag && ( ( fflag = 0 ) == 0 ) ) && ( ( spass ) && ( !vpass || ( tss < tvv ) ) ) )
+            bool const try_real_iteration_first{ first_iteration && spass && ( !vpass || ( tss < tvv ) ) };
+            first_iteration = false;
+            if ( try_real_iteration_first )
             {
-              ;
-              // Do nothing.Provides a quick "short circuit".
+              // Intentionally skip QuadIT on the first pass; the RealIT call
+              // below will handle the currently faster real sequence.
             }
             else
             {
