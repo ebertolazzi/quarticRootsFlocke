@@ -203,7 +203,7 @@ static void run_case(
   summary.case_header( index, "quartic stress case", source );
   auto [ok_double, res_double] = do_test<Quartic>( p, re, im );
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
-  auto [ok_quad, res_quad]     = do_test<QuarticHQ>( p, re, im );
+  auto [ok_quad, res_quad] = do_test<QuarticHQ>( p, re, im );
   summary.comparison_table_header();
   summary.comparison_table_row( "double", ok_double, res_double );
   summary.comparison_table_row( "quad", ok_quad, res_quad );

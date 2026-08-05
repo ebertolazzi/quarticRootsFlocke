@@ -167,14 +167,15 @@ namespace
     char const *            source,
     std::pair<bool, double> ( *double_runner )()
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
-    , std::pair<bool, double> ( *hq_runner )()
+      ,
+    std::pair<bool, double> ( *hq_runner )()
 #endif
   )
   {
     summary.case_header( index, label, source );
     auto [ok_double, err_double] = double_runner();
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
-    auto [ok_quad, err_quad]     = hq_runner();
+    auto [ok_quad, err_quad] = hq_runner();
     summary.comparison_table_header();
     summary.comparison_table_row( "double", ok_double, err_double );
     summary.comparison_table_row( "quad", ok_quad, err_quad );

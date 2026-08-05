@@ -96,14 +96,14 @@ namespace
     CaseType const &        tc,
     Runner                  runner_double,
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
-    Runner                  runner_quad,
+    Runner runner_quad,
 #endif
-    bool                    known_difficult = false )
+    bool known_difficult = false )
   {
     summary.case_header( idx++, tc.label, tc.source );
     auto [ok_double, res_double] = runner_double( tc );
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
-    auto [ok_quad, res_quad]     = runner_quad( tc );
+    auto [ok_quad, res_quad] = runner_quad( tc );
     summary.comparison_table_header();
     summary.comparison_table_row( "double", ok_double, res_double );
     summary.comparison_table_row( "quad", ok_quad, res_quad );
@@ -144,7 +144,8 @@ int main()
 #endif
   }
 
-  for ( auto const & tc : cubic_cases ) {
+  for ( auto const & tc : cubic_cases )
+  {
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
     run_case( summary, idx, tc, run_cubic<Cubic>, run_cubic<CubicHQ> );
 #else

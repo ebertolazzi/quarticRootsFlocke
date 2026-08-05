@@ -79,14 +79,14 @@ namespace PolynomialRoots
 
   // static real_type const maxValue   = std::numeric_limits<real_type>::max();
   // static real_type const minValue   = std::numeric_limits<real_type>::min();
-  static constexpr real_type epsilon{ std::numeric_limits<real_type>::epsilon() };
-  static constexpr real_type epsilon10{ 10 * epsilon };
-  static constexpr real_type epsilon100{ 100 * epsilon };
-  static constexpr real_type pi{ 3.141592653589793238462643383279502884L };
+  static constexpr real_type epsilon    = std::numeric_limits<real_type>::epsilon();
+  static constexpr real_type epsilon10  = 10 * epsilon;
+  static constexpr real_type epsilon100 = 100 * epsilon;
+  static constexpr real_type pi         = static_cast<real_type>( 3.141592653589793238462643383279502884L );
 
-  static constexpr real_type RADFAC{ pi / 180 };          // Degrees - to - radians conversion factor = pi / 180
-  static real_type const     cosr{ cos( 94 * RADFAC ) };  //= -0.069756474
-  static real_type const     sinr{ sin( 94 * RADFAC ) };  //= 0.99756405
+  static constexpr real_type RADFAC = pi / 180;            // Degrees - to - radians conversion factor = pi / 180
+  static real_type const     cosr   = cos( 94 * RADFAC );  //= -0.069756474
+  static real_type const     sinr   = sin( 94 * RADFAC );  //= 0.99756405
 
   //============================================================================
   // Divides p by the quadratic x^2+u*x+v
@@ -519,7 +519,7 @@ namespace PolynomialRoots
           // flow explicitly: on the first pass only, if the real sequence is
           // the better convergence candidate, skip the quadratic attempt and
           // go directly to RealIT below.
-          bool first_iteration{ true };
+          bool    first_iteration{ true };
           integer stry{ 0 };
           integer vtry{ 0 };
           for ( ;; )

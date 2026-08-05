@@ -53,7 +53,7 @@ static void run_case( TestReporter::Summary & summary, int index, double const p
 
   auto [ok_double, res_double] = do_test<Quadratic>( p );
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
-  auto [ok_quad, res_quad]     = do_test<QuadraticHQ>( p );
+  auto [ok_quad, res_quad] = do_test<QuadraticHQ>( p );
 
   summary.comparison_table_header();
   summary.comparison_table_row( "double", ok_double, res_double );
