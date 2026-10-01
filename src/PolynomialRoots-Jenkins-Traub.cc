@@ -16,13 +16,11 @@
 // to the C++ versions posted below:
 // 1) All global variables have been eliminated.
 // 2) The "FAIL" parameter passed into RPOLY.FOR has been eliminated.
-// 3) RPOLY.FOR solves polynomials of degree up to 100, but		does	not	explicitly state this limit.
-// rpoly_ak1 explicitly states this limit; uses the macro name MAXDEGREE to specify this limit;
-
-// and does a check to ensure that the user input variable Degree is not greater than MAXDEGREE
-//(if it is, an error message is output and rpoly_ak1 terminates).If a user wishes to compute
-// roots of polynomials of degree greater than MAXDEGREE, using a macro name like MAXDEGREE provides
-// the simplest way of offering this capability.
+// 3) RPOLY.FOR solves polynomials of degree up to 100 but does not explicitly state this limit.
+// rpoly_ak1 states it explicitly; here the limit is the constant PolynomialRoots::max_degree,
+// and jenkins_traub_roots() checks the user supplied Degree against it, returning
+// RootsError::DEGREE_TOO_LARGE instead of terminating.  Raising max_degree is all that is needed
+// to support higher degrees.
 // 4) All "GO TO" statements have been eliminated.
 //
 // A small main program is included also, to provide an example of how to use rpoly_ak1.In this
@@ -45,6 +43,7 @@
 #include <cfloat>
 #include <limits>
 #include <algorithm>
+#include <utility>
 #include <vector>
 
 namespace PolynomialRoots
@@ -71,6 +70,7 @@ namespace PolynomialRoots
   using std::cos;
   using std::exp;
   using std::frexp;
+  using std::hypot;
   using std::ldexp;
   using std::log;
   using std::pow;
@@ -379,9 +379,17 @@ namespace PolynomialRoots
     bool      triedFlag = false;
     do
     {
-      Quadratic solve( 1.0, u, v );
-      solve.getRoot0( szr, szi );
-      solve.getRoot1( lzr, lzi );
+      Quadratic const solve( 1.0, u, v );
+      solve.get_root0( szr, szi );
+      solve.get_root1( lzr, lzi );
+      // TOMS/493 expects (szr,szi) to be the zero of SMALLER modulus and
+      // (lzr,lzi) the one of larger modulus; Quadratic orders REAL roots by
+      // value, so the two may come out swapped.
+      if ( std::hypot( szr, szi ) > std::hypot( lzr, lzi ) )
+      {
+        std::swap( szr, lzr );
+        std::swap( szi, lzi );
+      }
 
       // Return if roots of the quadratic are real and not close
       // to multiple or nearly equal and of opposite sign.
@@ -502,8 +510,8 @@ namespace PolynomialRoots
         tv = ( vv != 0.0 ) ? std::abs( ( vv - ovv ) / vv ) : tv;
         ts = ( ss != 0.0 ) ? std::abs( ( ss - oss ) / ss ) : ts;
         // If decreasing, multiply the two most recent convergence measures
-        real_type const tvv{ static_cast<real_type>( ( tv < otv ) ? tv * otv : 1 ) };
-        real_type const tss{ static_cast<real_type>( ( ts < ots ) ? ts * ots : 1 ) };
+        real_type const tvv{ ( tv < otv ) ? tv * otv : real_type( 1 ) };
+        real_type const tss{ ( ts < ots ) ? ts * ots : real_type( 1 ) };
         // Compare with convergence criteria
         bool const vpass{ tvv < betav };
         bool const spass{ tss < betas };
@@ -626,16 +634,24 @@ namespace PolynomialRoots
     .. The functions return a number x such that x has a magnitude in
     .. the interval [1/2, 1) or 0, and value = x*(2**exp).
     */
-    int max_exponent = std::numeric_limits<int>::min();
+    bool found{ false };
+    int  max_exponent{ 0 };
     for ( int i = 0; i <= N; ++i )
     {
       if ( p[i] != 0 )
       {
         int exponent;
         frexp( p[i], &exponent );
-        if ( exponent > max_exponent ) max_exponent = exponent;
+        if ( !found || exponent > max_exponent )
+        {
+          max_exponent = exponent;
+          found        = true;
+        }
       }
     }
+    // an all-zero polynomial has no exponent to normalize; negating
+    // numeric_limits<int>::min() would have been undefined behaviour
+    if ( !found ) return;
     int const l{ -max_exponent };
     for ( integer i{ 0 }; i <= N; ++i ) p[i] = ldexp( p[i], l );
   }
@@ -657,9 +673,10 @@ namespace PolynomialRoots
       if ( real_type const xm{ -pt[static_cast<std::size_t>( N )] / pt[static_cast<std::size_t>( N - 1 )] }; xm < x )
         x = xm;
     }
-    // Chop the interval(0, x) until f <= 0
+    // Chop the interval(0, x) until f <= 0 (bounded: xm underflows to 0 in at
+    // most ~330 steps, and pt[N] < 0 makes the test fail there)
     real_type xm{ x };
-    while ( evalPoly( xm, pt.data(), N ) > 0 )
+    for ( integer i{ 0 }; i < 400 && evalPoly( xm, pt.data(), N ) > 0; ++i )
     {
       x  = xm;
       xm = 0.1 * x;
@@ -667,13 +684,16 @@ namespace PolynomialRoots
 
     // Do Newton iteration until x converges to two decimal places
     real_type dx;
-    do
+    for ( integer i{ 0 }; i < 100; ++i )
     {
       real_type f, df;
       evalPoly( x, pt.data(), N, f, df );
+      if ( df == 0 ) break;
       dx = f / df;
+      if ( !std::isfinite( dx ) ) break;
       x -= dx;
-    } while ( std::abs( dx ) > std::abs( x ) * 0.005 );
+      if ( std::abs( dx ) <= std::abs( x ) * 0.005 ) break;
+    }
     return x;
   }
 
@@ -710,14 +730,28 @@ namespace PolynomialRoots
 #endif
 
   //============================================================================
-  int roots( real_type const * op, integer const Degree, real_type * zeror, real_type * zeroi )
+  char const * to_string( RootsError const e )
   {
-    if ( Degree < 1 ) return -1;
-    if ( Degree > MAXDEGREE ) return -3;
+    switch ( e )
+    {
+      case RootsError::SUCCESS: return "success";
+      case RootsError::DEGREE_TOO_SMALL: return "degree must be >= 1";
+      case RootsError::LEADING_ZERO: return "the leading coefficient is zero";
+      case RootsError::DEGREE_TOO_LARGE: return "degree exceeds max_degree";
+      case RootsError::NO_CONVERGENCE: return "no convergence after 20 shifts";
+    }
+    return "unknown error";
+  }
+
+  //============================================================================
+  RootsError jenkins_traub_roots( real_type const * op, integer const Degree, real_type * zeror, real_type * zeroi )
+  {
+    if ( Degree < 1 ) return RootsError::DEGREE_TOO_SMALL;
+    if ( Degree > max_degree ) return RootsError::DEGREE_TOO_LARGE;
 
     // Do a quick check to see if leading coefficient is 0
     // The leading coefficient is zero. No further action taken. Program terminated
-    if ( op[0] == 0 ) return -2;
+    if ( op[0] == 0 ) return RootsError::LEADING_ZERO;
 
     std::vector<real_type> storage( static_cast<std::size_t>( 4 * ( Degree + 1 ) ) );
     real_type *            ptr = storage.data();
@@ -825,8 +859,8 @@ namespace PolynomialRoots
         }
       }
       // Return with failure if no convergence with 20 shifts
-      if ( !ok ) return -2;
+      if ( !ok ) return RootsError::NO_CONVERGENCE;
     }
-    return 0;
+    return RootsError::SUCCESS;
   }
 }  // namespace PolynomialRoots

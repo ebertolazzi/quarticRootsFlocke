@@ -44,14 +44,17 @@ $os = case RUBY_PLATFORM
 
 $build_type = $compile_debug ? 'Debug' : 'Release'
 
+$enable_hq = defined?(COMPILE_ARBITRARY_PRECISION) ? COMPILE_ARBITRARY_PRECISION : false
+
 BASE_BUILD_OPTIONS = [
   "-DCMAKE_BUILD_TYPE=#{$build_type}",
-  "-DUTILS_BUILD_SHARED=#{$compile_dynamic ? 'ON' : 'OFF'}"
+  "-DQRF_BUILD_SHARED=#{$compile_dynamic ? 'ON' : 'OFF'}",
+  "-DQRF_ENABLE_ARBITRARY_PRECISION=#{$enable_hq ? 'ON' : 'OFF'}"
 ].freeze
 
 def cmake_options(enable_tests:)
   (BASE_BUILD_OPTIONS + [
-    "-DUTILS_ENABLE_TESTS=#{enable_tests ? 'ON' : 'OFF'}"
+    "-DQRF_ENABLE_TESTS=#{enable_tests ? 'ON' : 'OFF'}"
   ]).join(' ')
 end
 
@@ -115,7 +118,7 @@ end
 
 desc 'Clean build artifacts'
 task :clean do
-  FileUtils.rm_rf(%w[build lib])
+  FileUtils.rm_rf(%w[build lib bin])
 end
 
 desc 'Generate compile_commands.json and run cppcheck'

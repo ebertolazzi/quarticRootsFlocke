@@ -64,8 +64,13 @@ set(UTILS_BUILD_FAT_DEFAULT OFF)
 if(CMAKE_HOST_APPLE OR CMAKE_SYSTEM_NAME MATCHES "Darwin|iOS|tvOS|watchOS|visionOS")
   set(UTILS_BUILD_FAT_DEFAULT ON)
 endif()
-option(UTILS_BUILD_FAT "Build Apple universal/fat binaries when supported" ${UTILS_BUILD_FAT_DEFAULT})
-set(UTILS_FAT_ARCHITECTURES "arm64;x86_64" CACHE STRING "Apple architectures to build when UTILS_BUILD_FAT is ON")
+if(DEFINED UTILS_BUILD_FAT AND NOT DEFINED QRF_BUILD_FAT)
+  set(UTILS_BUILD_FAT_DEFAULT ${UTILS_BUILD_FAT})
+endif()
+option(QRF_BUILD_FAT "Build Apple universal/fat binaries when supported" ${UTILS_BUILD_FAT_DEFAULT})
+set(UTILS_BUILD_FAT ${QRF_BUILD_FAT})
+set(QRF_FAT_ARCHITECTURES "arm64;x86_64" CACHE STRING "Apple architectures to build when QRF_BUILD_FAT is ON")
+set(UTILS_FAT_ARCHITECTURES "${QRF_FAT_ARCHITECTURES}")
 
 if(UTILS_BUILD_FAT AND NOT CMAKE_OSX_ARCHITECTURES)
   set(
@@ -84,22 +89,41 @@ endif()
 # from cmake-gui, or by a parent project embedding this project with
 # add_subdirectory().
 #
-# UTILS_GIT_VERSION controls whether Git tags are used for the project version.
-# UTILS_ENABLE_TESTS controls the test executable section near the end.
-# UTILS_BUILD_SHARED adds a shared-library target next to the always-built
+# QRF_GIT_VERSION controls whether Git tags are used for the project version.
+# QRF_ENABLE_TESTS controls the test executable section near the end.
+# QRF_BUILD_SHARED adds a shared-library target next to the always-built
 # static library.
-# UTILS_INSTALL_LOCAL enables the local install layout used by the historical
+# QRF_INSTALL_LOCAL enables the local install layout used by the historical
 # project structure.
-# UTILS_TWEAK_VERSION_IS_TIMESTAMP changes the fallback version suffix from 0
+# QRF_TWEAK_VERSION_IS_TIMESTAMP changes the fallback version suffix from 0
 # to a compact timestamp.
-# UTILS_ENABLE_ARBITRARY_PRECISION enables the optional Boost.Multiprecision
+# QRF_ENABLE_ARBITRARY_PRECISION enables the optional Boost.Multiprecision
 # backend when the resolver module can find a usable Boost include tree.
-option(UTILS_GIT_VERSION "Get version from GIT command" ON)
-option(UTILS_ENABLE_TESTS "Enable compilation of testing targets" ON)
-option(UTILS_BUILD_SHARED "Enable shared option compilation" OFF)
-option(UTILS_INSTALL_LOCAL "Enable installation on local directory" ON)
-option(UTILS_TWEAK_VERSION_IS_TIMESTAMP "Sets tweak version to timestamp" OFF)
-option(UTILS_ENABLE_ARBITRARY_PRECISION "Enable Boost-based arbitrary precision HQ solvers when Boost is available" OFF)
+#
+# The canonical option prefix is QRF_ (quarticRootsFlocke); the historical
+# UTILS_ spellings are still honoured so that existing scripts and superprojects
+# keep working.  Setting the UTILS_ variable seeds the default of the matching
+# QRF_ option, and a QRF_ value given on the command line always wins.
+#
+macro(qrf_option name docstring default)
+  if(DEFINED UTILS_${name} AND NOT DEFINED QRF_${name})
+    set(_qrf_default ${UTILS_${name}})
+    message(STATUS "UTILS_${name} is deprecated, use QRF_${name}")
+  else()
+    set(_qrf_default ${default})
+  endif()
+  option(QRF_${name} "${docstring}" ${_qrf_default})
+  # keep the legacy variable in sync for the rest of this file
+  set(UTILS_${name} ${QRF_${name}})
+  unset(_qrf_default)
+endmacro()
+
+qrf_option(GIT_VERSION "Get version from GIT command" ON)
+qrf_option(ENABLE_TESTS "Enable compilation of testing targets" ON)
+qrf_option(BUILD_SHARED "Enable shared option compilation" OFF)
+qrf_option(INSTALL_LOCAL "Enable installation on local directory" ON)
+qrf_option(TWEAK_VERSION_IS_TIMESTAMP "Sets tweak version to timestamp" OFF)
+qrf_option(ENABLE_ARBITRARY_PRECISION "Enable Boost-based arbitrary precision HQ solvers when Boost is available" OFF)
 
 # --------------------------------------------------------------------------
 # Compatibility namespace and install target accumulator
@@ -126,7 +150,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_VERBOSE_MAKEFILE FALSE)
 set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD 17)
+# The public header uses std::format: C++20 is a hard requirement, see the
+# compiler check below.
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_INSTALL_RPATH $ORIGIN)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
 
@@ -365,6 +391,19 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # --------------------------------------------------------------------------
+# <format> availability
+# --------------------------------------------------------------------------
+# PolynomialRoots.hh formats its diagnostics with std::format, which landed in
+# libstdc++ 13 and in MSVC 19.29.  Failing here with a clear message is far
+# friendlier than the wall of template errors produced by a missing <format>.
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 13)
+  message(FATAL_ERROR "GCC ${CMAKE_CXX_COMPILER_VERSION} has no <format>: GCC >= 13 is required")
+endif()
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 19.29)
+  message(FATAL_ERROR "MSVC ${CMAKE_CXX_COMPILER_VERSION} has no <format>: Visual Studio 2019 16.10 or newer is required")
+endif()
+
+# --------------------------------------------------------------------------
 # Optional local customization hook
 # --------------------------------------------------------------------------
 # A developer can place CMakeLists-customize.txt one directory above this source
@@ -446,19 +485,22 @@ set(INCLUDE_DIRS "${SOURCE_DIR}")
 # --------------------------------------------------------------------------
 # Optional Boost.Multiprecision backend
 # --------------------------------------------------------------------------
-# The default build is double-only.  When UTILS_ENABLE_ARBITRARY_PRECISION is ON,
+# The default build is double-only.  When QRF_ENABLE_ARBITRARY_PRECISION is ON,
 # a project-local resolver tries to find Boost.Multiprecision.  The public macro
 # POLYNOMIAL_ROOTS_HAS_MULTIPRECISION is then set per target so client code and
 # tests can compile the correct code path.
-set(QRF_ENABLE_ARBITRARY_PRECISION OFF)
+#
+# QRF_ENABLE_ARBITRARY_PRECISION is what the USER asked for;
+# QRF_MULTIPRECISION_ENABLED is what could actually be honoured.
+set(QRF_MULTIPRECISION_ENABLED OFF)
 set(QRF_BOOST_INCLUDE_DIR "")
 set(QRF_BOOST_SOURCE "disabled")
-if(UTILS_ENABLE_ARBITRARY_PRECISION)
+if(QRF_ENABLE_ARBITRARY_PRECISION)
   qrf_resolve_boost_multiprecision(QRF_BOOST_INCLUDE_DIR QRF_BOOST_SOURCE)
   if(QRF_BOOST_INCLUDE_DIR)
-    set(QRF_ENABLE_ARBITRARY_PRECISION ON)
+    set(QRF_MULTIPRECISION_ENABLED ON)
   else()
-    message(WARNING "UTILS_ENABLE_ARBITRARY_PRECISION=ON but Boost multiprecision was not found. Falling back to double-only build.")
+    message(WARNING "QRF_ENABLE_ARBITRARY_PRECISION=ON but Boost.Multiprecision was not found. Falling back to double-only build.")
   endif()
 endif()
 
@@ -483,15 +525,19 @@ function(qrf_configure_target target_name)
 
   # Boost.Multiprecision is header-only for this use case.  Marking the include
   # directory SYSTEM suppresses third-party warnings while compiling this target.
-  if(QRF_ENABLE_ARBITRARY_PRECISION)
-    target_include_directories(${target_name} SYSTEM PRIVATE "${QRF_BOOST_INCLUDE_DIR}")
+  # The POLYNOMIAL_ROOTS_HAS_MULTIPRECISION macro below is PUBLIC, so the public
+  # header pulls in <boost/multiprecision/...> in every consumer too: the include
+  # directory must therefore be PUBLIC as well, otherwise anybody linking this
+  # target fails to compile.
+  if(QRF_MULTIPRECISION_ENABLED)
+    target_include_directories(${target_name} SYSTEM PUBLIC "${QRF_BOOST_INCLUDE_DIR}")
   endif()
   # Publish the multiprecision state as a numeric preprocessor macro.  The
   # generator expression expands to 0 or 1 for each build configuration.
   target_compile_definitions(
     ${target_name}
     PUBLIC
-      POLYNOMIAL_ROOTS_HAS_MULTIPRECISION=$<BOOL:${QRF_ENABLE_ARBITRARY_PRECISION}>
+      POLYNOMIAL_ROOTS_HAS_MULTIPRECISION=$<BOOL:${QRF_MULTIPRECISION_ENABLED}>
   )
   # Use generator expressions to expose different include roots in the build
   # tree and in the install tree.  PRIVATE includes are only needed while
@@ -510,9 +556,11 @@ function(qrf_configure_target target_name)
     PROPERTIES
       VERSION ${PROJECT_VERSION}
       XCODE_ATTRIBUTE_HEADER_SEARCH_PATHS "${SOURCE_DIR}"
-      ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib/lib"
-      LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib/lib"
-      RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib/bin"
+      # build artifacts belong to the build tree; the ./lib layout is produced by
+      # the install step when QRF_INSTALL_LOCAL is ON
+      ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+      LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+      RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
       POSITION_INDEPENDENT_CODE ON
   )
 endfunction()
@@ -643,12 +691,12 @@ function(qrf_final_messages)
   message(STATUS "CMAKE_HOME_DIRECTORY     = ${CMAKE_HOME_DIRECTORY}")
   message(STATUS "CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
   message(STATUS "CMAKE_INSTALL_PREFIX     = ${CMAKE_INSTALL_PREFIX}")
-  message(STATUS "UTILS_GIT_VERSION   = ${UTILS_GIT_VERSION}")
-  message(STATUS "UTILS_ENABLE_TESTS  = ${UTILS_ENABLE_TESTS}")
-  message(STATUS "UTILS_BUILD_SHARED  = ${UTILS_BUILD_SHARED}")
-  message(STATUS "UTILS_ENABLE_ARBITRARY_PRECISION = ${UTILS_ENABLE_ARBITRARY_PRECISION}")
-  message(STATUS "QRF_ENABLE_ARBITRARY_PRECISION   = ${QRF_ENABLE_ARBITRARY_PRECISION}")
-  message(STATUS "UTILS_INSTALL_LOCAL = ${UTILS_INSTALL_LOCAL}")
+  message(STATUS "QRF_GIT_VERSION     = ${QRF_GIT_VERSION}")
+  message(STATUS "QRF_ENABLE_TESTS    = ${QRF_ENABLE_TESTS}")
+  message(STATUS "QRF_BUILD_SHARED    = ${QRF_BUILD_SHARED}")
+  message(STATUS "QRF_ENABLE_ARBITRARY_PRECISION = ${QRF_ENABLE_ARBITRARY_PRECISION}")
+  message(STATUS "QRF_MULTIPRECISION_ENABLED     = ${QRF_MULTIPRECISION_ENABLED}")
+  message(STATUS "QRF_INSTALL_LOCAL   = ${QRF_INSTALL_LOCAL}")
   message(STATUS "Headers install     = ${CMAKE_INSTALL_INCLUDEDIR}")
   message(STATUS "Libraries install   = ${CMAKE_INSTALL_LIBDIR}")
   message(STATUS "boost backend       = ${QRF_BOOST_SOURCE}")
@@ -725,13 +773,14 @@ if(UTILS_ENABLE_TESTS)
       ${TEST_NAME}
       PROPERTIES
         SUFFIX ".exe"
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     )
-    if(QRF_ENABLE_ARBITRARY_PRECISION)
-      target_include_directories(${TEST_NAME} SYSTEM PRIVATE "${QRF_BOOST_INCLUDE_DIR}")
-    endif()
+    target_include_directories(${TEST_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src_tests")
     target_link_libraries(${TEST_NAME} PRIVATE ${LIBS})
-    add_test(NAME "${TEST_NAME}" COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/bin/${TEST_NAME}.exe")
+    # $<TARGET_FILE:...> resolves to the real location in every generator and
+    # configuration; the hard coded source-tree path used before was wrong for
+    # multi-config generators and for out-of-source builds.
+    add_test(NAME "${TEST_NAME}" COMMAND "$<TARGET_FILE:${TEST_NAME}>")
     add_dependencies("${PROJECT_NAME}_all_tests" ${TEST_NAME})
   endforeach()
 endif()

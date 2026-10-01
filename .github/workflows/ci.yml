@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux-gcc13
+            os: ubuntu-24.04
+            cc: gcc-13
+            cxx: g++-13
+            multiprecision: ON
+          - name: linux-clang18
+            os: ubuntu-24.04
+            cc: clang-18
+            cxx: clang++-18
+            multiprecision: ON
+          - name: macos-clang
+            os: macos-14
+            cc: clang
+            cxx: clang++
+            multiprecision: ON
+          - name: windows-msvc
+            os: windows-2022
+            multiprecision: OFF
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Boost (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libboost-dev ninja-build
+
+      - name: Install Boost (macOS)
+        if: runner.os == 'macOS'
+        run: brew install boost ninja
+
+      - name: Configure
+        shell: bash
+        env:
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
+        run: |
+          cmake -S . -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DQRF_ENABLE_TESTS=ON \
+            -DQRF_ENABLE_ARBITRARY_PRECISION=${{ matrix.multiprecision }}
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Test
+        run: ctest --test-dir build --build-config Release --output-on-failure
+
+  sanitizers:
+    name: asan-ubsan
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y libboost-dev ninja-build
+      - name: Configure
+        run: |
+          cmake -S . -B build-san -G Ninja \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DQRF_ENABLE_TESTS=ON \
+            -DQRF_ENABLE_ARBITRARY_PRECISION=ON \
+            -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" \
+            -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
+      - run: cmake --build build-san
+      - run: ctest --test-dir build-san --output-on-failure
+        env:
+          UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+          ASAN_OPTIONS: detect_leaks=1

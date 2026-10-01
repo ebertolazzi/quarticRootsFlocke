@@ -85,18 +85,20 @@ namespace PolynomialRoots
     }
 
     //! Multiply by a complex number in place.
+    //!
+    //! The arithmetic is carried out in `real_type`: routing it through
+    //! `long double` used to buy extra precision only on the platforms where
+    //! that type is wider than `double` (x86 Linux), making the results
+    //! platform dependent at no benefit on arm64 and MSVC.
     inline real_complex & operator*=( real_complex const & rhs )
     {
-      long double const a = static_cast<long double>( re );
-      long double const b = static_cast<long double>( im );
-      long double const c = static_cast<long double>( rhs.re );
-      long double const d = static_cast<long double>( rhs.im );
+      real_type const a = re;
+      real_type const b = im;
+      real_type const c = rhs.re;
+      real_type const d = rhs.im;
 
-      long double const real = a * c - b * d;
-      long double const imag = a * d + b * c;
-
-      re = static_cast<real_type>( real );
-      im = static_cast<real_type>( imag );
+      re = a * c - b * d;
+      im = a * d + b * c;
 
       return *this;
     }
@@ -109,39 +111,36 @@ namespace PolynomialRoots
       return *this;
     }
 
-    //! Divide by a complex number in place using a scaled algorithm.
+    //! Divide by a complex number in place using Smith's scaled algorithm.
+    //!
+    //! Carried out in `real_type` for the same portability reason explained in
+    //! `operator*=`.
     inline real_complex & operator/=( real_complex const & rhs )
     {
-      long double const a = static_cast<long double>( re );
-      long double const b = static_cast<long double>( im );
-      long double const c = static_cast<long double>( rhs.re );
-      long double const d = static_cast<long double>( rhs.im );
+      real_type const a = re;
+      real_type const b = im;
+      real_type const c = rhs.re;
+      real_type const d = rhs.im;
 
-      long double const abs_c = std::fabs( c );
-      long double const abs_d = std::fabs( d );
-
-      long double real;
-      long double imag;
+      real_type const abs_c = std::fabs( c );
+      real_type const abs_d = std::fabs( d );
 
       if ( abs_c >= abs_d )
       {
-        long double const r   = d / c;
-        long double const den = c + d * r;
+        real_type const r   = d / c;
+        real_type const den = c + d * r;
 
-        real = ( a + b * r ) / den;
-        imag = ( b - a * r ) / den;
+        re = ( a + b * r ) / den;
+        im = ( b - a * r ) / den;
       }
       else
       {
-        long double const r   = c / d;
-        long double const den = d + c * r;
+        real_type const r   = c / d;
+        real_type const den = d + c * r;
 
-        real = ( a * r + b ) / den;
-        imag = ( b * r - a ) / den;
+        re = ( a * r + b ) / den;
+        im = ( b * r - a ) / den;
       }
-
-      re = static_cast<real_type>( real );
-      im = static_cast<real_type>( imag );
 
       return *this;
     }

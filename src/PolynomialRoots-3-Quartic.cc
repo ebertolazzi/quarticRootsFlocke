@@ -19,7 +19,21 @@
 
 #include "PolynomialRoots.hh"
 
+#include <ostream>
+
 #define MAX_ITER_SAFETY 50
+
+//
+// Safety factor on the machine epsilon used to decide that the quartic touches
+// the real axis at a stationary point, that is that it has a real root of even
+// multiplicity there.  Calibrated on (x-r)^2 (x-s)^2 and (x-r)^4 families.
+//
+#define QRF_TOUCHING_ROOT_FACTOR 64
+
+//
+// Largest relative residual accepted for an isolated real root, eps^(3/4).
+//
+#define QRF_ACCEPT_RESIDUAL ( sqrt( machine_eps<T_real>() ) * sqrt( sqrt( machine_eps<T_real>() ) ) )
 
 namespace PolynomialRoots
 {
@@ -29,58 +43,97 @@ namespace PolynomialRoots
   using std::hypot;
   using std::sqrt;
 
+  //!
+  //! Collect the computed real roots.
+  //!
+  //! The storage layout depends on `m_ncplx`:
+  //!   - 0 : m_r0..m_r3 hold up to `m_nreal` real roots;
+  //!   - 2 : (m_r0,m_r1) is a conjugate pair, m_r2/m_r3 hold up to `m_nreal`
+  //!         real roots;
+  //!   - 4 : two conjugate pairs, no real root.
+  //!
+  //! `m_nreal` is smaller than 4 only for degenerate quartics (A == 0), hence
+  //! the explicit bound: without it a degenerate cubic would report a fourth,
+  //! never computed, "root".
+  //!
   template <typename T_real, typename T_complex> integer QuarticT<T_real, T_complex>::get_real_roots( T_real r[] ) const
   {
     integer nr = 0;
-    if ( !cplx0() ) r[nr++] = m_r0;
-    if ( !cplx1() ) r[nr++] = m_r1;
-    if ( !cplx2() ) r[nr++] = m_r2;
-    if ( !cplx3() ) r[nr++] = m_r3;
+    switch ( m_ncplx )
+    {
+      case 0:
+        if ( m_nreal > 0 ) r[nr++] = m_r0;
+        if ( m_nreal > 1 ) r[nr++] = m_r1;
+        if ( m_nreal > 2 ) r[nr++] = m_r2;
+        if ( m_nreal > 3 ) r[nr++] = m_r3;
+        break;
+      case 2:
+        if ( m_nreal > 0 ) r[nr++] = m_r2;
+        if ( m_nreal > 1 ) r[nr++] = m_r3;
+        break;
+      default: break;  // 4 complex roots: nothing real to report
+    }
     return nr;
   }
 
   template <typename T_real, typename T_complex>
   integer QuarticT<T_real, T_complex>::get_positive_roots( T_real r[] ) const
   {
-    integer nr = 0;
-    if ( !cplx0() && m_r0 > 0 ) r[nr++] = m_r0;
-    if ( !cplx1() && m_r1 > 0 ) r[nr++] = m_r1;
-    if ( !cplx2() && m_r2 > 0 ) r[nr++] = m_r2;
-    if ( !cplx3() && m_r3 > 0 ) r[nr++] = m_r3;
+    T_real        tmp[4];
+    integer const n  = get_real_roots( tmp );
+    integer       nr = 0;
+    for ( integer i{ 0 }; i < n; ++i )
+      if ( tmp[i] > 0 ) r[nr++] = tmp[i];
     return nr;
   }
 
   template <typename T_real, typename T_complex>
   integer QuarticT<T_real, T_complex>::get_negative_roots( T_real r[] ) const
   {
-    integer nr = 0;
-    if ( !cplx0() && m_r0 < 0 ) r[nr++] = m_r0;
-    if ( !cplx1() && m_r1 < 0 ) r[nr++] = m_r1;
-    if ( !cplx2() && m_r2 < 0 ) r[nr++] = m_r2;
-    if ( !cplx3() && m_r3 < 0 ) r[nr++] = m_r3;
+    T_real        tmp[4];
+    integer const n  = get_real_roots( tmp );
+    integer       nr = 0;
+    for ( integer i{ 0 }; i < n; ++i )
+      if ( tmp[i] < 0 ) r[nr++] = tmp[i];
     return nr;
   }
 
   template <typename T_real, typename T_complex>
   integer QuarticT<T_real, T_complex>::get_roots_in_range( T_real const & a, T_real const & b, T_real r[] ) const
   {
-    integer nr = 0;
-    if ( !cplx0() && m_r0 >= a && m_r0 <= b ) r[nr++] = m_r0;
-    if ( !cplx1() && m_r1 >= a && m_r1 <= b ) r[nr++] = m_r1;
-    if ( !cplx2() && m_r2 >= a && m_r2 <= b ) r[nr++] = m_r2;
-    if ( !cplx3() && m_r3 >= a && m_r3 <= b ) r[nr++] = m_r3;
+    T_real        tmp[4];
+    integer const n  = get_real_roots( tmp );
+    integer       nr = 0;
+    for ( integer i{ 0 }; i < n; ++i )
+      if ( tmp[i] >= a && tmp[i] <= b ) r[nr++] = tmp[i];
     return nr;
   }
 
   template <typename T_real, typename T_complex>
   integer QuarticT<T_real, T_complex>::get_roots_in_open_range( T_real const & a, T_real const & b, T_real r[] ) const
   {
-    integer nr = 0;
-    if ( !cplx0() && m_r0 > a && m_r0 < b ) r[nr++] = m_r0;
-    if ( !cplx1() && m_r1 > a && m_r1 < b ) r[nr++] = m_r1;
-    if ( !cplx2() && m_r2 > a && m_r2 < b ) r[nr++] = m_r2;
-    if ( !cplx3() && m_r3 > a && m_r3 < b ) r[nr++] = m_r3;
+    T_real        tmp[4];
+    integer const n  = get_real_roots( tmp );
+    integer       nr = 0;
+    for ( integer i{ 0 }; i < n; ++i )
+      if ( tmp[i] > a && tmp[i] < b ) r[nr++] = tmp[i];
     return nr;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //
+  // Compute (p/q) * 2^shift without any intermediate overflow or underflow:
+  // the mantissas are divided first, the binary exponents are added afterwards.
+  //
+  template <typename T_real> static T_real scaled_ratio( T_real const & p, T_real const & q, int const shift )
+  {
+    using std::frexp;
+    using std::ldexp;
+    if ( p == 0 ) return T_real( 0 );
+    int          ep{ 0 }, eq{ 0 };
+    T_real const mp{ frexp( p, &ep ) };
+    T_real const mq{ frexp( q, &eq ) };
+    return ldexp( mp / mq, ep - eq + shift );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -230,29 +283,36 @@ namespace PolynomialRoots
     T_real &       b1,
     T_real &       b0 )
   {
-    integer      i_cross  = 0;
-    T_real const r2       = r * r;
-    T_real       v_cross  = abs( a0 );
-    T_real       v_cross1 = abs( a1 * r );
-    if ( v_cross1 > v_cross )
+    /*
+    ..  The cross-over index is the k maximizing |a_k| |r|^k.  Forming those
+    ..  products directly overflows as soon as |r| is large - for the quartic
+    ..  with roots 1e154, 1e152, 10, 1 every one of them becomes infinite, they
+    ..  all compare equal and the first, wrong, branch is taken.  Dividing by
+    ..  |r|^4 when |r| > 1 (and multiplying otherwise) leaves the ordering
+    ..  unchanged and cannot overflow either way.
+    */
+    T_real const ar{ abs( r ) };
+    T_real       w[5];
+    if ( ar > 1 )
     {
-      v_cross = v_cross1;
-      i_cross = 1;
+      w[4] = abs( a4 );
+      w[3] = abs( a3 ) / ar;
+      w[2] = ( abs( a2 ) / ar ) / ar;
+      w[1] = ( ( abs( a1 ) / ar ) / ar ) / ar;
+      w[0] = ( ( ( abs( a0 ) / ar ) / ar ) / ar ) / ar;
     }
-    v_cross1 = abs( a2 * r2 );
-    if ( v_cross1 > v_cross )
+    else
     {
-      v_cross = v_cross1;
-      i_cross = 2;
+      T_real const r2{ ar * ar };
+      w[0] = abs( a0 );
+      w[1] = abs( a1 ) * ar;
+      w[2] = abs( a2 ) * r2;
+      w[3] = abs( a3 ) * ar * r2;
+      w[4] = abs( a4 ) * r2 * r2;
     }
-    v_cross1 = abs( a3 * r * r2 );
-    if ( v_cross1 > v_cross )
-    {
-      v_cross = v_cross1;
-      i_cross = 3;
-    }
-    v_cross1 = abs( a4 * r2 * r2 );
-    if ( v_cross1 > v_cross ) i_cross = 4;
+    integer i_cross{ 0 };
+    for ( integer k{ 1 }; k <= 4; ++k )
+      if ( w[k] > w[i_cross] ) i_cross = k;
     switch ( i_cross )
     {
       case 0:
@@ -294,10 +354,12 @@ namespace PolynomialRoots
     T_real const & b,
     T_real const & c,
     T_real const & d,
-    T_real &       x )
+    T_real &       x,
+    bool &         ok )
   {
+    ok = false;
     T_real p, dp;
-    evalMonicQuartic( x, a, b, c, d, p, dp );
+    eval_monic_quartic( x, a, b, c, d, p, dp );
     T_real t = p;  // save p(x) for sign comparison
     x -= p / dp;   // 1st improved root
 
@@ -306,44 +368,60 @@ namespace PolynomialRoots
     integer nconverged = 0;
     bool    bisection  = false;
     bool    converged  = false;
+    bool    have_s     = false;
+    bool    have_u     = false;
     T_real  s          = 0;
     T_real  u          = 0;  // to mute warning
     while ( !( nconverged > 1 || bisection ) && iter < MAX_ITER_SAFETY )
     {
       ++iter;
       T_real ddp;
-      evalMonicQuartic( x, a, b, c, d, p, dp, ddp );
+      eval_monic_quartic( x, a, b, c, d, p, dp, ddp );
       if ( p * t < 0 )
       {  // does Newton start oscillating ?
         if ( p < 0 )
         {
           ++oscillate;  // increment oscillation counter
-          s = x;        // save lower bisection bound
+          s      = x;   // save lower bisection bound
+          have_s = true;
         }
         else
         {
-          u = x;  // save upper bisection bound
+          u      = x;  // save upper bisection bound
+          have_u = true;
         }
         t = p;  // save current p(x)
       }
       // dp = (p*dp)/(dp*dp-p*ddp); // double zero correction
-      dp = ( p * dp ) / ( dp * dp - 0.5 * p * ddp );  // Halley correction
+      dp = ( p * dp ) / ( dp * dp - p * ddp / 2 );  // Halley correction
       // dp = p/dp; // Newton correction
-      x -= dp;                                                          // new Newton root
-      bisection = oscillate > 2;                                        // activate bisection
-      converged = abs( dp ) <= ( 1 + abs( x ) ) * machepsiT<T_real>();  // Newton convergence indicator
+      x -= dp;                    // new Newton root
+      bisection = oscillate > 2;  // activate bisection
+      /*
+      ..  RELATIVE convergence test.  The customary (1+|x|)*eps carries an
+      ..  absolute floor of one epsilon: harmless while the roots are O(1), but
+      ..  after Flocke's scaling a quartic with a tiny leading coefficient has
+      ..  roots down at 1e-18, where that floor is eighty times the root itself
+      ..  and the iteration stops with eight correct digits instead of sixteen.
+      ..  The iteration cap above keeps the loop bounded when x tends to zero.
+      */
+      converged = abs( dp ) <= abs( x ) * machine_eps<T_real>();  // Newton convergence indicator
       if ( converged )
         ++nconverged;
       else
         nconverged = 0;
     }
-    if ( bisection || !converged )
+    // The oscillation brackets are usable only when BOTH of them have been
+    // recorded: s and u start at 0 and, without this guard, a Newton run that
+    // never oscillated would "bisect" over the meaningless interval [0,0] and
+    // silently accept the last, unconverged iterate.
+    if ( bisection && have_s && have_u )
     {
       t = u - s;  // initial bisection interval
-      while ( abs( t ) > ( 1 + abs( x ) ) * machepsiT<T_real>() && iter < MAX_ITER_SAFETY )
+      while ( abs( t ) > abs( x ) * machine_eps<T_real>() && iter < MAX_ITER_SAFETY )
       {  // bisection iterates
         ++iter;
-        p = evalMonicQuartic( x, a, b, c, d );
+        p = eval_monic_quartic( x, a, b, c, d );
         if ( p < 0 )
           s = x;
         else
@@ -351,8 +429,234 @@ namespace PolynomialRoots
         t = ( u - s ) / 2;  // new bisection interval
         x = s + t;          // new bisection root
       }
+      ok = true;
+    }
+    else
+    {
+      ok = converged;
+    }
+    ok = ok && isfinite( x );
+    return iter;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //
+  // Safeguarded Newton (Newton step when it stays inside the bracket and makes
+  // progress, bisection otherwise) for the monic quartic
+  //
+  //    Q(x) = x^4 + q3 x^3 + q2 x^2 + q1 x + q0
+  //
+  // on an interval [lo,hi] where Q changes sign.  Unlike the heuristic routine
+  // above this one is unconditionally convergent, and is used as a fallback
+  // whenever the fast path fails.
+  //
+  template <typename T_real> static integer zeroQuarticInBracket(
+    T_real const & q3,
+    T_real const & q2,
+    T_real const & q1,
+    T_real const & q0,
+    T_real const & lo,
+    T_real const & hi,
+    T_real &       x )
+  {
+    T_real const flo{ eval_monic_quartic( lo, q3, q2, q1, q0 ) };
+    T_real const fhi{ eval_monic_quartic( hi, q3, q2, q1, q0 ) };
+    if ( flo == 0 )
+    {
+      x = lo;
+      return 0;
+    }
+    if ( fhi == 0 )
+    {
+      x = hi;
+      return 0;
+    }
+    // xl is the end where Q < 0, xh the end where Q > 0
+    T_real xl{ flo < 0 ? lo : hi };
+    T_real xh{ flo < 0 ? hi : lo };
+
+    T_real dx_old{ abs( hi - lo ) };
+    T_real dx{ dx_old };
+    x = ( lo + hi ) / 2;
+
+    T_real p, dp;
+    eval_monic_quartic( x, q3, q2, q1, q0, p, dp );
+
+    integer iter{ 0 };
+    for ( ; iter < 200; ++iter )
+    {
+      bool const   newton_out_of_range{ ( ( x - xh ) * dp - p ) * ( ( x - xl ) * dp - p ) > 0 };
+      bool const   newton_too_slow{ abs( 2 * p ) > abs( dx_old * dp ) };
+      T_real const xl_prev{ xl };
+      T_real const xh_prev{ xh };
+      dx_old = dx;
+      if ( newton_out_of_range || newton_too_slow )
+      {
+        dx = ( xh - xl ) / 2;
+        x  = xl + dx;
+      }
+      else
+      {
+        dx = p / dp;
+        x -= dx;
+      }
+      /*
+      ..  The stopping rule is RELATIVE.  The usual (1+|x|)*eps form hides an
+      ..  absolute floor of one eps, which is harmless while the roots are O(1)
+      ..  but fatal here: after Flocke's scaling a quartic with a tiny leading
+      ..  coefficient has roots of the order of eps itself, and an absolute
+      ..  floor would stop the iteration an order of magnitude away from them.
+      ..  The bracket collapsing onto two adjacent floating point numbers is the
+      ..  companion criterion, needed when the root is exactly zero.
+      */
+      if ( abs( dx ) <= abs( x ) * machine_eps<T_real>() ) break;
+      if ( x == xl_prev || x == xh_prev ) break;
+      eval_monic_quartic( x, q3, q2, q1, q0, p, dp );
+      if ( p < 0 )
+        xl = x;
+      else
+        xh = x;
     }
     return iter;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //
+  // Relative residual of the monic quartic at x, used to validate the root
+  // returned by the fast path.
+  //
+  template <typename T_real> static T_real quarticRelativeResidual(
+    T_real const & q3,
+    T_real const & q2,
+    T_real const & q1,
+    T_real const & q0,
+    T_real const & x )
+  {
+    T_real const ax{ abs( x ) };
+    T_real const den{ ( ( ( ax + abs( q3 ) ) * ax + abs( q2 ) ) * ax + abs( q1 ) ) * ax + abs( q0 ) };
+    if ( !( den > 0 ) ) return T_real( 0 );
+    return abs( eval_monic_quartic( x, q3, q2, q1, q0 ) ) / den;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //
+  // Unconditionally correct search for ONE real root of the monic quartic.
+  //
+  // Q is monotone on each interval delimited by its stationary points, and all
+  // its real roots lie in [-R,R] with R = 1 + max|q_k| (Cauchy bound).  Hence
+  // scanning the sign of Q over the breakpoints -R, u, t, s, +R either exhibits
+  // a bracket - and then `zeroQuarticInBracket` converges - or proves that no
+  // real root exists.
+  //
+  template <typename T_real> static bool findRealRootOfQuartic(
+    T_real const & q3,
+    T_real const & q2,
+    T_real const & q1,
+    T_real const & q0,
+    T_real const & u,
+    T_real const & t,
+    T_real const & s,
+    bool const     three_stationary_points,
+    T_real &       x,
+    integer &      iter )
+  {
+    T_real R{ abs( q3 ) };
+    if ( abs( q2 ) > R ) R = abs( q2 );
+    if ( abs( q1 ) > R ) R = abs( q1 );
+    if ( abs( q0 ) > R ) R = abs( q0 );
+    R += 1;
+
+    T_real  bp[5];
+    integer n{ 0 };
+    bp[n++] = -R;
+    if ( three_stationary_points )
+    {
+      // u <= t <= s, all of them inside [-R,R]
+      if ( u > bp[n - 1] && u < R ) bp[n++] = u;
+      if ( t > bp[n - 1] && t < R ) bp[n++] = t;
+      if ( s > bp[n - 1] && s < R ) bp[n++] = s;
+    }
+    else if ( s > bp[n - 1] && s < R ) { bp[n++] = s; }
+    bp[n++] = R;
+
+    /*
+    ..  Every sign change is solved, and the root of LARGEST modulus is kept.
+    ..  That is Flocke's own rationale for starting Newton at +-2: the extreme
+    ..  root is the best conditioned one and the one the composite deflation
+    ..  handles best.  Taking the first bracket instead is wrong whenever the
+    ..  leading coefficient is tiny, because the scaled quartic then has one
+    ..  root near +-1 and the others down at the level of the machine epsilon,
+    ..  and the leftmost bracket is precisely the hopeless one.
+    */
+    bool    found{ false };
+    T_real  best_x{ 0 };
+    integer total_iter{ 0 };
+
+    T_real f_prev{ eval_monic_quartic( bp[0], q3, q2, q1, q0 ) };
+    if ( f_prev == 0 )
+    {
+      found  = true;
+      best_x = bp[0];
+    }
+    for ( integer i{ 1 }; i < n; ++i )
+    {
+      T_real const f_cur{ eval_monic_quartic( bp[i], q3, q2, q1, q0 ) };
+      T_real       cand{ 0 };
+      bool         have_cand{ false };
+      if ( f_cur == 0 )
+      {
+        cand      = bp[i];
+        have_cand = true;
+      }
+      else if ( ( f_prev < 0 ) != ( f_cur < 0 ) )
+      {
+        total_iter += zeroQuarticInBracket( q3, q2, q1, q0, bp[i - 1], bp[i], cand );
+        have_cand = true;
+      }
+      if ( have_cand && ( !found || abs( cand ) > abs( best_x ) ) )
+      {
+        found  = true;
+        best_x = cand;
+      }
+      f_prev = f_cur;
+    }
+    if ( found )
+    {
+      x    = best_x;
+      iter = total_iter;
+      return true;
+    }
+
+    /*
+    ..  No sign change.  That still does not prove the absence of real roots: a
+    ..  root of EVEN multiplicity touches the axis without crossing it, so for
+    ..  (x-r)^2 (x-s)^2 and for (x-r)^4 the scan above finds nothing while all
+    ..  four roots are real.  Such a root sits on a stationary point and makes Q
+    ..  numerically vanish there, so the minimum of the RELATIVE residual over
+    ..  the stationary points settles the question.  The relative form is what
+    ..  makes the test usable: the absolute residual depends on the scale of the
+    ..  coefficients and no fixed threshold works for it.
+    */
+    T_real touch_x{ 0 };
+    T_real touch_res{ 0 };
+    bool   have_touch{ false };
+    for ( integer i{ 1 }; i + 1 < n; ++i )
+    {
+      T_real const res{ quarticRelativeResidual( q3, q2, q1, q0, bp[i] ) };
+      if ( !have_touch || res < touch_res )
+      {
+        touch_x    = bp[i];
+        touch_res  = res;
+        have_touch = true;
+      }
+    }
+    if ( have_touch && touch_res <= QRF_TOUCHING_ROOT_FACTOR * machine_eps<T_real>() )
+    {
+      x    = touch_x;
+      iter = 0;
+      return true;
+    }
+    return false;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -373,9 +677,14 @@ namespace PolynomialRoots
     integer oscillate = 0;
     bool    bisection = false;
     bool    converged = false;
+    bool    have_s    = false;
+    bool    have_u    = false;
     T_real  s         = 0;
     T_real  u         = 0;  // to mute warning
-    while ( !( converged || bisection ) )
+    // Both loops below are bounded by MAX_ITER_SAFETY and use the absolute plus
+    // relative criterion (1+|x|)*eps.  The original formulation, |dx| <= |x|*eps
+    // with no iteration cap, cannot terminate when x converges to zero.
+    while ( !( converged || bisection ) && iter < MAX_ITER_SAFETY )
     {
       ++iter;
       evalHexic( x, q3, q2, q1, q0, p, dp );
@@ -384,23 +693,27 @@ namespace PolynomialRoots
         if ( p < 0 )
         {
           ++oscillate;  // increment oscillation counter
-          s = x;        // save lower bisection bound
+          s      = x;   // save lower bisection bound
+          have_s = true;
         }
         else
         {
-          u = x;  // save upper bisection bound
+          u      = x;  // save upper bisection bound
+          have_u = true;
         }
         t = p;  // save current p(x)
       }
-      dp = p / dp;                                              // Newton correction
-      x -= dp;                                                  // new Newton root
-      bisection = oscillate > 2;                                // activate bisection
-      converged = abs( dp ) <= abs( x ) * machepsiT<T_real>();  // Newton convergence indicator
+      if ( dp == 0 ) break;
+      dp = p / dp;  // Newton correction
+      if ( !isfinite( dp ) ) break;
+      x -= dp;                                                    // new Newton root
+      bisection = oscillate > 2;                                  // activate bisection
+      converged = abs( dp ) <= abs( x ) * machine_eps<T_real>();  // Newton convergence indicator
     }
-    if ( bisection )
+    if ( bisection && have_s && have_u )
     {
       t = u - s;  // initial bisection interval
-      while ( abs( t ) > abs( x ) * machepsiT<T_real>() )
+      while ( abs( t ) > abs( x ) * machine_eps<T_real>() && iter < MAX_ITER_SAFETY )
       {  // bisection iterates
         ++iter;
         p = evalHexic( x, q3, q2, q1, q0 );
@@ -447,6 +760,7 @@ namespace PolynomialRoots
     {
       CubicT<T_real, T_complex> csolve( B, C, D, E );
       m_nreal = csolve.num_roots();
+      m_r0 = m_r1 = m_r2 = m_r3 = 0;
       switch ( m_nreal )
       {
         case 3: m_r2 = csolve.real_root2(); [[fallthrough]];
@@ -482,6 +796,10 @@ namespace PolynomialRoots
         if ( m_r3 < m_r2 ) std::swap( m_r2, m_r3 );
         if ( m_r2 < m_r1 ) std::swap( m_r1, m_r2 );
         if ( m_r1 < m_r0 ) std::swap( m_r0, m_r1 );
+      }
+      else if ( m_ncplx == 2 && m_nreal == 2 && m_r2 > m_r3 )
+      {  // (m_r0,m_r1) complex pair, m_r2 and m_r3 real: keep them ordered
+        std::swap( m_r2, m_r3 );
       }
       return;
     }
@@ -549,12 +867,46 @@ namespace PolynomialRoots
     .. (due to underflow in the coefficients).
     */
 
-    T_real const A3 = B / A;
-    T_real const A2 = C / A;
-    T_real const A1 = D / A;
-    T_real const A0 = E / A;
-    T_real       q0, q1, q2, q3, scale;
-    integer      i_case;
+    T_real A3 = B / A;
+    T_real A2 = C / A;
+    T_real A1 = D / A;
+    T_real A0 = E / A;
+
+    /*
+    ..  Extremely unbalanced coefficients, such as |e| / |a| > DBL_MAX, make the
+    ..  normalized quartic overflow and the solver used to return `inf` roots.
+    ..  In that case the unknown is rescaled, x = root_scale * y with
+    ..  root_scale a power of two chosen so that |A0| ~ 1; the whole solution is
+    ..  then carried out on y and every root is multiplied back at the end.
+    */
+    T_real root_scale{ 1 };
+    bool   rescaled{ false };
+    if ( !( isfinite( A3 ) && isfinite( A2 ) && isfinite( A1 ) && isfinite( A0 ) ) )
+    {
+      using std::frexp;
+      using std::ldexp;
+      int eA{ 0 }, eE{ 0 };
+      frexp( A, &eA );
+      if ( E != 0 ) frexp( E, &eE );
+      int const m{ ( eE - eA ) / 4 };
+      root_scale = ldexp( T_real( 1 ), m );
+      A3         = scaled_ratio( B, A, -m );
+      A2         = scaled_ratio( C, A, -2 * m );
+      A1         = scaled_ratio( D, A, -3 * m );
+      A0         = scaled_ratio( E, A, -4 * m );
+      rescaled   = true;
+      root_assert(
+        isfinite( A3 ) && isfinite( A2 ) && isfinite( A1 ) && isfinite( A0 ) && isfinite( root_scale ),
+        "QuarticT: coefficients a={}, b={}, c={}, d={}, e={} are too unbalanced to be normalized",
+        A,
+        B,
+        C,
+        D,
+        E );
+    }
+
+    T_real  q0, q1, q2, q3, scale;
+    integer i_case;
     scaleQuarticMonicPolynomial( A3, A2, A1, A0, q3, q2, q1, q0, i_case, scale );
 
     // Q(x)    = q0 + q1 * x + q2 * x^2 + q3 * x^3 + x^4
@@ -602,16 +954,22 @@ namespace PolynomialRoots
     T_real c1 = q2 / 2;
     T_real c0 = q1 / 4;
 
-    CubicT<T_real, T_complex> qsolve( 1, c2, c1, c0 );
-    T_real                    u = qsolve.real_root0();  // root according to paper
-    T_real                    t = qsolve.real_root1();
-    T_real                    s = qsolve.real_root2();
+    CubicT<T_real, T_complex> qsolve( T_real( 1 ), c2, c1, c0 );
+    // When the derivative has three real roots they come out sorted as
+    // u <= t <= s.  When it has a conjugate pair, real_root0()/real_root1() are
+    // the real and imaginary part of that pair and the single real stationary
+    // point is real_root2(): u and t are then meaningless and must not be used.
+    bool const three_stationary_points = !qsolve.complex_root();
+    T_real     u                       = qsolve.real_root0();  // root according to paper
+    T_real     t                       = qsolve.real_root1();
+    T_real     s                       = qsolve.real_root2();
+    if ( !three_stationary_points ) u = t = s;
 
     bool must_refine_r3 = true;
-    if ( !qsolve.complex_root() )
+    if ( three_stationary_points )
     {
-      T_real Qs    = evalMonicQuartic( s, q3, q2, q1, q0 );
-      T_real Qu    = evalMonicQuartic( u, q3, q2, q1, q0 );
+      T_real Qs    = eval_monic_quartic( s, q3, q2, q1, q0 );
+      T_real Qu    = eval_monic_quartic( u, q3, q2, q1, q0 );
       bool   q0pos = q0 > 0;
       m_nreal      = 1;
       if ( Qs < 0 && Qu < 0 )
@@ -684,11 +1042,14 @@ namespace PolynomialRoots
     }
     else
     {
-      // one single real root (only 1 minimum)
-      if ( T_real const Qs = evalMonicQuartic( s, q3, q2, q1, q0 ); Qs <= 0 )
+      // Q has a single stationary point (a minimum) located at x = s.  The test
+      // below must therefore look at s: using real_root0() here compared the
+      // REAL PART of the complex stationary pair and picked the wrong Newton
+      // starting point.
+      if ( T_real const Qs = eval_monic_quartic( s, q3, q2, q1, q0 ); Qs <= 0 )
       {
         T_real const tmp = q0 >= 0 ? 0 : 2;
-        m_r3             = u > 0 ? -tmp : -2;
+        m_r3             = s > 0 ? -tmp : -2;
         m_nreal          = 1;
       }
     }
@@ -705,9 +1066,57 @@ namespace PolynomialRoots
     ..  and further location of the root is done using bisection starting with the
     ..  oscillation brackets.
     */
+    bool real_root_ok{ false };
     if ( m_nreal > 0 )
     {
-      if ( must_refine_r3 ) m_iter += zeroQuarticByNewtonBisection( q3, q2, q1, q0, m_r3 );
+      if ( must_refine_r3 )
+      {
+        bool conv{ false };
+        m_iter += zeroQuarticByNewtonBisection( q3, q2, q1, q0, m_r3, conv );
+        real_root_ok = conv;
+      }
+      else
+      {
+        real_root_ok = true;
+      }
+      // Accept the fast path only if the returned value really is a root.  The
+      // bound is eps^(3/4): a correctly rounded root leaves a relative residual
+      // of a few eps, so this is generous, while a root known to half precision
+      // only - residual around sqrt(eps) - is rejected and recomputed below.
+      if ( real_root_ok ) real_root_ok = quarticRelativeResidual( q3, q2, q1, q0, m_r3 ) <= QRF_ACCEPT_RESIDUAL;
+    }
+
+    /*
+    ..  Guaranteed fallback.  The heuristic above can both miss an existing real
+    ..  root and return an unconverged iterate (the Newton loop gives up after
+    ..  MAX_ITER_SAFETY steps and the oscillation brackets may never have been
+    ..  recorded).  Deciding the question on the monotonicity intervals of Q is
+    ..  cheap - at most four extra evaluations - and always conclusive.
+    */
+    if ( !real_root_ok )
+    {
+      T_real  x_real{ 0 };
+      integer extra_iter{ 0 };
+      // the fallback result is validated exactly like the fast path one: a
+      // quartic whose real root cannot be isolated to the working precision is
+      // better served by the all-complex branch than by a bogus deflation
+      if (
+        findRealRootOfQuartic( q3, q2, q1, q0, u, t, s, three_stationary_points, x_real, extra_iter ) &&
+        quarticRelativeResidual( q3, q2, q1, q0, x_real ) <= QRF_ACCEPT_RESIDUAL )
+      {
+        m_r3    = x_real;
+        m_nreal = 1;
+        m_iter += extra_iter;
+        real_root_ok = true;
+      }
+      else
+      {
+        m_nreal = 0;
+      }
+    }
+
+    if ( real_root_ok )
+    {
       m_r3 *= scale;
 
       /*
@@ -717,9 +1126,16 @@ namespace PolynomialRoots
       ..  deflation is being performed on the original quartic again to avoid enhanced
       ..  propagation of root errors.
       */
-      deflateQuarticPolynomial( A, B, C, D, E, m_r3, q2, q1, q0 );
+      // Flocke deflates on the ORIGINAL quartic to limit error propagation; in
+      // the rescaled case the original coefficients live in a different
+      // variable, so the normalized ones must be used instead.
+      T_real const d4{ rescaled ? T_real( 1 ) : A };
+      if ( rescaled )
+        deflateQuarticPolynomial( T_real( 1 ), A3, A2, A1, A0, m_r3, q2, q1, q0 );
+      else
+        deflateQuarticPolynomial( A, B, C, D, E, m_r3, q2, q1, q0 );
 
-      CubicT<T_real, T_complex> csolve( A, q2, q1, q0 );
+      CubicT<T_real, T_complex> csolve( d4, q2, q1, q0 );
       m_r0 = csolve.real_root0();
       m_r1 = csolve.real_root1();
       m_r2 = csolve.real_root2();
@@ -745,8 +1161,8 @@ namespace PolynomialRoots
       */
       s            = q3 / 2;
       t            = s * s - q2;
-      u            = s * t + q1;                           // value of Q'(-q3/4) at stationary point -q3/4
-      bool notZero = ( abs( u ) >= machepsiT<T_real>() );  // H(-a3/4) is considered > 0 at stationary point
+      u            = s * t + q1;                             // value of Q'(-q3/4) at stationary point -q3/4
+      bool notZero = ( abs( u ) >= machine_eps<T_real>() );  // H(-a3/4) is considered > 0 at stationary point
       bool minimum;
       if ( q3 != 0 )
       {
@@ -788,15 +1204,22 @@ namespace PolynomialRoots
         T_real ss = c + y;  // magnitude^2 of (a + iy) root
         T_real tt = d + z;  // magnitude^2 of (b + iz) root
 
+        // the arguments below are non negative in exact arithmetic but can turn
+        // slightly negative because of rounding: clamp them as already done in
+        // the non-iterative branch
         if ( ss > tt )
-        {                           // minimize imaginary error
-          c = sqrt( y );            // 1st imaginary component -> c
-          d = sqrt( A0 / ss - d );  // 2nd imaginary component -> d
+        {                                   // minimize imaginary error
+          T_real const cc2{ y };            // 1st imaginary component -> c
+          T_real const dd2{ A0 / ss - d };  // 2nd imaginary component -> d
+          c = cc2 > 0 ? sqrt( cc2 ) : T_real( 0 );
+          d = dd2 > 0 ? sqrt( dd2 ) : T_real( 0 );
         }
         else
         {
-          c = sqrt( A0 / tt - c );  // 1st imaginary component -> c
-          d = sqrt( z );            // 2nd imaginary component -> d
+          T_real const cc2{ A0 / tt - c };  // 1st imaginary component -> c
+          T_real const dd2{ z };            // 2nd imaginary component -> d
+          c = cc2 > 0 ? sqrt( cc2 ) : T_real( 0 );
+          d = dd2 > 0 ? sqrt( dd2 ) : T_real( 0 );
         }
       }
       else
@@ -813,10 +1236,29 @@ namespace PolynomialRoots
         T_real z = y * y - x;
         z        = z > 0 ? sqrt( z ) : 0;  // force discriminant to be >= 0
                                            // square root of discriminant
-        y = y > 0 ? y + z : y - z;         // larger magnitude root
-        x /= y;                            // smaller magnitude root
-        c = y < 0 ? 0 : sqrt( y );         // ensure root of biquadratic > 0
-        d = x < 0 ? 0 : sqrt( x );         // large magnitude imaginary component
+        y        = y > 0 ? y + z : y - z;  // larger magnitude root
+        if ( y == 0 )
+        {
+          /*
+          ..  Both coefficients of the resolvent vanish: with t = x - a the
+          ..  quartic has degenerated to  Q(a+t) = t^4 + x,  x >= 0.  Its roots
+          ..  lie on the diagonals through a,
+          ..        a +- m +- i m,   m = ( x^(1/4) ) / sqrt(2)
+          ..  and x == 0 gives the quadruple root a.  Without this branch the
+          ..  division below was 0/0 and produced infinite imaginary parts, as
+          ..  happens for every (x-r)^4 whose Q(a) rounds to a value >= 0.
+          */
+          T_real const m = x > 0 ? sqrt( sqrt( x ) / 2 ) : T_real( 0 );
+          b              = a - m;  // 2nd real component
+          a              = a + m;  // 1st real component
+          c = d = m;               // both imaginary components
+        }
+        else
+        {
+          x /= y;                     // smaller magnitude root
+          c = y < 0 ? 0 : sqrt( y );  // ensure root of biquadratic > 0
+          d = x < 0 ? 0 : sqrt( x );  // large magnitude imaginary component
+        }
       }
 
       m_ncplx = 4;
@@ -841,6 +1283,16 @@ namespace PolynomialRoots
         m_r2 = a;
         m_r3 = d;
       }
+    }
+
+    if ( rescaled )
+    {
+      // undo x = root_scale * y (root_scale is a positive power of two, so the
+      // ordering established above is preserved)
+      m_r0 *= root_scale;
+      m_r1 *= root_scale;
+      m_r2 *= root_scale;
+      m_r3 *= root_scale;
     }
   }
 
@@ -891,66 +1343,34 @@ namespace PolynomialRoots
     }
   }
 
+  template <typename T_real, typename T_complex> T_real QuarticT<T_real, T_complex>::backward_error() const
+  {
+    T_real        err{ 0 };
+    integer const n{ num_roots() };
+    for ( integer i{ 0 }; i < n; ++i )
+    {
+      T_real const e{ root_backward_error<T_real, T_complex>( m_ABCDE, 4, root( i ) ) };
+      if ( e > err ) err = e;
+    }
+    return err;
+  }
+
   template <typename T_real, typename T_complex> bool QuarticT<T_real, T_complex>::check( ostream_type & s ) const
   {
-    T_real const & A    = m_ABCDE[0];
-    T_real const & B    = m_ABCDE[1];
-    T_real const & C    = m_ABCDE[2];
-    T_real const & D    = m_ABCDE[3];
-    T_real const & E    = m_ABCDE[4];
-    bool           ok   = true;
-    T_real const   epsi = ( ( abs( A ) + abs( B ) + abs( C ) + abs( D ) + abs( E ) ) * toleranceT<T_real>() );
-    if ( m_ncplx > 0 )
+    integer const n{ num_roots() };
+    if ( n <= 0 )
     {
-      T_real const z0 = abs( eval( root0() ) );
-      T_real const z1 = abs( eval( root1() ) );
-      s << std::format(
-        "|p(r0)| = {}\n"
-        "|p(r1)| = {}\n",
-        z0,
-        z1 );
-      ok = ok && abs( z0 ) < epsi && abs( z1 ) < epsi;
+      s << "no root computed\n";
+      return true;
     }
-    else
+    T_real const tol{ residual_tolerance<T_real>() };
+    bool         ok{ true };
+    for ( integer i{ 0 }; i < n; ++i )
     {
-      if ( m_nreal > 0 )
-      {
-        T_real const z0 = eval( real_root0() );
-        s << std::format( "p(r0) = {}\n", z0 );
-        ok = ok && abs( z0 ) < epsi;
-      }
-      if ( m_nreal > 1 )
-      {
-        T_real const z1 = eval( real_root1() );
-        s << std::format( "p(r1) = {}\n", z1 );
-        ok = ok && abs( z1 ) < epsi;
-      }
-    }
-    if ( m_ncplx > 2 )
-    {
-      T_real const z2 = abs( eval( root2() ) );
-      T_real const z3 = abs( eval( root3() ) );
-      s << std::format(
-        "|p(r2)| = {}\n"
-        "|p(r3)| = {}\n",
-        z2,
-        z3 );
-      ok = ok && abs( z2 ) < epsi && abs( z3 ) < epsi;
-    }
-    else
-    {
-      if ( m_nreal > 2 || ( m_ncplx > 0 && m_nreal > 0 ) )
-      {
-        T_real const z2 = eval( real_root2() );
-        s << std::format( "p(r2) = {}\n", z2 );
-        ok = ok && abs( z2 ) < epsi;
-      }
-      if ( m_nreal > 3 || ( m_ncplx > 0 && m_nreal > 1 ) )
-      {
-        T_real const z3 = eval( real_root3() );
-        s << std::format( "p(r3) = {}\n", z3 );
-        ok = ok && abs( z3 ) < epsi;
-      }
+      T_complex const r{ root( i ) };
+      T_real const    be{ root_backward_error<T_real, T_complex>( m_ABCDE, 4, r ) };
+      s << std::format( "|p(r{})| = {}, backward error = {}\n", i, abs( eval( r ) ), be );
+      ok = ok && be <= tol;
     }
     return ok;
   }

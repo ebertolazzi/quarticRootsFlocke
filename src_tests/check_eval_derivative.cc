@@ -17,10 +17,10 @@ namespace
   using PolynomialRoots::Cubic;
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
   using PolynomialRoots::CubicHQ;
-  using PolynomialRoots::MAXDEGREE;
+  using PolynomialRoots::max_degree;
   using PolynomialRoots::quad_real;
 #else
-  using PolynomialRoots::MAXDEGREE;
+  using PolynomialRoots::max_degree;
 #endif
   using PolynomialRoots::Quadratic;
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
@@ -94,8 +94,9 @@ namespace
   {
     using Real = solver_scalar_t<Solver>;
 
-    // Costruisce il solutore
-    Solver solver( std::apply( []( auto... args ) { return Solver( args... ); }, coeffs ) );
+    // Costruisce il solutore (una sola volta: std::apply espande direttamente
+    // i coefficienti sul costruttore)
+    Solver solver{ std::apply( []( auto const &... args ) { return Solver( args... ); }, coeffs ) };
 
     bool   ok      = true;
     double max_err = 0.0;
@@ -237,19 +238,21 @@ int main()
   );
 
   {
-    summary.case_header( case_id, "MAXDEGREE guard", "Jenkins-Traub entry-point" );
-    std::vector<real_type> coeffs( MAXDEGREE + 2, 0 );
-    std::vector<real_type> zr( MAXDEGREE + 1, 0 );
-    std::vector<real_type> zi( MAXDEGREE + 1, 0 );
+    summary.case_header( case_id, "max_degree guard", "Jenkins-Traub entry-point" );
+    std::vector<real_type> coeffs( max_degree + 2, 0 );
+    std::vector<real_type> zr( max_degree + 1, 0 );
+    std::vector<real_type> zi( max_degree + 1, 0 );
     coeffs.front() = 1;
 
-    if ( PolynomialRoots::roots( coeffs.data(), MAXDEGREE + 1, zr.data(), zi.data() ) == -3 )
+    if (
+      PolynomialRoots::jenkins_traub_roots( coeffs.data(), max_degree + 1, zr.data(), zi.data() ) ==
+      PolynomialRoots::RootsError::DEGREE_TOO_LARGE )
     {
-      summary.pass( "roots(MAXDEGREE overflow)" );
+      summary.pass( "roots(max_degree overflow)" );
     }
     else
     {
-      summary.fail( "roots(MAXDEGREE overflow)" );
+      summary.fail( "roots(max_degree overflow)" );
     }
   }
 

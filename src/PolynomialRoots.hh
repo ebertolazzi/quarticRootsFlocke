@@ -20,18 +20,25 @@
 #ifndef POLYNOMIAL_ROOTS_HH
 #define POLYNOMIAL_ROOTS_HH
 
-#include <cmath>
 #include <cfloat>
-#include <iostream>
-
-#include <complex>
+#include <cmath>
 #include <cstdint>
 #include <format>
-#include <iomanip>
 #include <iosfwd>
 #include <limits>
-#include <sstream>
+#include <stdexcept>
 #include <string>
+#include <utility>
+
+//!
+//! The library formats its diagnostic messages with `std::format`, so a C++20
+//! standard library providing `<format>` is mandatory.  The feature-test macro
+//! is checked here to turn a wall of template errors into a single readable
+//! diagnostic.
+//!
+#if !defined( __cpp_lib_format )
+#error "PolynomialRoots requires a C++20 standard library with <format> (GCC >= 13, clang >= 17, MSVC >= 19.29)"
+#endif
 
 //!
 //! Implementation of Flocke algorithm for roots
@@ -55,8 +62,10 @@
 //!
 
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
-#include <boost/multiprecision/cpp_bin_float.hpp>
 #include <boost/math/special_functions/cbrt.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
+#include <iomanip>
+#include <sstream>
 #endif
 
 namespace PolynomialRoots
@@ -72,16 +81,42 @@ namespace PolynomialRoots
   using istream_type = std::basic_istream<char>;
 
   //! Maximum degree accepted by the Jenkins-Traub entry point.
-  inline constexpr integer MAXDEGREE = 100;
+  inline constexpr integer max_degree{ 100 };
 
+  //! \deprecated Use `max_degree`.
+  [[deprecated( "use max_degree" )]] inline constexpr integer MAXDEGREE{ max_degree };
+
+  //!
+  //! Error codes returned by `jenkins_traub_roots()` (and by its `roots()` alias).
+  //!
+  enum class RootsError : int
+  {
+    SUCCESS          = 0,   //!< all the roots have been computed
+    DEGREE_TOO_SMALL = -1,  //!< `Degree < 1`
+    LEADING_ZERO     = -2,  //!< the leading coefficient is zero
+    DEGREE_TOO_LARGE = -3,  //!< `Degree > max_degree`
+    NO_CONVERGENCE   = -4   //!< the shift strategy did not converge
+  };
+
+  //! Convert a `RootsError` to its integer representation.
+  inline constexpr int to_int( RootsError const e )
+  { return static_cast<int>( e ); }
+
+  //! Return a human readable description of a `RootsError` value.
+  [[nodiscard]] char const * to_string( RootsError e );
+
+  //!
   //! Lightweight assertion helper used by the solvers to validate inputs.
+  //!
+  //! Throws `std::runtime_error` when \p cond is false.
   //!
   //! \param[in] cond  condition that must hold
   //! \param[in] fmt   format string used to build the diagnostic message
   //! \param[in] args  arguments interpolated in \p fmt
+  //!
   template <typename... Args> inline void root_assert( bool cond, std::format_string<Args...> fmt, Args &&... args )
   {
-    if ( !cond ) std::runtime_error( std::format( fmt, std::forward<Args>( args )... ) );
+    if ( !cond ) throw std::runtime_error( std::format( fmt, std::forward<Args>( args )... ) );
   }
 
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
@@ -119,23 +154,51 @@ namespace PolynomialRoots
 {
   using std::isfinite;
 
+  //!
   //! Return the machine epsilon associated with the scalar type.
-  template <typename T_real> T_real machepsiT();
-  //! Return the default residual tolerance associated with the scalar type.
-  template <typename T_real> T_real toleranceT();
+  //!
+  //! The primary template works for every type modelling `std::numeric_limits`;
+  //! `real_type` and `quad_real` are specialized in the library.
+  //!
+  template <typename T_real> T_real machine_eps()
+  { return std::numeric_limits<T_real>::epsilon(); }
+
+  //!
+  //! Return the default relative tolerance used by `check()` to accept a root.
+  //!
+  //! The primary template returns a type-dependent multiple of the machine
+  //! epsilon; `real_type` and `quad_real` are specialized in the library.
+  //!
+  template <typename T_real> T_real residual_tolerance()
+  { return T_real( 1000 ) * machine_eps<T_real>(); }
+
+  template <> real_type machine_eps<real_type>();
+  template <> real_type residual_tolerance<real_type>();
+#if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
+  template <> quad_real machine_eps<quad_real>();
+  template <> quad_real residual_tolerance<quad_real>();
+#endif
+
+  //! \deprecated Use `machine_eps()`.
+  template <typename T_real> [[deprecated( "use machine_eps" )]] T_real machepsiT()
+  { return machine_eps<T_real>(); }
+
+  //! \deprecated Use `residual_tolerance()`.
+  template <typename T_real> [[deprecated( "use residual_tolerance" )]] T_real toleranceT()
+  { return residual_tolerance<T_real>(); }
 
   //! Evaluate a real polynomial at a real point with a numerically stable scheme.
   //!
-  //! \param[in] op      polynomial coefficients in descending powers
-  //! \param[in] Degree  polynomial degree
+  //! \param[in] op      polynomial coefficients in descending powers, `op[0..Degree]`
+  //! \param[in] Degree  polynomial degree, must be `>= 0`
   //! \param[in] x       evaluation point
   //! \return            value of the polynomial at \p x
   template <typename T_real> T_real eval_poly( T_real const op[], integer Degree, T_real const & x );
 
   //! Evaluate a real polynomial and its first derivative at a real point.
   //!
-  //! \param[in]  op      polynomial coefficients in descending powers
-  //! \param[in]  Degree  polynomial degree
+  //! \param[in]  op      polynomial coefficients in descending powers, `op[0..Degree]`
+  //! \param[in]  Degree  polynomial degree, must be `>= 0`
   //! \param[in]  x       evaluation point
   //! \param[out] p       polynomial value at \p x
   //! \param[out] dp      derivative value at \p x
@@ -144,32 +207,167 @@ namespace PolynomialRoots
 
   //! Apply one Newton update to a real polynomial root estimate.
   //!
-  //! \param[in]     op      polynomial coefficients in descending powers
-  //! \param[in]     Degree  polynomial degree
+  //! \param[in]     op      polynomial coefficients in descending powers, `op[0..Degree]`
+  //! \param[in]     Degree  polynomial degree, must be `>= 1`
   //! \param[in,out] x       current estimate, overwritten with the updated value
-  //! \return                `true` after performing the update
+  //! \return                `true` when the step was applied, `false` when the
+  //!                        derivative vanishes and \p x is left unchanged
   template <typename T_real> bool Newton_step( T_real const op[], integer Degree, T_real & x );
 
   //! Evaluate a real polynomial at a complex point.
   //!
-  //! \param[in] op      polynomial coefficients in descending powers
-  //! \param[in] Degree  polynomial degree
+  //! \param[in] op      polynomial coefficients in descending powers, `op[0..Degree]`
+  //! \param[in] Degree  polynomial degree, must be `>= 0`
   //! \param[in] x       complex evaluation point
   //! \return            value of the polynomial at \p x
   template <typename T_real, typename T_complex>
   T_complex eval_poly_complex( T_real const op[], integer Degree, T_complex const & x );
 
   //!
-  //! Find roots of a generic polynomial using Jenkins-Traub method
+  //! Safety factor of the multiple-root test.
   //!
-  //! \param[in]  op     the coefficients of the polynomial
-  //! \param[in]  Degree degree of the polynomial
+  //! The test below compares quantities that should vanish with what a relative
+  //! perturbation of the coefficients of size \f$ \varepsilon \f$ can produce,
+  //! so a constant is needed to absorb the error accumulated while computing the
+  //! roots.  Measured over 100000 random polynomials spanning six decades of
+  //! scale, the value 64 recognizes the exact multiple roots of every family
+  //! tested (worst case 99.5%) and reports no multiplicity at all for roots
+  //! separated by more than \f$ 10^{-5} \f$ in relative terms:
+  //!
+  //! | factor | detection | false positives at 1e-6 | at 1e-5 |
+  //! |--------|-----------|-------------------------|---------|
+  //! |      8 |   97.1%   |          0.2%           |   0.0%  |
+  //! |     64 |   99.5%   |          4.3%           |   0.0%  |
+  //! |    256 |   99.9%   |         54%             |   0.0%  |
+  //!
+  //! The band around \f$ \sqrt{\varepsilon} \f$ is intrinsically ambiguous: two
+  //! roots that close cannot be told apart from a double root by any algorithm,
+  //! because a perturbation of the last bits of the coefficients merges them.
+  //!
+  inline constexpr integer multiple_root_safety_factor{ 64 };
+
+  //!
+  //! Does \p op have, within rounding, a root of multiplicity \p multiplicity
+  //! at \p centre?
+  //!
+  //! A root of multiplicity \f$ m \f$ at \f$ c \f$ is characterised by
+  //! \f$ p(c)=p'(c)=\cdots=p^{(m-1)}(c)=0 \f$.  In floating point those
+  //! derivatives are never exactly zero, so each of them is compared with what a
+  //! relative perturbation \f$ \varepsilon \f$ of the coefficients would produce
+  //! in it:
+  //!
+  //! \f[ \left|\frac{p^{(j)}(c)}{j!}\right| \le K\,\varepsilon\,A_j(|c|),
+  //!     \qquad j = 0,\dots,m-1 \f]
+  //!
+  //! where \f$ A_j \f$ is the same Taylor coefficient of the polynomial built
+  //! with the absolute values of the coefficients.  Both sides are computed by
+  //! the same Horner shift, so the test is dimensionally consistent, free of any
+  //! assumption on the magnitude of the roots, and automatically correct for
+  //! every scalar type: `machine_eps<T_real>()` is the only precision-dependent
+  //! quantity involved.
+  //!
+  //! \param[in] op            polynomial coefficients in descending powers
+  //! \param[in] Degree        polynomial degree, `1 <= Degree <= 7`
+  //! \param[in] multiplicity  multiplicity under test, `2 <= multiplicity <= Degree`
+  //! \param[in] centre        point to be tested
+  //! \return                  `true` when the condition above holds
+  //!
+  template <typename T_real, typename T_complex>
+  bool is_multiple_root( T_real const op[], integer Degree, integer multiplicity, T_complex const & centre );
+
+  //!
+  //! Spread of a root of multiplicity \p multiplicity of \p op located at
+  //! \p centre, that is the accuracy such a root can be computed with.
+  //!
+  //! Perturbing the coefficients by a relative amount \f$ \varepsilon \f$ changes
+  //! the polynomial near \f$ c \f$ by \f$ \varepsilon S(c) \f$ with
+  //! \f$ S(c)=\sum_j |a_j||c|^{n-j} \f$, while locally
+  //! \f$ p(x)\simeq \frac{p^{(m)}(c)}{m!}(x-c)^m \f$.  Equating the two gives
+  //!
+  //! \f[ \delta \simeq \left( \frac{\varepsilon\,S(c)}{|p^{(m)}(c)|/m!} \right)^{1/m} \f]
+  //!
+  //! which is the familiar rule that a double root carries about half the
+  //! significant digits and a triple root about a third of them.  It is reported
+  //! for the caller that needs a tolerance of its own; the library decides the
+  //! multiplicity with `is_multiple_root()`, a test that does not degrade when
+  //! \f$ p^{(m)}(c) \f$ happens to vanish for unrelated reasons.
+  //!
+  //! \param[in] op            polynomial coefficients in descending powers
+  //! \param[in] Degree        polynomial degree, `1 <= Degree <= 7`
+  //! \param[in] multiplicity  multiplicity of the root, `>= 2`
+  //! \param[in] centre        location of the root
+  //! \return                  the expected spread, 0 when not applicable
+  //!
+  template <typename T_real, typename T_complex>
+  T_real multiple_root_separation( T_real const op[], integer Degree, integer multiplicity, T_complex const & centre );
+
+  //!
+  //! Multiplicity of each computed root, as resolvable in the working precision.
+  //!
+  //! The roots are grouped top down, the largest group of mutually compatible
+  //! roots first: the four roots of \f$ (x-r)^4 \f$ spread over
+  //! \f$ \varepsilon^{1/4} \f$, far beyond what is admissible for a double root,
+  //! so a bottom-up merge would never reach multiplicity 4.
+  //!
+  //! \param[in]  op     polynomial coefficients in descending powers
+  //! \param[in]  Degree polynomial degree
+  //! \param[in]  roots  the computed roots
+  //! \param[in]  n      number of roots, `<= 4`
+  //! \param[out] mult   multiplicity of `roots[i]`, filled for `i < n`
+  //!
+  template <typename T_real, typename T_complex>
+  void root_multiplicities( T_real const op[], integer Degree, T_complex const roots[], integer n, integer mult[] );
+
+  //!
+  //! Relative backward error of \p x seen as a root of the polynomial \p op.
+  //!
+  //! The quantity returned is
+  //! \f[ \frac{|p(x)|}{\sum_k |op_k|\,|x|^{n-k}} \f]
+  //! which, unlike the bare residual \f$ |p(x)| \f$, does not grow with the
+  //! magnitude of the root and is therefore a meaningful accuracy indicator
+  //! for both tiny and huge roots.
+  //!
+  //! \param[in] op      polynomial coefficients in descending powers, `op[0..Degree]`
+  //! \param[in] Degree  polynomial degree, must be `>= 0`
+  //! \param[in] x       point to be tested
+  //! \return            the relative backward error, `0` for the null polynomial
+  //!
+  template <typename T_real, typename T_complex>
+  T_real root_backward_error( T_real const op[], integer Degree, T_complex const & x );
+
+  //!
+  //! Find the roots of a generic real polynomial with the Jenkins-Traub method.
+  //!
+  //! The polynomial is \f$ op[0] x^n + op[1] x^{n-1} + \cdots + op[n] \f$ with
+  //! \f$ n = \f$ \p Degree.  On success the \p Degree roots are stored in
+  //! \p zeror / \p zeroi; both arrays must be able to hold \p Degree values.
+  //!
+  //! \param[in]  op     the coefficients of the polynomial, `op[0..Degree]`
+  //! \param[in]  Degree degree of the polynomial, `1 <= Degree <= max_degree`
   //! \param[out] zeror  real part of the roots
   //! \param[out] zeroi  imaginary part of the roots
   //!
-  //! \return error code, 0 OK
+  //! \return `RootsError::SUCCESS` or the code describing the failure
   //!
-  [[nodiscard]] int roots( real_type const * op, integer Degree, real_type * zeror, real_type * zeroi );
+  [[nodiscard]] RootsError jenkins_traub_roots(
+    real_type const * op,
+    integer           Degree,
+    real_type *       zeror,
+    real_type *       zeroi );
+
+  //!
+  //! Backward compatible wrapper of `jenkins_traub_roots()` returning a plain
+  //! integer error code (see `RootsError`).
+  //!
+  //! \param[in]  op     the coefficients of the polynomial, `op[0..Degree]`
+  //! \param[in]  Degree degree of the polynomial, `1 <= Degree <= max_degree`
+  //! \param[out] zeror  real part of the roots
+  //! \param[out] zeroi  imaginary part of the roots
+  //!
+  //! \return 0 on success, a negative `RootsError` code otherwise
+  //!
+  [[nodiscard]] inline int roots( real_type const * op, integer const Degree, real_type * zeror, real_type * zeroi )
+  { return to_int( jenkins_traub_roots( op, Degree, zeror, zeroi ) ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   /*\
@@ -256,9 +454,33 @@ namespace PolynomialRoots
     T_real  m_r1   = 0;
     integer m_nrts = 0;
     bool    m_cplx = false;
-    bool    m_dblx = false;
+    void    find_roots();
 
-    void find_roots();
+    //!
+    //! Multiplicity of every computed root.  Evaluated on demand rather than
+    //! stored: the solvers are used in inner loops where most callers never ask
+    //! for it, and computing it eagerly costs more than finding the roots.
+    //!
+    //! \param[out] mult  multiplicities, `mult[i]` refers to `root(i)`
+    //! \return           number of entries written
+    //!
+    integer multiplicities( integer mult[] ) const
+    {
+      integer const n{ m_nrts };
+      T_complex     r[2];
+      for ( integer i{ 0 }; i < n; ++i ) r[i] = root( i );
+      root_multiplicities<T_real, T_complex>( m_ABC, 2, r, n, mult );
+      return n;
+    }
+
+    bool has_multiplicity( integer const m ) const
+    {
+      integer       mult[2];
+      integer const n{ multiplicities( mult ) };
+      for ( integer i{ 0 }; i < n; ++i )
+        if ( mult[i] == m ) return true;
+      return false;
+    }
 
   public:
     using value_type   = T_real;
@@ -306,6 +528,13 @@ namespace PolynomialRoots
       m_ABC[0] = a;
       m_ABC[1] = b;
       m_ABC[2] = c;
+      // find roots only on finite values
+      root_assert(
+        isfinite( a ) && isfinite( b ) && isfinite( c ),
+        "QuadraticT::setup( a={}, b={}, c={} ) arguments must be finite!",
+        a,
+        b,
+        c );
       find_roots();
     }
 
@@ -321,24 +550,69 @@ namespace PolynomialRoots
     //!
     integer num_roots() const { return m_nrts; }
 
-    //! Alias of `num_roots()`.
-    integer numRoots() const { return m_nrts; }
+    //! \deprecated Use `num_roots()`.
+    [[deprecated( "use num_roots" )]] integer numRoots() const { return m_nrts; }
+
+    //!
+    //! Number of real roots, 0, 1 or 2.
+    //!
+    integer num_real_roots() const { return m_cplx ? 0 : m_nrts; }
+
+    //!
+    //! Number of complex roots, 0 or 2.
+    //!
+    integer num_complex_roots() const { return m_cplx ? m_nrts : 0; }
 
     //!
     //! true if roots are complex conjugated
     //!
     bool complex_root() const { return m_cplx; }
 
-    //! Alias of `complex_root()`.
-    bool complexRoot() const { return m_cplx; }
+    //! \deprecated Use `complex_root()`.
+    [[deprecated( "use complex_root" )]] bool complexRoot() const { return m_cplx; }
 
     //!
     //! true if \f$ p(x) = a x^2 + b x + c = (x-r)^2 \f$
     //!
-    bool double_root() const { return m_dblx; }
+    //! The two computed roots are declared equal when their separation is below
+    //! `multiple_root_separation()`, which is the resolution limit of the
+    //! working precision: an exact comparison would miss every double root
+    //! whose coefficients are not exactly representable.
+    //!
+    bool double_root() const { return has_multiplicity( 2 ); }
 
-    //! Alias of `double_root()`.
-    bool doubleRoot() const { return m_dblx; }
+    //! \deprecated Use `double_root()`.
+    [[deprecated( "use double_root" )]] bool doubleRoot() const { return double_root(); }
+
+    //!
+    //! Multiplicity of the \p i-th root, as resolvable in the working precision.
+    //!
+    //! \param[in] i root index in `[0,num_roots()-1]`
+    //!
+    integer root_multiplicity( integer const i ) const
+    {
+      root_assert(
+        i >= 0 && i < m_nrts,
+        "QuadraticT::root_multiplicity( i={} ): index out of range [0,{}]",
+        i,
+        m_nrts - 1 );
+      integer mult[2];
+      (void) multiplicities( mult );
+      return mult[i];
+    }
+
+    //!
+    //! Largest multiplicity among the computed roots, 0 when there is none.
+    //!
+    integer max_root_multiplicity() const
+    {
+      integer       mult[2];
+      integer const n{ multiplicities( mult ) };
+      integer       m{ 0 };
+      for ( integer i{ 0 }; i < n; ++i )
+        if ( mult[i] > m ) m = mult[i];
+      return m;
+    }
 
     //!
     //! Get the real roots
@@ -348,8 +622,8 @@ namespace PolynomialRoots
     //!
     integer get_real_roots( T_real r[] ) const;
 
-    //! Alias of `get_real_roots()`.
-    integer getRealRoots( T_real r[] ) const { return get_real_roots( r ); }
+    //! \deprecated Use `get_real_roots()`.
+    [[deprecated( "use get_real_roots" )]] integer getRealRoots( T_real r[] ) const { return get_real_roots( r ); }
 
     //!
     //! Get positive real roots
@@ -359,8 +633,9 @@ namespace PolynomialRoots
     //!
     integer get_positive_roots( T_real r[] ) const;
 
-    //! Alias of `get_positive_roots()`.
-    integer getPositiveRoots( T_real r[] ) const { return get_positive_roots( r ); }
+    //! \deprecated Use `get_positive_roots()`.
+    [[deprecated( "use get_positive_roots" )]] integer getPositiveRoots( T_real r[] ) const
+    { return get_positive_roots( r ); }
 
     //!
     //! Get negative real roots
@@ -370,8 +645,9 @@ namespace PolynomialRoots
     //!
     integer get_negative_roots( T_real r[] ) const;
 
-    //! Alias of `get_negative_roots()`.
-    integer getNegativeRoots( T_real r[] ) const { return get_negative_roots( r ); }
+    //! \deprecated Use `get_negative_roots()`.
+    [[deprecated( "use get_negative_roots" )]] integer getNegativeRoots( T_real r[] ) const
+    { return get_negative_roots( r ); }
 
     //!
     //! Get real roots in a closed range
@@ -383,8 +659,9 @@ namespace PolynomialRoots
     //!
     integer get_roots_in_range( T_real const & a, T_real const & b, T_real r[] ) const;
 
-    //! Alias of `get_roots_in_range()`.
-    integer getRootsInRange( T_real const & a, T_real const & b, T_real r[] ) const
+    //! \deprecated Use `get_roots_in_range()`.
+    [[deprecated( "use get_roots_in_range" )]] integer getRootsInRange( T_real const & a, T_real const & b, T_real r[] )
+      const
     { return get_roots_in_range( a, b, r ); }
 
     //!
@@ -397,8 +674,11 @@ namespace PolynomialRoots
     //!
     integer get_roots_in_open_range( T_real const & a, T_real const & b, T_real r[] ) const;
 
-    //! Alias of `get_roots_in_open_range()`.
-    integer getRootsInOpenRange( T_real const & a, T_real const & b, T_real r[] ) const
+    //! \deprecated Use `get_roots_in_open_range()`.
+    [[deprecated( "use get_roots_in_open_range" )]] integer getRootsInOpenRange(
+      T_real const & a,
+      T_real const & b,
+      T_real         r[] ) const
     { return get_roots_in_open_range( a, b, r ); }
 
     //!
@@ -442,8 +722,8 @@ namespace PolynomialRoots
       }
     }
 
-    //! Alias of `get_root0()`.
-    void getRoot0( T_real & re, T_real & im ) const { return get_root0( re, im ); }
+    //! \deprecated Use `get_root0()`.
+    [[deprecated( "use get_root0" )]] void getRoot0( T_real & re, T_real & im ) const { return get_root0( re, im ); }
 
     //!
     //! Get the first root (complex or real)
@@ -452,8 +732,8 @@ namespace PolynomialRoots
     //!
     void get_root0( T_complex & r ) const { r = m_cplx ? T_complex( m_r0, m_r1 ) : T_complex( m_r0, 0 ); }
 
-    //! Alias of `get_root0()`.
-    void getRoot0( T_complex & r ) const { return get_root0( r ); }
+    //! \deprecated Use `get_root0()`.
+    [[deprecated( "use get_root0" )]] void getRoot0( T_complex & r ) const { return get_root0( r ); }
 
     //!
     //! Get the second root (complex or real)
@@ -475,8 +755,8 @@ namespace PolynomialRoots
       }
     }
 
-    //! Alias of `get_root1()`.
-    void getRoot1( T_real & re, T_real & im ) const { return get_root1( re, im ); }
+    //! \deprecated Use `get_root1()`.
+    [[deprecated( "use get_root1" )]] void getRoot1( T_real & re, T_real & im ) const { return get_root1( re, im ); }
 
     //!
     //! Get the second root (complex or real)
@@ -485,8 +765,8 @@ namespace PolynomialRoots
     //!
     void get_root1( T_complex & r ) const { r = m_cplx ? T_complex( m_r0, -m_r1 ) : T_complex( m_r1, 0 ); }
 
-    //! Alias of `get_root1()`.
-    void getRoot1( T_complex & r ) const { return get_root1( r ); }
+    //! \deprecated Use `get_root1()`.
+    [[deprecated( "use get_root1" )]] void getRoot1( T_complex & r ) const { return get_root1( r ); }
 
     //! Return the \p i-th root as a complex value.
     //!
@@ -498,11 +778,15 @@ namespace PolynomialRoots
       {
         case 0: return root0();
         case 1: return root1();
+        default: break;
       }
-      return 0;
+      root_assert( false, "QuadraticT::root( i={} ): index out of range [0,1]", i );
+      return T_complex( 0, 0 );
     }
 
     //! Store the \p i-th root in split real/imaginary form.
+    //!
+    //! Throws `std::runtime_error` when \p i is outside `[0,1]`.
     //!
     //! \param[in]  i   root index in `[0,1]`
     //! \param[out] re  real part of the selected root
@@ -513,7 +797,9 @@ namespace PolynomialRoots
       {
         case 0: return get_root0( re, im );
         case 1: return get_root1( re, im );
+        default: break;
       }
+      root_assert( false, "QuadraticT::get_root( i={} ): index out of range [0,1]", i );
     }
 
     //!
@@ -545,9 +831,22 @@ namespace PolynomialRoots
     void info( ostream_type & s ) const;
 
     //!
-    //! Check tolerance and quality of the computed roots
+    //! Maximum relative backward error over the computed roots.
+    //!
+    //! \return 0 when no root has been computed
+    //!
+    [[nodiscard]] T_real backward_error() const;
+
+    //!
+    //! Check tolerance and quality of the computed roots, printing a report.
     //!
     [[nodiscard]] bool check( ostream_type & s ) const;
+
+    //!
+    //! Silent version of `check()`: `true` when every computed root has a
+    //! relative backward error below `residual_tolerance<T_real>()`.
+    //!
+    [[nodiscard]] bool check() const { return backward_error() <= residual_tolerance<T_real>(); }
   };
 
   using Quadratic = QuadraticT<real_type, real_complex>;
@@ -648,10 +947,33 @@ namespace PolynomialRoots
     integer m_nrts = 0;
     integer m_iter = 0;
     bool    m_cplx = false;  // complex root
-    bool    m_dblx = false;  // double root
-    bool    m_trpx = false;  // triple root
+    void    find_roots();
 
-    void find_roots();
+    //!
+    //! Multiplicity of every computed root.  Evaluated on demand rather than
+    //! stored: the solvers are used in inner loops where most callers never ask
+    //! for it, and computing it eagerly costs more than finding the roots.
+    //!
+    //! \param[out] mult  multiplicities, `mult[i]` refers to `root(i)`
+    //! \return           number of entries written
+    //!
+    integer multiplicities( integer mult[] ) const
+    {
+      integer const n{ m_nrts };
+      T_complex     r[3];
+      for ( integer i{ 0 }; i < n; ++i ) r[i] = root( i );
+      root_multiplicities<T_real, T_complex>( m_ABCD, 3, r, n, mult );
+      return n;
+    }
+
+    bool has_multiplicity( integer const m ) const
+    {
+      integer       mult[3];
+      integer const n{ multiplicities( mult ) };
+      for ( integer i{ 0 }; i < n; ++i )
+        if ( mult[i] == m ) return true;
+      return false;
+    }
 
   public:
     using value_type   = T_real;
@@ -707,8 +1029,6 @@ namespace PolynomialRoots
       m_nrts    = 0;
       m_iter    = 0;
       m_cplx    = false;  // complex root
-      m_dblx    = false;  // double root
-      m_trpx    = false;  // triple root
       root_assert(
         isfinite( a ) && isfinite( b ) && isfinite( c ) && isfinite( d ),
         "CubicT::setup( a={}, b={}, c={}, d={} ) arguments must be finite!",
@@ -724,32 +1044,77 @@ namespace PolynomialRoots
     //!
     integer num_roots() const { return m_nrts; }
 
-    //! Alias of `num_roots()`.
-    integer numRoots() const { return m_nrts; }
+    //! \deprecated Use `num_roots()`.
+    [[deprecated( "use num_roots" )]] integer numRoots() const { return m_nrts; }
+
+    //!
+    //! Number of real roots, 0, 1, 2 or 3.
+    //!
+    integer num_real_roots() const { return m_cplx ? m_nrts - 2 : m_nrts; }
+
+    //!
+    //! Number of complex roots, 0 or 2.
+    //!
+    integer num_complex_roots() const { return m_cplx ? 2 : 0; }
 
     //!
     //! Has complex roots?
     //!
     bool complex_root() const { return m_cplx; }
 
-    //! Alias of `complex_root()`.
-    bool complexRoot() const { return m_cplx; }
+    //! \deprecated Use `complex_root()`.
+    [[deprecated( "use complex_root" )]] bool complexRoot() const { return m_cplx; }
 
     //!
-    //! Has a double root?
+    //! Has a root of multiplicity exactly 2?
     //!
-    bool double_root() const { return m_dblx; }
+    //! Roots closer than `multiple_root_separation()` are counted as one; the
+    //! previous implementation only looked at the quadratic left by the
+    //! deflation, and therefore missed the double root of, say,
+    //! \f$ (x-1)^2(x-2) \f$ whenever Newton isolated one of the two equal roots.
+    //!
+    bool double_root() const { return has_multiplicity( 2 ); }
 
-    //! Alias of `double_root()`.
-    bool doubleRoot() const { return m_dblx; }
+    //! \deprecated Use `double_root()`.
+    [[deprecated( "use double_root" )]] bool doubleRoot() const { return double_root(); }
 
     //!
-    //! Has a triple root?
+    //! Has a root of multiplicity exactly 3?
     //!
-    bool triple_root() const { return m_trpx; }
+    bool triple_root() const { return has_multiplicity( 3 ); }
 
-    //! Alias of `triple_root()`.
-    bool tripleRoot() const { return m_trpx; }
+    //! \deprecated Use `triple_root()`.
+    [[deprecated( "use triple_root" )]] bool tripleRoot() const { return triple_root(); }
+
+    //!
+    //! Multiplicity of the \p i-th root, as resolvable in the working precision.
+    //!
+    //! \param[in] i root index in `[0,num_roots()-1]`
+    //!
+    integer root_multiplicity( integer const i ) const
+    {
+      root_assert(
+        i >= 0 && i < m_nrts,
+        "CubicT::root_multiplicity( i={} ): index out of range [0,{}]",
+        i,
+        m_nrts - 1 );
+      integer mult[3];
+      (void) multiplicities( mult );
+      return mult[i];
+    }
+
+    //!
+    //! Largest multiplicity among the computed roots, 0 when there is none.
+    //!
+    integer max_root_multiplicity() const
+    {
+      integer       mult[3];
+      integer const n{ multiplicities( mult ) };
+      integer       m{ 0 };
+      for ( integer i{ 0 }; i < n; ++i )
+        if ( mult[i] > m ) m = mult[i];
+      return m;
+    }
 
     //!
     //! Get the real roots.
@@ -759,8 +1124,8 @@ namespace PolynomialRoots
     //!
     integer get_real_roots( T_real r[] ) const;
 
-    //! Alias of `get_real_roots()`.
-    integer getRealRoots( T_real r[] ) const { return get_real_roots( r ); }
+    //! \deprecated Use `get_real_roots()`.
+    [[deprecated( "use get_real_roots" )]] integer getRealRoots( T_real r[] ) const { return get_real_roots( r ); }
 
     //!
     //! Get positive real roots.
@@ -770,8 +1135,9 @@ namespace PolynomialRoots
     //!
     integer get_positive_roots( T_real r[] ) const;
 
-    //! Alias of `get_positive_roots()`.
-    integer getPositiveRoots( T_real r[] ) const { return get_positive_roots( r ); }
+    //! \deprecated Use `get_positive_roots()`.
+    [[deprecated( "use get_positive_roots" )]] integer getPositiveRoots( T_real r[] ) const
+    { return get_positive_roots( r ); }
 
     //!
     //! Get negative real roots.
@@ -781,8 +1147,9 @@ namespace PolynomialRoots
     //!
     integer get_negative_roots( T_real r[] ) const;
 
-    //! Alias of `get_negative_roots()`.
-    integer getNegativeRoots( T_real r[] ) const { return get_negative_roots( r ); }
+    //! \deprecated Use `get_negative_roots()`.
+    [[deprecated( "use get_negative_roots" )]] integer getNegativeRoots( T_real r[] ) const
+    { return get_negative_roots( r ); }
 
     //!
     //! Get real roots in a closed range.
@@ -794,8 +1161,9 @@ namespace PolynomialRoots
     //!
     integer get_roots_in_range( T_real const & a, T_real const & b, T_real r[] ) const;
 
-    //! Alias of `get_roots_in_range()`.
-    integer getRootsInRange( T_real const & a, T_real const & b, T_real r[] ) const
+    //! \deprecated Use `get_roots_in_range()`.
+    [[deprecated( "use get_roots_in_range" )]] integer getRootsInRange( T_real const & a, T_real const & b, T_real r[] )
+      const
     { return get_roots_in_range( a, b, r ); }
 
     //!
@@ -808,8 +1176,11 @@ namespace PolynomialRoots
     //!
     integer get_roots_in_open_range( T_real const & a, T_real const & b, T_real r[] ) const;
 
-    //! Alias of `get_roots_in_open_range()`.
-    integer getRootsInOpenRange( T_real const & a, T_real const & b, T_real r[] ) const
+    //! \deprecated Use `get_roots_in_open_range()`.
+    [[deprecated( "use get_roots_in_open_range" )]] integer getRootsInOpenRange(
+      T_real const & a,
+      T_real const & b,
+      T_real         r[] ) const
     { return get_roots_in_open_range( a, b, r ); }
 
     //!
@@ -861,16 +1232,16 @@ namespace PolynomialRoots
       }
     }
 
-    //! Alias of `get_root0()`.
-    void getRoot0( T_real & re, T_real & im ) const { get_root0( re, im ); }
+    //! \deprecated Use `get_root0()`.
+    [[deprecated( "use get_root0" )]] void getRoot0( T_real & re, T_real & im ) const { get_root0( re, im ); }
 
     //!
     //! First complex or real root.
     //!
     void get_root0( T_complex & r ) const { r = m_cplx ? T_complex( m_r0, m_r1 ) : T_complex( m_r0, 0 ); }
 
-    //! Alias of `get_root0()`.
-    void getRoot0( T_complex & r ) const { get_root0( r ); }
+    //! \deprecated Use `get_root0()`.
+    [[deprecated( "use get_root0" )]] void getRoot0( T_complex & r ) const { get_root0( r ); }
 
     //!
     //! Second complex or real root.
@@ -889,16 +1260,16 @@ namespace PolynomialRoots
       }
     }
 
-    //! Alias of `get_root1()`.
-    void getRoot1( T_real & re, T_real & im ) const { get_root1( re, im ); }
+    //! \deprecated Use `get_root1()`.
+    [[deprecated( "use get_root1" )]] void getRoot1( T_real & re, T_real & im ) const { get_root1( re, im ); }
 
     //!
     //! Second complex or real root.
     //!
     void get_root1( T_complex & r ) const { r = m_cplx ? T_complex( m_r0, -m_r1 ) : T_complex( m_r1, 0 ); }
 
-    //! Alias of `get_root1()`.
-    void getRoot1( T_complex & r ) const { get_root1( r ); }
+    //! \deprecated Use `get_root1()`.
+    [[deprecated( "use get_root1" )]] void getRoot1( T_complex & r ) const { get_root1( r ); }
 
     //!
     //! Third complex or real root.
@@ -909,16 +1280,16 @@ namespace PolynomialRoots
       im = 0;
     }
 
-    //! Alias of `get_root2()`.
-    void getRoot2( T_real & re, T_real & im ) const { get_root2( re, im ); }
+    //! \deprecated Use `get_root2()`.
+    [[deprecated( "use get_root2" )]] void getRoot2( T_real & re, T_real & im ) const { get_root2( re, im ); }
 
     //!
     //! Third complex or real root.
     //!
     void get_root2( T_complex & r ) const { r = T_complex( m_r2, 0 ); }
 
-    //! Alias of `get_root2()`.
-    void getRoot2( T_complex & r ) const { get_root2( r ); }
+    //! \deprecated Use `get_root2()`.
+    [[deprecated( "use get_root2" )]] void getRoot2( T_complex & r ) const { get_root2( r ); }
 
     //! Return the \p i-th root as a complex value.
     //!
@@ -931,11 +1302,15 @@ namespace PolynomialRoots
         case 0: return root0();
         case 1: return root1();
         case 2: return root2();
+        default: break;
       }
-      return 0;
+      root_assert( false, "CubicT::root( i={} ): index out of range [0,2]", i );
+      return T_complex( 0, 0 );
     }
 
     //! Store the \p i-th root in split real/imaginary form.
+    //!
+    //! Throws `std::runtime_error` when \p i is outside `[0,2]`.
     //!
     //! \param[in]  i   root index in `[0,2]`
     //! \param[out] re  real part of the selected root
@@ -947,7 +1322,9 @@ namespace PolynomialRoots
         case 0: return get_root0( re, im );
         case 1: return get_root1( re, im );
         case 2: return get_root2( re, im );
+        default: break;
       }
+      root_assert( false, "CubicT::get_root( i={} ): index out of range [0,2]", i );
     }
 
     //!
@@ -977,9 +1354,22 @@ namespace PolynomialRoots
     void info( ostream_type & s ) const;
 
     //!
-    //! Check tolerance and quality of the computed roots.
+    //! Maximum relative backward error over the computed roots.
+    //!
+    //! \return 0 when no root has been computed
+    //!
+    [[nodiscard]] T_real backward_error() const;
+
+    //!
+    //! Check tolerance and quality of the computed roots, printing a report.
     //!
     [[nodiscard]] bool check( ostream_type & s ) const;
+
+    //!
+    //! Silent version of `check()`: `true` when every computed root has a
+    //! relative backward error below `residual_tolerance<T_real>()`.
+    //!
+    [[nodiscard]] bool check() const { return backward_error() <= residual_tolerance<T_real>(); }
   };
 
   using Cubic = CubicT<real_type, real_complex>;
@@ -1085,8 +1475,33 @@ namespace PolynomialRoots
     integer m_iter  = 0;
     integer m_nreal = 0;
     integer m_ncplx = 0;
+    void    find_roots();
 
-    void find_roots();
+    //!
+    //! Multiplicity of every computed root.  Evaluated on demand rather than
+    //! stored: the solvers are used in inner loops where most callers never ask
+    //! for it, and computing it eagerly costs more than finding the roots.
+    //!
+    //! \param[out] mult  multiplicities, `mult[i]` refers to `root(i)`
+    //! \return           number of entries written
+    //!
+    integer multiplicities( integer mult[] ) const
+    {
+      integer const n{ m_nreal + m_ncplx };
+      T_complex     r[4];
+      for ( integer i{ 0 }; i < n; ++i ) r[i] = root( i );
+      root_multiplicities<T_real, T_complex>( m_ABCDE, 4, r, n, mult );
+      return n;
+    }
+
+    bool has_multiplicity( integer const m ) const
+    {
+      integer       mult[4];
+      integer const n{ multiplicities( mult ) };
+      for ( integer i{ 0 }; i < n; ++i )
+        if ( mult[i] == m ) return true;
+      return false;
+    }
 
     bool cplx0() const { return m_ncplx > 0; }
     bool cplx1() const { return m_ncplx > 0; }
@@ -1163,24 +1578,69 @@ namespace PolynomialRoots
     //!
     integer num_roots() const { return m_nreal + m_ncplx; }
 
-    //! Alias of `num_roots()`.
-    integer numRoots() const { return m_nreal + m_ncplx; }
+    //! \deprecated Use `num_roots()`.
+    [[deprecated( "use num_roots" )]] integer numRoots() const { return m_nreal + m_ncplx; }
 
     //!
     //! Number of real roots.
     //!
     integer num_real_roots() const { return m_nreal; }
 
-    //! Alias of `num_real_roots()`.
-    integer numRealRoots() const { return m_nreal; }
+    //! \deprecated Use `num_real_roots()`.
+    [[deprecated( "use num_real_roots" )]] integer numRealRoots() const { return m_nreal; }
 
     //!
     //! Number of complex roots.
     //!
     integer num_complex_roots() const { return m_ncplx; }
 
-    //! Alias of `num_complex_roots()`.
-    integer numComplexRoots() const { return m_ncplx; }
+    //! \deprecated Use `num_complex_roots()`.
+    [[deprecated( "use num_complex_roots" )]] integer numComplexRoots() const { return m_ncplx; }
+
+    //!
+    //! Has a root of multiplicity exactly 2?
+    //!
+    bool double_root() const { return has_multiplicity( 2 ); }
+
+    //!
+    //! Has a root of multiplicity exactly 3?
+    //!
+    bool triple_root() const { return has_multiplicity( 3 ); }
+
+    //!
+    //! Has a root of multiplicity 4, that is \f$ p(x) = a (x-r)^4 \f$?
+    //!
+    bool quadruple_root() const { return has_multiplicity( 4 ); }
+
+    //!
+    //! Multiplicity of the \p i-th root, as resolvable in the working precision.
+    //!
+    //! \param[in] i root index in `[0,num_roots()-1]`
+    //!
+    integer root_multiplicity( integer const i ) const
+    {
+      root_assert(
+        i >= 0 && i < m_nreal + m_ncplx,
+        "QuarticT::root_multiplicity( i={} ): index out of range [0,{}]",
+        i,
+        m_nreal + m_ncplx - 1 );
+      integer mult[4];
+      (void) multiplicities( mult );
+      return mult[i];
+    }
+
+    //!
+    //! Largest multiplicity among the computed roots, 0 when there is none.
+    //!
+    integer max_root_multiplicity() const
+    {
+      integer       mult[4];
+      integer const n{ multiplicities( mult ) };
+      integer       m{ 0 };
+      for ( integer i{ 0 }; i < n; ++i )
+        if ( mult[i] > m ) m = mult[i];
+      return m;
+    }
 
     //!
     //! Get the real roots.
@@ -1190,8 +1650,8 @@ namespace PolynomialRoots
     //!
     integer get_real_roots( T_real r[] ) const;
 
-    //! Alias of `get_real_roots()`.
-    integer getRealRoots( T_real r[] ) const { return get_real_roots( r ); }
+    //! \deprecated Use `get_real_roots()`.
+    [[deprecated( "use get_real_roots" )]] integer getRealRoots( T_real r[] ) const { return get_real_roots( r ); }
 
     //!
     //! Get positive real roots
@@ -1201,8 +1661,9 @@ namespace PolynomialRoots
     //!
     integer get_positive_roots( T_real r[] ) const;
 
-    //! Alias of `get_positive_roots()`.
-    integer getPositiveRoots( T_real r[] ) const { return get_positive_roots( r ); }
+    //! \deprecated Use `get_positive_roots()`.
+    [[deprecated( "use get_positive_roots" )]] integer getPositiveRoots( T_real r[] ) const
+    { return get_positive_roots( r ); }
 
     //!
     //! Get negative real roots.
@@ -1212,8 +1673,9 @@ namespace PolynomialRoots
     //!
     integer get_negative_roots( T_real r[] ) const;
 
-    //! Alias of `get_negative_roots()`.
-    integer getNegativeRoots( T_real r[] ) const { return get_negative_roots( r ); }
+    //! \deprecated Use `get_negative_roots()`.
+    [[deprecated( "use get_negative_roots" )]] integer getNegativeRoots( T_real r[] ) const
+    { return get_negative_roots( r ); }
 
     //!
     //! Get real roots in a closed range.
@@ -1225,8 +1687,9 @@ namespace PolynomialRoots
     //!
     integer get_roots_in_range( T_real const & a, T_real const & b, T_real r[] ) const;
 
-    //! Alias of `get_roots_in_range()`.
-    integer getRootsInRange( T_real const & a, T_real const & b, T_real r[] ) const
+    //! \deprecated Use `get_roots_in_range()`.
+    [[deprecated( "use get_roots_in_range" )]] integer getRootsInRange( T_real const & a, T_real const & b, T_real r[] )
+      const
     { return get_roots_in_range( a, b, r ); }
 
     //!
@@ -1239,8 +1702,11 @@ namespace PolynomialRoots
     //!
     integer get_roots_in_open_range( T_real const & a, T_real const & b, T_real r[] ) const;
 
-    //! Alias of `get_roots_in_open_range()`.
-    integer getRootsInOpenRange( T_real const & a, T_real const & b, T_real r[] ) const
+    //! \deprecated Use `get_roots_in_open_range()`.
+    [[deprecated( "use get_roots_in_open_range" )]] integer getRootsInOpenRange(
+      T_real const & a,
+      T_real const & b,
+      T_real         r[] ) const
     { return get_roots_in_open_range( a, b, r ); }
 
     //!
@@ -1306,8 +1772,8 @@ namespace PolynomialRoots
       }
     }
 
-    //! Alias of `get_root0()`.
-    void getRoot0( T_real & re, T_real & im ) const { get_root0( re, im ); }
+    //! \deprecated Use `get_root0()`.
+    [[deprecated( "use get_root0" )]] void getRoot0( T_real & re, T_real & im ) const { get_root0( re, im ); }
 
     //!
     //! First real or complex root.
@@ -1320,8 +1786,8 @@ namespace PolynomialRoots
         r = T_complex( m_r0, 0 );
     }
 
-    //! Alias of `get_root0()`.
-    void getRoot0( T_complex & r ) const { get_root0( r ); }
+    //! \deprecated Use `get_root0()`.
+    [[deprecated( "use get_root0" )]] void getRoot0( T_complex & r ) const { get_root0( r ); }
 
     //!
     //! Second real or complex root.
@@ -1340,8 +1806,8 @@ namespace PolynomialRoots
       }
     }
 
-    //! Alias of `get_root1()`.
-    void getRoot1( T_real & re, T_real & im ) const { get_root1( re, im ); }
+    //! \deprecated Use `get_root1()`.
+    [[deprecated( "use get_root1" )]] void getRoot1( T_real & re, T_real & im ) const { get_root1( re, im ); }
 
     //!
     //! Second real or complex root.
@@ -1354,8 +1820,8 @@ namespace PolynomialRoots
         r = T_complex( m_r1, 0 );
     }
 
-    //! Alias of `get_root1()`.
-    void getRoot1( T_complex & r ) const { get_root1( r ); }
+    //! \deprecated Use `get_root1()`.
+    [[deprecated( "use get_root1" )]] void getRoot1( T_complex & r ) const { get_root1( r ); }
 
     //!
     //! Third real or complex root.
@@ -1374,8 +1840,8 @@ namespace PolynomialRoots
       }
     }
 
-    //! Alias of `get_root2()`.
-    void getRoot2( T_real & re, T_real & im ) const { get_root2( re, im ); }
+    //! \deprecated Use `get_root2()`.
+    [[deprecated( "use get_root2" )]] void getRoot2( T_real & re, T_real & im ) const { get_root2( re, im ); }
 
     //!
     //! Third real or complex root.
@@ -1388,8 +1854,8 @@ namespace PolynomialRoots
         r = T_complex( m_r2, 0 );
     }
 
-    //! Alias of `get_root2()`.
-    void getRoot2( T_complex & r ) const { get_root2( r ); }
+    //! \deprecated Use `get_root2()`.
+    [[deprecated( "use get_root2" )]] void getRoot2( T_complex & r ) const { get_root2( r ); }
 
     //!
     //! Fourth real or complex root.
@@ -1408,8 +1874,8 @@ namespace PolynomialRoots
       }
     }
 
-    //! Alias of `get_root3()`.
-    void getRoot3( T_real & re, T_real & im ) const { get_root3( re, im ); }
+    //! \deprecated Use `get_root3()`.
+    [[deprecated( "use get_root3" )]] void getRoot3( T_real & re, T_real & im ) const { get_root3( re, im ); }
 
     //!
     //! Fourth real or complex root.
@@ -1422,8 +1888,8 @@ namespace PolynomialRoots
         r = T_complex( m_r3, 0 );
     }
 
-    //! Alias of `get_root3()`.
-    void getRoot3( T_complex & r ) const { get_root3( r ); }
+    //! \deprecated Use `get_root3()`.
+    [[deprecated( "use get_root3" )]] void getRoot3( T_complex & r ) const { get_root3( r ); }
 
     //! Return the \p i-th root as a complex value.
     //!
@@ -1437,11 +1903,15 @@ namespace PolynomialRoots
         case 1: return root1();
         case 2: return root2();
         case 3: return root3();
+        default: break;
       }
-      return 0;
+      root_assert( false, "QuarticT::root( i={} ): index out of range [0,3]", i );
+      return T_complex( 0, 0 );
     }
 
     //! Store the \p i-th root in split real/imaginary form.
+    //!
+    //! Throws `std::runtime_error` when \p i is outside `[0,3]`.
     //!
     //! \param[in]  i   root index in `[0,3]`
     //! \param[out] re  real part of the selected root
@@ -1454,7 +1924,9 @@ namespace PolynomialRoots
         case 1: return get_root1( re, im );
         case 2: return get_root2( re, im );
         case 3: return get_root3( re, im );
+        default: break;
       }
+      root_assert( false, "QuarticT::get_root( i={} ): index out of range [0,3]", i );
     }
 
     //!
@@ -1484,9 +1956,22 @@ namespace PolynomialRoots
     void info( ostream_type & s ) const;
 
     //!
-    //! Check tolerance and quality of the computed roots.
+    //! Maximum relative backward error over the computed roots.
+    //!
+    //! \return 0 when no root has been computed
+    //!
+    [[nodiscard]] T_real backward_error() const;
+
+    //!
+    //! Check tolerance and quality of the computed roots, printing a report.
     //!
     [[nodiscard]] bool check( ostream_type & s ) const;
+
+    //!
+    //! Silent version of `check()`: `true` when every computed root has a
+    //! relative backward error below `residual_tolerance<T_real>()`.
+    //!
+    [[nodiscard]] bool check() const { return backward_error() <= residual_tolerance<T_real>(); }
   };
 
   using Quartic = QuarticT<real_type, real_complex>;
@@ -1510,7 +1995,7 @@ namespace PolynomialRoots
   //! \param[in] c  constant coefficient
   //! \return       value of \f$ x^3 + a x^2 + b x + c \f$
   template <typename T_real>
-  inline T_real evalMonicCubic( T_real const & x, T_real const & a, T_real const & b, T_real const & c )
+  inline T_real eval_monic_cubic( T_real const & x, T_real const & a, T_real const & b, T_real const & c )
   {
     T_real p;
     p = x + a;
@@ -1520,7 +2005,7 @@ namespace PolynomialRoots
   }
 
   //! Evaluate a monic cubic polynomial and its first derivative.
-  template <typename T_real> inline void evalMonicCubic(
+  template <typename T_real> inline void eval_monic_cubic(
     T_real const & x,
     T_real const & a,
     T_real const & b,
@@ -1536,7 +2021,7 @@ namespace PolynomialRoots
   }
 
   //! Evaluate a monic cubic polynomial and its first two derivatives.
-  template <typename T_real> inline void evalMonicCubic(
+  template <typename T_real> inline void eval_monic_cubic(
     T_real const & x,
     T_real const & a,
     T_real const & b,
@@ -1554,7 +2039,7 @@ namespace PolynomialRoots
   }
 
   //! Evaluate a monic quartic polynomial.
-  template <typename T_real> inline T_real evalMonicQuartic(
+  template <typename T_real> inline T_real eval_monic_quartic(
     T_real const & x,
     T_real const & a,
     T_real const & b,
@@ -1570,7 +2055,7 @@ namespace PolynomialRoots
   }
 
   //! Evaluate a monic quartic polynomial and its first derivative.
-  template <typename T_real> inline void evalMonicQuartic(
+  template <typename T_real> inline void eval_monic_quartic(
     T_real const & x,
     T_real const & a,
     T_real const & b,
@@ -1589,7 +2074,7 @@ namespace PolynomialRoots
   }
 
   //! Evaluate a monic quartic polynomial and its first two derivatives.
-  template <typename T_real> inline void evalMonicQuartic(
+  template <typename T_real> inline void eval_monic_quartic(
     T_real const & x,
     T_real const & a,
     T_real const & b,
@@ -1618,6 +2103,72 @@ namespace PolynomialRoots
     dp  = dp * x + p;
     p   = p * x + d;
   }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // Deprecated camelCase spellings kept for source compatibility.
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  //! \deprecated Use `eval_monic_cubic()`.
+  template <typename T_real> [[deprecated( "use eval_monic_cubic" )]] inline T_real evalMonicCubic(
+    T_real const & x,
+    T_real const & a,
+    T_real const & b,
+    T_real const & c )
+  { return eval_monic_cubic( x, a, b, c ); }
+
+  //! \deprecated Use `eval_monic_cubic()`.
+  template <typename T_real> [[deprecated( "use eval_monic_cubic" )]] inline void evalMonicCubic(
+    T_real const & x,
+    T_real const & a,
+    T_real const & b,
+    T_real const & c,
+    T_real &       p,
+    T_real &       dp )
+  { eval_monic_cubic( x, a, b, c, p, dp ); }
+
+  //! \deprecated Use `eval_monic_cubic()`.
+  template <typename T_real> [[deprecated( "use eval_monic_cubic" )]] inline void evalMonicCubic(
+    T_real const & x,
+    T_real const & a,
+    T_real const & b,
+    T_real const & c,
+    T_real &       p,
+    T_real &       dp,
+    T_real &       ddp )
+  { eval_monic_cubic( x, a, b, c, p, dp, ddp ); }
+
+  //! \deprecated Use `eval_monic_quartic()`.
+  template <typename T_real> [[deprecated( "use eval_monic_quartic" )]] inline T_real evalMonicQuartic(
+    T_real const & x,
+    T_real const & a,
+    T_real const & b,
+    T_real const & c,
+    T_real const & d )
+  { return eval_monic_quartic( x, a, b, c, d ); }
+
+  //! \deprecated Use `eval_monic_quartic()`.
+  template <typename T_real> [[deprecated( "use eval_monic_quartic" )]] inline void evalMonicQuartic(
+    T_real const & x,
+    T_real const & a,
+    T_real const & b,
+    T_real const & c,
+    T_real const & d,
+    T_real &       p,
+    T_real &       dp )
+  { eval_monic_quartic( x, a, b, c, d, p, dp ); }
+
+  //! \deprecated Use `eval_monic_quartic()`.
+  template <typename T_real> [[deprecated( "use eval_monic_quartic" )]] inline void evalMonicQuartic(
+    T_real const & x,
+    T_real const & a,
+    T_real const & b,
+    T_real const & c,
+    T_real const & d,
+    T_real &       p,
+    T_real &       dp,
+    T_real &       ddp )
+  { eval_monic_quartic( x, a, b, c, d, p, dp, ddp ); }
 
 }  // namespace PolynomialRoots
 

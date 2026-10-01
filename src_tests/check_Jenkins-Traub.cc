@@ -57,12 +57,20 @@ vector<real_type> build_polynomial( const vector<complex<real_type>> & roots )
 }
 
 // ---------------------------------------------------------------------------
-// Compute maximum residual |p(r)| for a polynomial given its roots.
+// Compute the maximum RELATIVE backward error over the computed roots:
+//
+//            |p(r)| / sum_k |a_k| |r|^(n-k)
+//
+// The bare residual |p(r)| grows with |r| and with the size of the
+// coefficients, so an absolute threshold is unreachable for Wilkinson-like
+// polynomials even when every root is correct to the last bit.  The quantity
+// below is scale free and is the standard accuracy indicator for root finders.
+//
 // coeffs: [a_n, a_{n-1}, ..., a_0]
 // roots:  vectors of real and imaginary parts (same length)
 // Returns -1.0 if input vectors have inconsistent sizes.
 // ---------------------------------------------------------------------------
-double max_residual(
+double max_backward_error(
   const vector<real_type> & coeffs,
   const vector<real_type> & zeror,
   const vector<real_type> & zeroi )
@@ -75,10 +83,19 @@ double max_residual(
   double maxRes = 0.0;
   for ( std::size_t i = 0; i < n; ++i )
   {
-    complex<real_type> r( zeror[i], zeroi[i] );
-    complex<real_type> val = 0.0;
-    for ( std::size_t k = 0; k <= n; ++k ) { val += coeffs[k] * std::pow( r, static_cast<int>( n - k ) ); }
-    maxRes = std::max( maxRes, std::abs( val ) );
+    complex<real_type> const r( zeror[i], zeroi[i] );
+    complex<real_type>       val( coeffs[0], 0.0 );
+    double const             ar  = std::abs( r );
+    double                   den = 0.0;
+    double                   pw  = 1.0;
+    for ( std::size_t k = 1; k <= n; ++k ) val = val * r + coeffs[k];  // Horner
+    for ( std::size_t k = n + 1; k-- > 0; )
+    {
+      den += std::abs( coeffs[k] ) * pw;
+      pw *= ar;
+      if ( !std::isfinite( pw ) ) break;
+    }
+    if ( den > 0 ) maxRes = std::max( maxRes, std::abs( val ) / den );
   }
   return maxRes;
 }
@@ -270,12 +287,13 @@ std::pair<bool, double> run_JT( const vector<real_type> & coeffs, vector<complex
       zeroi[static_cast<std::size_t>( i )] );
   }
 
-  double res = max_residual( coeffs, zeror, zeroi );
-  // If max_residual returns a negative value, something went wrong.
+  double res = max_backward_error( coeffs, zeror, zeroi );
+  // If max_backward_error returns a negative value, something went wrong.
   if ( res < 0.0 ) { return { false, std::numeric_limits<double>::infinity() }; }
 
-  // Relax tolerance for higher-degree polynomials
-  bool ok = ( res < 1e-8 );
+  // Scale free threshold: a backward stable solver stays within a small
+  // multiple of the unit roundoff whatever the degree and the conditioning.
+  bool ok = ( res < 1e-13 );
   return { ok, res };
 }
 
@@ -310,8 +328,13 @@ template <typename CaseType> void report_case(
     if ( err >= 0.0 )
     {
       summary.comparison_table_row( "matching error", ok, err );
-      // If matching error is too large, fail the test regardless of residual.
-      const double matching_tolerance = 1e-7;  // relaxed for high-degree
+      // The forward error cannot be smaller than (unit roundoff) x (condition
+      // number of the root), which for Wilkinson-like families grows very
+      // quickly with the degree: scale the tolerance with the magnitude of the
+      // exact roots instead of using a fixed absolute bound.
+      double scale = 1.0;
+      for ( auto const & z : exact ) scale = std::max( scale, std::abs( z ) );
+      double const matching_tolerance = 1e-9 * scale * static_cast<double>( exact.size() * exact.size() );
       if ( err > matching_tolerance ) { final_ok = false; }
     }
     else
@@ -322,10 +345,10 @@ template <typename CaseType> void report_case(
   }
 
   summary.comparison_table_footer();
-  if ( final_ok ) { summary.pass( "Residual and matching within tolerance" ); }
+  if ( final_ok ) { summary.pass( "Backward error and matching within tolerance" ); }
   else
   {
-    summary.fail( "Residual too high or matching error too large" );
+    summary.fail( "Backward error too high or matching error too large" );
   }
 }
 
