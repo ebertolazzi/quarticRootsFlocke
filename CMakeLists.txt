@@ -150,8 +150,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_VERBOSE_MAKEFILE FALSE)
 set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# The public header uses std::format: C++20 is a hard requirement, see the
-# compiler check below.
+# The numerical implementation and public API use C++20.
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_INSTALL_RPATH $ORIGIN)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
@@ -168,6 +167,11 @@ endif()
 # library implementations.  The definition is harmless on compilers where those
 # constants are already available or not controlled by this macro.
 add_compile_definitions(_USE_MATH_DEFINES)
+if(WIN32)
+  # Prevent windows.h from defining min/max macros that corrupt calls such as
+  # std::max(...) in clients and tests.
+  add_compile_definitions(NOMINMAX)
+endif()
 
 # --------------------------------------------------------------------------
 # Project version resolution
@@ -297,7 +301,6 @@ set(COMMON_CXX_FLAGS
   "-Wdouble-promotion"
   "-Wformat=2"
   "-Wimplicit-fallthrough"
-  "-Wreturn-local-addr"
 )
 
 # GCC exposes several additional diagnostics that are either unavailable or have
@@ -311,7 +314,10 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     "-Wlogical-op"
     "-Wnull-dereference"
     "-Wuseless-cast"
+    "-Wreturn-local-addr"
   )
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  list(APPEND COMMON_CXX_FLAGS "-Wreturn-stack-address")
 endif()
 
 string(JOIN " " COMMON_CXX_FLAGS_STR ${COMMON_CXX_FLAGS})
@@ -343,7 +349,6 @@ set(MSVC_COMPILE_FLAGS
   "/w14928"
   "/external:W0"
   "/external:anglebrackets"
-  "/external:templates-compat"
 )
 
 string(JOIN " " MSVC_COMPILE_FLAGS_STR ${MSVC_COMPILE_FLAGS})
@@ -352,7 +357,7 @@ string(JOIN " " MSVC_COMPILE_FLAGS_STR ${MSVC_COMPILE_FLAGS})
 # separated from MSVC_COMPILE_FLAGS because they are applied to the global C and
 # C++ configuration strings for the selected build type.
 set(VS_DEFINE "/D_WINDOWS /D_SCL_SECURE_NO_WARNINGS /DHAVE_STRING_H /DNO_GETTIMEOFDAY /DYAML_DECLARE_STATIC /DPCRE_STATIC")
-set(VS_FLAGS "/nologo /std:c++17 /utf-8 /GS /Gy /GF /EHsc /bigobj")
+set(VS_FLAGS "/nologo /utf-8 /GS /Gy /GF /EHsc /bigobj")
 
 # --------------------------------------------------------------------------
 # Compiler-specific global flags
@@ -369,7 +374,11 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   set(CMAKE_CXX_FLAGS_RELEASE "-fPIC -O2 -g ")
   set(CMAKE_CXX_FLAGS_DEBUG "-fPIC -O0 -ggdb ")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  set(CMAKE_CXX_FLAGS "-std=c++20 -stdlib=libc++ ${COMMON_CXX_FLAGS_STR}")
+  if(APPLE)
+    set(CMAKE_CXX_FLAGS "-std=c++20 -stdlib=libc++ ${COMMON_CXX_FLAGS_STR}")
+  else()
+    set(CMAKE_CXX_FLAGS "-std=c++20 ${COMMON_CXX_FLAGS_STR}")
+  endif()
   set(CMAKE_CXX_FLAGS_RELEASE "-fPIC -Os -g -fcolor-diagnostics ")
   set(CMAKE_CXX_FLAGS_DEBUG "-fPIC -O0 -gfull -fcolor-diagnostics ")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
@@ -389,19 +398,6 @@ set(CMAKE_C_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-
-# --------------------------------------------------------------------------
-# <format> availability
-# --------------------------------------------------------------------------
-# PolynomialRoots.hh formats its diagnostics with std::format, which landed in
-# libstdc++ 13 and in MSVC 19.29.  Failing here with a clear message is far
-# friendlier than the wall of template errors produced by a missing <format>.
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 13)
-  message(FATAL_ERROR "GCC ${CMAKE_CXX_COMPILER_VERSION} has no <format>: GCC >= 13 is required")
-endif()
-if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 19.29)
-  message(FATAL_ERROR "MSVC ${CMAKE_CXX_COMPILER_VERSION} has no <format>: Visual Studio 2019 16.10 or newer is required")
-endif()
 
 # --------------------------------------------------------------------------
 # Optional local customization hook
@@ -743,14 +739,6 @@ if(UTILS_ENABLE_TESTS)
   # not need an explicit dynamic-loader library and expands to the proper system
   # library where required.
   set(LIBS ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${CMAKE_DL_LIBS})
-
-  # Linux and other non-Apple Unix systems may require an explicit pthread target.
-  # macOS handles this differently, so the thread dependency is only added here.
-  if(UNIX AND NOT APPLE)
-    set(THREADS_PREFER_PTHREAD_FLAG ON)
-    find_package(Threads REQUIRED)
-    list(APPEND LIBS Threads::Threads)
-  endif()
 
   # Discover test source files.  CONFIGURE_DEPENDS asks CMake-supported generators
   # to re-run configuration when files are added to or removed from src_tests/.

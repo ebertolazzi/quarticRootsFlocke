@@ -23,22 +23,13 @@
 #include <cfloat>
 #include <cmath>
 #include <cstdint>
-#include <format>
 #include <iosfwd>
 #include <limits>
+#include <sstream>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <utility>
-
-//!
-//! The library formats its diagnostic messages with `std::format`, so a C++20
-//! standard library providing `<format>` is mandatory.  The feature-test macro
-//! is checked here to turn a wall of template errors into a single readable
-//! diagnostic.
-//!
-#if !defined( __cpp_lib_format )
-#error "PolynomialRoots requires a C++20 standard library with <format> (GCC >= 13, clang >= 17, MSVC >= 19.29)"
-#endif
 
 //!
 //! Implementation of Flocke algorithm for roots
@@ -64,8 +55,6 @@
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
 #include <boost/math/special_functions/cbrt.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
-#include <iomanip>
-#include <sstream>
 #endif
 
 namespace PolynomialRoots
@@ -114,9 +103,32 @@ namespace PolynomialRoots
   //! \param[in] fmt   format string used to build the diagnostic message
   //! \param[in] args  arguments interpolated in \p fmt
   //!
-  template <typename... Args> inline void root_assert( bool cond, std::format_string<Args...> fmt, Args &&... args )
+  namespace detail
   {
-    if ( !cond ) throw std::runtime_error( std::format( fmt, std::forward<Args>( args )... ) );
+    inline void append_message( std::ostringstream & out, std::string_view text ) { out << text; }
+
+    template <typename T, typename... Args>
+    void append_message( std::ostringstream & out, std::string_view text, T && value, Args &&... args )
+    {
+      std::size_t const marker{ text.find( "{}" ) };
+      if ( marker == std::string_view::npos )
+      {
+        out << text;
+        return;
+      }
+      out << text.substr( 0, marker ) << std::forward<T>( value );
+      append_message( out, text.substr( marker + 2 ), std::forward<Args>( args )... );
+    }
+  }  // namespace detail
+
+  template <typename... Args> inline void root_assert( bool cond, std::string_view fmt, Args &&... args )
+  {
+    if ( !cond )
+    {
+      std::ostringstream message;
+      detail::append_message( message, fmt, std::forward<Args>( args )... );
+      throw std::runtime_error( message.str() );
+    }
   }
 
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
@@ -125,28 +137,6 @@ namespace PolynomialRoots
 #endif
 
 }  // namespace PolynomialRoots
-
-namespace std
-{
-
-#if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
-  template <>
-
-  struct formatter<PolynomialRoots::quad_real, char> : formatter<std::string, char>
-
-  {
-    auto format( PolynomialRoots::quad_real const & x, format_context & ctx ) const
-    {
-      std::ostringstream ss;
-      constexpr int      digits = std::numeric_limits<PolynomialRoots::quad_real>::max_digits10 > 0
-                                    ? std::numeric_limits<PolynomialRoots::quad_real>::max_digits10
-                                    : 36;
-      ss << std::setprecision( digits ) << x;
-      return formatter<std::string, char>::format( ss.str(), ctx );
-    }
-  };
-#endif
-}  // namespace std
 
 #include "PolynomialRoots-complex.hxx"
 

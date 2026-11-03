@@ -12,8 +12,7 @@ solvers.
 
 ## Requirements
 
-- a C++20 compiler **with `<format>`**: GCC >= 13, clang >= 17, MSVC >= 19.29
-  (the build stops with an explicit message on older toolchains)
+- a C++20 compiler
 - CMake >= 3.16
 - Boost headers, **only** when the optional multiprecision backend is enabled
 

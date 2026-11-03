@@ -599,36 +599,22 @@ namespace PolynomialRoots
     T_real const & B = m_ABCD[1];
     T_real const & C = m_ABCD[2];
     T_real const & D = m_ABCD[3];
-    s << std::format(
-      "poly a={} b={} c={} d={}\n"
-      "n. roots = {}\n"
-      "complex  = {}\n"
-      "triple   = {}\n"
-      "double   = {}\n",
-      A,
-      B,
-      C,
-      D,
-      m_nrts,
-      ( m_cplx ? "YES" : "NO" ),
-      ( triple_root() ? "YES" : "NO" ),
-      ( double_root() ? "YES" : "NO" ) );
+    s << "poly a=" << A << " b=" << B << " c=" << C << " d=" << D << '\n'
+      << "n. roots = " << m_nrts << '\n'
+      << "complex  = " << ( m_cplx ? "YES" : "NO" ) << '\n'
+      << "triple   = " << ( triple_root() ? "YES" : "NO" ) << '\n'
+      << "double   = " << ( double_root() ? "YES" : "NO" ) << '\n';
     if ( m_cplx )
     {
-      s << std::format(
-        "x0 = ({},{})\n"
-        "x1 = ({},{})\n",
-        m_r0,
-        m_r1,
-        m_r0,
-        -m_r1 );
-      if ( m_nrts > 2 ) s << std::format( "x2 = {}\n", m_r2 );
+      s << "x0 = (" << m_r0 << ',' << m_r1 << ")\n"
+        << "x1 = (" << m_r0 << ',' << -m_r1 << ")\n";
+      if ( m_nrts > 2 ) s << "x2 = " << m_r2 << '\n';
     }
     else
     {
-      if ( m_nrts > 0 ) s << std::format( "x0 = {}\n", m_r0 );
-      if ( m_nrts > 1 ) s << std::format( "x1 = {}\n", m_r1 );
-      if ( m_nrts > 2 ) s << std::format( "x2 = {}\n", m_r2 );
+      if ( m_nrts > 0 ) s << "x0 = " << m_r0 << '\n';
+      if ( m_nrts > 1 ) s << "x1 = " << m_r1 << '\n';
+      if ( m_nrts > 2 ) s << "x2 = " << m_r2 << '\n';
     }
     s << '\n';
   }
@@ -657,7 +643,7 @@ namespace PolynomialRoots
     {
       T_complex const r{ root( i ) };
       T_real const    be{ root_backward_error<T_real, T_complex>( m_ABCD, 3, r ) };
-      s << std::format( "|p(r{})| = {}, backward error = {}\n", i, abs( eval( r ) ), be );
+      s << "|p(r" << i << ")| = " << abs( eval( r ) ) << ", backward error = " << be << '\n';
       ok = ok && be <= tol;
     }
     return ok;

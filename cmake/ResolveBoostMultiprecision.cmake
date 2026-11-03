@@ -5,7 +5,7 @@ include_guard(GLOBAL)
 #
 # Resolution order:
 #   1. an explicit local checkout, QRF_BOOST_LOCAL_DIR (default ../boost);
-#   2. the standard CMake package, find_package(Boost) - this is what works on
+#   2. the standard CMake package, find_package(Boost CONFIG) - this works on
 #      Linux distributions, in vcpkg/conan toolchains and with any Boost install
 #      shipping BoostConfig.cmake;
 #   3. find_path(), which honours BOOST_ROOT / BOOST_INCLUDEDIR and the usual
@@ -33,7 +33,7 @@ function(qrf_resolve_boost_multiprecision out_include_dir out_source)
   endif()
 
   # 2 - the standard CMake package
-  find_package(Boost QUIET)
+  find_package(Boost CONFIG QUIET)
   if(Boost_FOUND AND Boost_INCLUDE_DIRS)
     foreach(_dir IN LISTS Boost_INCLUDE_DIRS)
       if(EXISTS "${_dir}/${_probe}")

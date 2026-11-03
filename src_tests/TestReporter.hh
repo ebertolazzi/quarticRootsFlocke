@@ -3,9 +3,9 @@
 
 #include "termcolor.hh"
 #include <algorithm>
-#include <format>  // C++20
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <string_view>
 
@@ -105,8 +105,9 @@ namespace TestReporter
       std::string_view const status{ ok ? "pass" : "fail" };
       if ( note.empty() ) note = ok ? "check() passed" : "check() failed";
 
-      std::string text{ std::format( "{:.4e}", residual ) };
-      text += std::format( " ({})", note );
+      std::ostringstream formatted;
+      formatted << std::scientific << std::setprecision( 4 ) << residual << " (" << note << ')';
+      std::string const text{ formatted.str() };
 
       m_out << "  │ " << detail::fit( mode, MODE_WIDTH ) << " │ ";
 

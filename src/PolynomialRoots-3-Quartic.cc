@@ -1304,42 +1304,24 @@ namespace PolynomialRoots
     T_real const & D = m_ABCDE[3];
     T_real const & E = m_ABCDE[4];
 
-    s << std::format(
-      "poly a={} b={} c={} d={} e={}\n"
-      "n. complex = {}\n"
-      "n. real    = {}\n",
-      A,
-      B,
-      C,
-      D,
-      E,
-      m_ncplx,
-      m_nreal );
+    s << "poly a=" << A << " b=" << B << " c=" << C << " d=" << D << " e=" << E << '\n'
+      << "n. complex = " << m_ncplx << '\n'
+      << "n. real    = " << m_nreal << '\n';
     if ( m_ncplx > 0 )
-      s << std::format(
-        "x0 = ({},{})\n"
-        "x1 = ({},{})\n",
-        m_r0,
-        m_r1,
-        m_r0,
-        -m_r1 );
+      s << "x0 = (" << m_r0 << ',' << m_r1 << ")\n"
+        << "x1 = (" << m_r0 << ',' << -m_r1 << ")\n";
     else
     {
-      if ( m_nreal > 0 ) s << std::format( "x0 = {}\n", m_r0 );
-      if ( m_nreal > 1 ) s << std::format( "x1 = {}\n", m_r1 );
+      if ( m_nreal > 0 ) s << "x0 = " << m_r0 << '\n';
+      if ( m_nreal > 1 ) s << "x1 = " << m_r1 << '\n';
     }
     if ( m_ncplx > 2 )
-      s << std::format(
-        "x2 = ({},{})\n"
-        "x3 = ({},{})\n",
-        m_r2,
-        m_r3,
-        m_r2,
-        -m_r3 );
+      s << "x2 = (" << m_r2 << ',' << m_r3 << ")\n"
+        << "x3 = (" << m_r2 << ',' << -m_r3 << ")\n";
     else
     {
-      if ( m_nreal > 2 || ( m_ncplx > 0 && m_nreal > 0 ) ) s << std::format( "x2 = {}\n", m_r2 );
-      if ( m_nreal > 3 || ( m_ncplx > 0 && m_nreal > 1 ) ) s << std::format( "x3 = {}\n", m_r3 );
+      if ( m_nreal > 2 || ( m_ncplx > 0 && m_nreal > 0 ) ) s << "x2 = " << m_r2 << '\n';
+      if ( m_nreal > 3 || ( m_ncplx > 0 && m_nreal > 1 ) ) s << "x3 = " << m_r3 << '\n';
     }
   }
 
@@ -1369,7 +1351,7 @@ namespace PolynomialRoots
     {
       T_complex const r{ root( i ) };
       T_real const    be{ root_backward_error<T_real, T_complex>( m_ABCDE, 4, r ) };
-      s << std::format( "|p(r{})| = {}, backward error = {}\n", i, abs( eval( r ) ), be );
+      s << "|p(r" << i << ")| = " << abs( eval( r ) ) << ", backward error = " << be << '\n';
       ok = ok && be <= tol;
     }
     return ok;

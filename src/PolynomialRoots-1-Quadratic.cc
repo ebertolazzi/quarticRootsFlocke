@@ -175,35 +175,19 @@ namespace PolynomialRoots
     T_real const & A = m_ABC[0];
     T_real const & B = m_ABC[1];
     T_real const & C = m_ABC[2];
-    s << std::format(
-      "poly A={} B={} C={}\n"
-      "n. roots = {}\n"
-      "complex  = {}\n"
-      "double   = {}\n",
-      A,
-      B,
-      C,
-      m_nrts,
-      ( m_cplx ? "YES" : "NO" ),
-      ( double_root() ? "YES" : "NO" ) );
+    s << "poly A=" << A << " B=" << B << " C=" << C << '\n'
+      << "n. roots = " << m_nrts << '\n'
+      << "complex  = " << ( m_cplx ? "YES" : "NO" ) << '\n'
+      << "double   = " << ( double_root() ? "YES" : "NO" ) << '\n';
     if ( m_cplx )
-      s << std::format(
-        "x0 = ({},{})\n"
-        "x1 = ({},{})\n",
-        m_r0,
-        m_r1,
-        m_r0,
-        -m_r1 );
+      s << "x0 = (" << m_r0 << ',' << m_r1 << ")\n"
+        << "x1 = (" << m_r0 << ',' << -m_r1 << ")\n";
     else if ( double_root() )
-      s << std::format( "x0 = x1 = {}\n", m_r0 );
+      s << "x0 = x1 = " << m_r0 << '\n';
     else if ( m_nrts == 1 )
-      s << std::format( "x0 = {}\n", m_r0 );
+      s << "x0 = " << m_r0 << '\n';
     else if ( m_nrts == 2 )
-      s << std::format(
-        "x0 = {}\n"
-        "x1 = {}\n",
-        m_r0,
-        m_r1 );
+      s << "x0 = " << m_r0 << '\n' << "x1 = " << m_r1 << '\n';
   }
 
   template <typename T_real, typename T_complex> T_real QuadraticT<T_real, T_complex>::backward_error() const
@@ -230,7 +214,7 @@ namespace PolynomialRoots
     {
       T_complex const r{ root( i ) };
       T_real const    be{ root_backward_error<T_real, T_complex>( m_ABC, 2, r ) };
-      s << std::format( "|p(r{})| = {}, backward error = {}\n", i, abs( eval( r ) ), be );
+      s << "|p(r" << i << ")| = " << abs( eval( r ) ) << ", backward error = " << be << '\n';
       ok = ok && be <= tol;
     }
     return ok;
