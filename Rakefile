@@ -35,11 +35,19 @@ $compile_debug = defined?(COMPILE_DEBUG) ? COMPILE_DEBUG : false
 $compile_dynamic = defined?(COMPILE_DYNAMIC) ? COMPILE_DYNAMIC : false
 $compile_executable = defined?(COMPILE_EXECUTABLE) ? COMPILE_EXECUTABLE : true
 
-$os = case RUBY_PLATFORM
-      when /darwin/       then :mac
-      when /linux|cygwin/ then :linux
-      when /msys/         then :mingw
-      else                     :win
+# MSYS2 non si riconosce dal solo RUBY_PLATFORM: a seconda del pacchetto ruby
+# vale "x86_64-pc-msys", "x64-mingw-ucrt" o "x86_64-w64-mingw32", e in qualche
+# installazione contiene "linux", nel qual caso il ramo /linux|cygwin/ scattava
+# per primo e la build si dichiarava Linux pur usando il toolchain MinGW.
+# MSYSTEM e' esportata da MSYS2 in ogni sua shell, quindi la si guarda prima.
+$os = if !ENV['MSYSTEM'].to_s.empty? then :mingw
+      else
+        case RUBY_PLATFORM
+        when /darwin/       then :mac
+        when /msys/         then :mingw
+        when /linux|cygwin/ then :linux
+        else                     :win
+        end
       end
 
 $build_type = $compile_debug ? 'Debug' : 'Release'
