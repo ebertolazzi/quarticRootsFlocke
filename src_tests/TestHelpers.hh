@@ -72,8 +72,8 @@ namespace TestHelpers
     double max_res = 0.0;
     for ( int i = 0; i < solver.num_roots(); ++i )
     {
-      auto const   r   = solver.root( i );
-      auto const   pv  = solver.eval( r );
+      auto const   root_value = solver.root( i );
+      auto const   pv         = solver.eval( root_value );
       double const res = to_double( abs( pv ) );
       if ( res > max_res ) max_res = res;
     }

@@ -77,29 +77,16 @@ def in_dir(path)
   Dir.chdir(path) { yield }
 end
 
-def visual_studio_arch
-  cl = `where cl.exe 2>NUL`.lines.first.to_s.strip
-
-  case cl
-  when /(x64|amd64)\\cl\.exe/i then 'x64'
-  when /(bin|x86|amd32)\\cl\.exe/i then 'x86'
-  else
-    raise 'Cannot determine Visual Studio architecture. Run from a Visual Studio Developer Prompt.'
-  end
-end
-
-def configure_and_build(bits: nil, enable_tests: false, target: 'install')
+def configure_and_build(enable_tests: false, target: 'install')
   in_dir('build') do
-    bits_opt = bits ? "-DBITS=#{bits}" : ''
     target_opt = target ? "--target #{target}" : ''
-    sh "cmake -G Ninja #{bits_opt} #{cmake_options(enable_tests: enable_tests)} .."
+    sh "cmake -G Ninja #{cmake_options(enable_tests: enable_tests)} .."
     sh "cmake --build . --config #{$build_type} #{target_opt} #{$parallel}"
   end
 end
 
 def build_and_run_tests
-  bits = $os == :win ? visual_studio_arch : nil
-  configure_and_build(bits: bits, enable_tests: true, target: nil)
+  configure_and_build(enable_tests: true, target: nil)
   Dir.chdir('build') { sh "ctest -C #{$build_type} --output-on-failure" }
 end
 
@@ -110,8 +97,7 @@ desc 'Build with CMake/Ninja'
 task :build do
   puts "Build (#{$os})".green
 
-  bits = $os == :win ? visual_studio_arch : nil
-  configure_and_build(bits: bits, enable_tests: false, target: 'install')
+  configure_and_build(enable_tests: false, target: 'install')
 end
 
 desc 'Build tests and run CTest'

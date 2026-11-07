@@ -616,15 +616,11 @@ function(qrf_add_platform_library_alias target_name base_name library_kind)
     )
 
     if(UTILS_INSTALL_LOCAL)
-      string(CONCAT _alias_install_code
-        "file(MAKE_DIRECTORY \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}\")\n"
-        "execute_process(\n"
-        "  COMMAND \"${CMAKE_COMMAND}\" -E copy_if_different\n"
-        "          \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${real_filename}\"\n"
-        "          \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${alias_filename}\"\n"
-        ")\n"
+      install(
+        FILES "$<TARGET_FILE:${target_name}>"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        RENAME "${alias_filename}"
       )
-      install(CODE "${_alias_install_code}")
     endif()
   else()
     # Unix compatibility alias: recreate the symbolic link after every build
