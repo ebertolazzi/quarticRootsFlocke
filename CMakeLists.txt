@@ -326,7 +326,10 @@ string(JOIN " " COMMON_CXX_FLAGS_STR ${COMMON_CXX_FLAGS})
 # GCC/Clang warning set while using MSVC's numeric warning identifiers and the
 # /external options to reduce noise from third-party or system headers.
 set(MSVC_COMPILE_FLAGS
-  "/permissive"
+  # Niente /permissive: /std:c++20 attiva da solo /permissive-, mentre il
+  # vecchio /permissive esplicito lo annullava e rimetteva il compilatore in
+  # modalita' non conforme, dove la libreria standard C++20 di MSVC non e'
+  # supportata (ICE nei suoi header, p.es. <chrono>).
   "/W4"
   "/w14242"
   "/w14254"
