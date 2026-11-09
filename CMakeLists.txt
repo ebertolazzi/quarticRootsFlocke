@@ -16,7 +16,8 @@
 # install/export rules, and policy handling.  Version 3.16 is kept as the lower
 # bound to preserve compatibility with older systems while still supporting the
 # features used below.
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.28)
+include("${CMAKE_CURRENT_LIST_DIR}/CMakeLists_compiler.txt")
 
 # --------------------------------------------------------------------------
 # CMake policy selection
@@ -222,6 +223,7 @@ project(
   HOMEPAGE_URL "https://ebertolazzi.github.io/quarticRootsFlocke/"
   LANGUAGES CXX
 )
+pins_configure_compiler()
 
 # --------------------------------------------------------------------------
 # Standard CMake modules
@@ -326,10 +328,8 @@ string(JOIN " " COMMON_CXX_FLAGS_STR ${COMMON_CXX_FLAGS})
 # GCC/Clang warning set while using MSVC's numeric warning identifiers and the
 # /external options to reduce noise from third-party or system headers.
 set(MSVC_COMPILE_FLAGS
-  # Niente /permissive: /std:c++20 attiva da solo /permissive-, mentre il
-  # vecchio /permissive esplicito lo annullava e rimetteva il compilatore in
-  # modalita' non conforme, dove la libreria standard C++20 di MSVC non e'
-  # supportata (ICE nei suoi header, p.es. <chrono>).
+  # /permissive- is supplied by the shared compiler policy. Never add the old
+  # /permissive switch here: it would disable standard-conforming mode.
   "/W4"
   "/w14242"
   "/w14254"
@@ -386,8 +386,10 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(CMAKE_CXX_FLAGS_DEBUG "-fPIC -O0 -gfull -fcolor-diagnostics ")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   set(CMAKE_CXX_FLAGS " ${MSVC_COMPILE_FLAGS_STR} ${VS_DEFINE} /sdl")
-  set(CMAKE_CXX_FLAGS_RELEASE " ${VS_FLAGS} /O2 /MD /Zo ")
-  set(CMAKE_CXX_FLAGS_DEBUG " ${VS_FLAGS} /Od /Ob0 /MDd /guard:cf /Zi /DEBUG:FULL ")
+  # The shared compiler policy selects /MD or /MDd through CMP0091 and
+  # CMAKE_MSVC_RUNTIME_LIBRARY. Do not encode the runtime a second time here.
+  set(CMAKE_CXX_FLAGS_RELEASE " ${VS_FLAGS} /O2 /Zo ")
+  set(CMAKE_CXX_FLAGS_DEBUG " ${VS_FLAGS} /Od /Ob0 /guard:cf /Zi /DEBUG:FULL ")
 else()
   message(FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}")
 endif()
