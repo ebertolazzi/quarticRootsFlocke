@@ -314,7 +314,12 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     "-Wduplicated-cond"
     "-Wduplicated-branches"
     "-Wlogical-op"
-    "-Wnull-dereference"
+    # -Wnull-dereference is deliberately NOT enabled with GCC: 15/16 emit
+    # false positives from Eigen in optimized builds, attributed to the
+    # inlining chain rather than to the header, so marking Eigen SYSTEM does
+    # not silence them. These flags end up in CMAKE_CXX_FLAGS, which does not
+    # expand generator expressions, so the warning cannot be re-enabled per
+    # configuration here. Clang keeps it below.
     "-Wuseless-cast"
     "-Wreturn-local-addr"
   )
