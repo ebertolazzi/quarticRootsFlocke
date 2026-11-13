@@ -4,6 +4,18 @@ require 'etc'
 require 'fileutils'
 require 'rake/clean'
 
+# Maximum number of parallel compile jobs. GCC/MSVC can need a couple of GB per
+# C++20 translation unit, and an over-subscribed build is a classic source of
+# compiler crashes. PINS_MAX_CORE (or JOBS) caps it; 16 by default.
+def pins_jobs
+  cap = ENV['PINS_MAX_CORE'].to_i
+  cap = 16 if cap <= 0
+  n = ENV['JOBS'].to_i
+  n = Etc.nprocessors if n <= 0
+  [n, cap].min
+end
+
+
 begin
   require 'colorize'
 rescue LoadError
@@ -70,7 +82,7 @@ end
 $parallel = if $os == :win
               ''
             else
-              "--parallel #{Etc.nprocessors}"
+              "--parallel #{pins_jobs}"
             end
 
 def in_dir(path)
